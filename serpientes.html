@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>🐍 Serpientes y Escaleras 2.0 · Física | Prof. Fabián Soberanes Martín</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="juvenil.css" />
+  <link rel="stylesheet" href="serpientes.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+</head>
+<body class="snake-body">
+
+  <canvas id="snakeParticles"></canvas>
+
+  <!-- ==================== PANTALLA INICIO ==================== -->
+  <section class="snake-screen active" id="screen-start">
+    <div class="start-logos">
+      <img src="logo1.png" alt="Logo 1" class="start-logo">
+      <img src="logo2.png" alt="Logo 2" class="start-logo">
+    </div>
+
+    <div class="start-content">
+      <div class="snake-badge">🐍 SERPIENTES Y ESCALERAS 2.0 🪜</div>
+      <h1 class="snake-title">
+        <span class="title-snake">FÍSICA</span>
+        <span class="title-edition">EDITION</span>
+      </h1>
+      <p class="snake-subtitle">⚡ El Movimiento · 2 Jugadores · ¡Con retos!</p>
+
+      <div class="rules-box">
+        <h3>📜 Reglas del juego</h3>
+        <div class="rules-grid">
+          <div class="rule"><span class="rule-icon">🎯</span><p>Responde la pregunta en <strong>30 segundos</strong></p></div>
+          <div class="rule"><span class="rule-icon">✅</span><p>Si aciertas → tiras el dado y avanzas</p></div>
+          <div class="rule"><span class="rule-icon">❌</span><p>Si fallas o se acaba el tiempo → pasa el turno</p></div>
+          <div class="rule"><span class="rule-icon">🪜</span><p>Escaleras: ¡subes de golpe!</p></div>
+          <div class="rule"><span class="rule-icon">🐍</span><p>Serpientes: retrocedes</p></div>
+          <div class="rule"><span class="rule-icon">🎲</span><p>Casillas especiales con retos y sorpresas</p></div>
+          <div class="rule"><span class="rule-icon">🏆</span><p>Gana quien llegue primero a la casilla 30</p></div>
+        </div>
+      </div>
+
+      <div class="players-config">
+        <div class="player-config p1-config">
+          <div class="player-avatar">🟠</div>
+          <label>JUGADOR 1</label>
+          <input type="text" id="p1Name" placeholder="Jugador 1" maxlength="14" value="Jugador 1">
+        </div>
+        <div class="vs-badge">VS</div>
+        <div class="player-config p2-config">
+          <div class="player-avatar">🔵</div>
+          <label>JUGADOR 2</label>
+          <input type="text" id="p2Name" placeholder="Jugador 2" maxlength="14" value="Jugador 2">
+        </div>
+      </div>
+
+      <div class="start-actions">
+        <button class="snake-btn primary" onclick="startGame()">🎮 ¡COMENZAR!</button>
+        <a href="index.html" class="snake-btn ghost">← Volver a teoría</a>
+      </div>
+
+      <p class="credit">✨ Creado por el <strong>Prof. Fabián Soberanes Martín</strong></p>
+    </div>
+  </section>
+
+  <!-- ==================== PANTALLA JUEGO ==================== -->
+  <section class="snake-screen" id="screen-game">
+
+    <header class="game-header">
+      <div class="player-panel p1-panel" id="p1Panel">
+        <div class="panel-avatar">🟠</div>
+        <div class="panel-info">
+          <div class="panel-name" id="p1DisplayName">Jugador 1</div>
+          <div class="panel-position">Casilla <span id="p1Position">0</span></div>
+        </div>
+        <div class="panel-turn-indicator" id="p1TurnIndicator">▶</div>
+      </div>
+
+      <div class="turn-info">
+        <div class="turn-label">TURNO DE</div>
+        <div class="turn-player" id="currentPlayerName">Jugador 1</div>
+      </div>
+
+      <div class="player-panel p2-panel" id="p2Panel">
+        <div class="panel-avatar">🔵</div>
+        <div class="panel-info">
+          <div class="panel-name" id="p2DisplayName">Jugador 2</div>
+          <div class="panel-position">Casilla <span id="p2Position">0</span></div>
+        </div>
+        <div class="panel-turn-indicator" id="p2TurnIndicator"></div>
+      </div>
+    </header>
+
+    <div class="game-main">
+      <div class="board-container">
+        <div class="board" id="board"></div>
+      </div>
+
+      <div class="side-panel">
+        <!-- Cronómetro -->
+        <div class="timer-zone">
+          <div class="timer-header">
+            <span class="timer-icon">⏱</span>
+            <span class="timer-label">TIEMPO</span>
+            <span class="timer-seconds" id="timerSeconds">30</span>
+          </div>
+          <div class="timer-bar-bg">
+            <div class="timer-bar-fill" id="timerBarFill"></div>
+          </div>
+        </div>
+
+        <!-- Dado -->
+        <div class="dice-zone">
+          <div class="dice" id="dice">
+            <div class="dice-face" id="diceFace">🎲</div>
+          </div>
+          <p class="dice-instruction" id="diceInstruction">Responde correctamente para tirar</p>
+        </div>
+
+        <!-- Área de pregunta -->
+        <div class="question-zone" id="questionZone">
+          <div class="question-card" id="questionCard">
+            <div class="question-category" id="qCategory">DISTANCIA</div>
+            <p class="question-text" id="qText">Cargando pregunta...</p>
+            <div class="answers" id="answersGrid"></div>
+            <div class="question-feedback" id="qFeedback"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="pause-btn" onclick="togglePause()">⏸</button>
+
+    <div class="pause-overlay" id="pauseOverlay">
+      <div class="pause-card">
+        <h2>⏸ PAUSA</h2>
+        <button class="snake-btn primary" onclick="togglePause()">▶ Continuar</button>
+        <button class="snake-btn ghost" onclick="quitGame()">✖ Salir</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MODAL DE RETO ==================== -->
+  <div class="challenge-overlay" id="challengeOverlay">
+    <div class="challenge-card" id="challengeCard">
+      <div class="challenge-icon" id="challengeIcon">🎲</div>
+      <div class="challenge-label" id="challengeLabel">CASILLA ESPECIAL</div>
+      <h2 class="challenge-title" id="challengeTitle">¡Tira otra vez!</h2>
+      <p class="challenge-description" id="challengeDescription">Vuelve a tirar el dado</p>
+
+      <div class="challenge-choices" id="challengeChoices"></div>
+
+      <button class="snake-btn primary challenge-continue" id="challengeContinue" onclick="acceptChallenge()">
+        ✓ ACEPTAR
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== PANTALLA FINAL ==================== -->
+  <section class="snake-screen" id="screen-end">
+    <div class="confetti-container" id="confettiEnd"></div>
+
+    <div class="end-card">
+      <div class="winner-trophy" id="winnerTrophy">🏆</div>
+      <h1 class="end-title" id="endTitle">¡JUGADOR 1 GANA!</h1>
+      <p class="end-winner-name" id="endWinnerName">¡Felicidades!</p>
+
+      <div class="end-stats">
+        <div class="stat-item">
+          <div class="stat-icon">🎲</div>
+          <div class="stat-value" id="endTotalTurns">0</div>
+          <div class="stat-label">Turnos totales</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">✅</div>
+          <div class="stat-value" id="endP1Correct">0</div>
+          <div class="stat-label">J1 aciertos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">✅</div>
+          <div class="stat-value" id="endP2Correct">0</div>
+          <div class="stat-label">J2 aciertos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">🐍</div>
+          <div class="stat-value" id="endSnakes">0</div>
+          <div class="stat-label">Serpientes</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">🪜</div>
+          <div class="stat-value" id="endLadders">0</div>
+          <div class="stat-label">Escaleras</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">🎲</div>
+          <div class="stat-value" id="endChallenges">0</div>
+          <div class="stat-label">Retos</div>
+        </div>
+      </div>
+
+      <div class="end-actions">
+        <button class="snake-btn primary" onclick="restartGame()">🔄 JUGAR DE NUEVO</button>
+        <a href="index.html" class="snake-btn ghost">🏠 Inicio</a>
+      </div>
+
+      <p class="credit">✨ Creado por el <strong>Prof. Fabián Soberanes Martín</strong></p>
+    </div>
+  </section>
+
+  <button class="fullscreen-btn" onclick="toggleFullscreen()" title="Pantalla completa">⛶</button>
+
+  <script src="serpientes.js"></script>
+</body>
+</html>
