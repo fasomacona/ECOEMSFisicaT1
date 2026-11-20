@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Actividades · Interacciones de la materia | CONAMAT</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="actividades.css" />
+</head>
+<body class="activities-page">
+  <header class="act-header">
+    <div class="act-header-inner">
+      <a href="interacciones.html" class="back-link">← Teoría Tema 3</a>
+      <h1>
+        <img src="assets/conamat-icon.png" alt="" style="height:28px;vertical-align:middle;margin-right:6px" />
+        Actividades · Interacciones
+      </h1>
+      <div class="session-info"><span id="currentBlock">Bloque 1</span></div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:20%"></div></div>
+  </header>
+
+  <aside class="act-sidebar">
+    <h3>Ruta de la clase</h3>
+    <nav class="block-nav">
+      <button class="block-btn active" data-block="1">1 · Modelo cinético</button>
+      <button class="block-btn" data-block="2">2 · Calor y temperatura</button>
+      <button class="block-btn" data-block="3">3 · Presión</button>
+      <button class="block-btn" data-block="4">4 · Pascal</button>
+      <button class="block-btn" data-block="5">5 · Cierre</button>
+    </nav>
+    <div class="score-box">
+      <p>Puntos</p>
+      <div class="score" id="totalScore">0</div>
+    </div>
+    <p style="font-size:0.8rem;color:#6b7280;margin-top:1rem;text-align:center">Prof. Fabián Soberanes Martín</p>
+  </aside>
+
+  <main class="act-main">
+    <section class="block active" id="block-1">
+      <div class="block-header"><h2>Bloque 1 · Modelo cinético</h2></div>
+
+      <article class="activity-card">
+        <div class="act-type">Clasificación</div>
+        <h3>1.1 ¿Sólido, líquido o gas?</h3>
+        <p>Asocia cada descripción con el estado.</p>
+        <div class="classify-area">
+          <div class="classify-items" id="stateItems">
+            <div class="chip" data-type="solido">Partículas vibran fijas</div>
+            <div class="chip" data-type="gas">Partículas muy separadas y rápidas</div>
+            <div class="chip" data-type="liquido">Forma del recipiente, volumen propio</div>
+            <div class="chip" data-type="solido">Forma y volumen definidos</div>
+            <div class="chip" data-type="gas">Se comprime fácilmente</div>
+            <div class="chip" data-type="liquido">Partículas se deslizan entre sí</div>
+          </div>
+          <div class="drop-zones" style="grid-template-columns:1fr 1fr 1fr">
+            <div class="drop-zone" data-accept="solido" id="zoneSolido"><h4>Sólido</h4><div class="dropped"></div></div>
+            <div class="drop-zone" data-accept="liquido" id="zoneLiquido"><h4>Líquido</h4><div class="dropped"></div></div>
+            <div class="drop-zone" data-accept="gas" id="zoneGas"><h4>Gas</h4><div class="dropped"></div></div>
+          </div>
+        </div>
+        <button class="big-btn secondary" onclick="checkStates()">Verificar</button>
+        <div class="feedback" id="statesFb"></div>
+      </article>
+
+      <article class="activity-card">
+        <div class="act-type">Concepto</div>
+        <h3>1.2 Al subir la temperatura, las partículas…</h3>
+        <div class="options-large">
+          <button onclick="tempPart(this, false)">Se detienen</button>
+          <button onclick="tempPart(this, true)">Se mueven más rápido</button>
+          <button onclick="tempPart(this, false)">Desaparecen</button>
+          <button onclick="tempPart(this, false)">Se juntan más</button>
+        </div>
+        <div class="feedback" id="tempPartFb"></div>
+      </article>
+    </section>
+
+    <section class="block" id="block-2">
+      <div class="block-header"><h2>Bloque 2 · Calor y temperatura</h2></div>
+
+      <article class="activity-card">
+        <div class="act-type">Verdadero / Falso</div>
+        <h3>2.1 ¿Calor o temperatura?</h3>
+        <div class="tf-list">
+          <div class="tf-item" data-answer="false">
+            <p>“Calor y temperatura son lo mismo.”</p>
+            <div class="tf-btns">
+              <button onclick="answerTF(this)">Verdadero</button>
+              <button onclick="answerTF(this)">Falso</button>
+            </div>
+            <div class="tf-explain hidden">Falso. Temperatura = promedio del movimiento; calor = energía transferida.</div>
+          </div>
+          <div class="tf-item" data-answer="true">
+            <p>“El calor pasa del cuerpo más caliente al más frío.”</p>
+            <div class="tf-btns">
+              <button onclick="answerTF(this)">Verdadero</button>
+              <button onclick="answerTF(this)">Falso</button>
+            </div>
+            <div class="tf-explain hidden">Verdadero.</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="activity-card">
+        <div class="act-type">Matching</div>
+        <h3>2.2 Tipos de transferencia</h3>
+        <div class="match-grid" id="heatMatch">
+          <div class="match-col">
+            <div class="match-item" data-match="a">Conducción</div>
+            <div class="match-item" data-match="b">Convección</div>
+            <div class="match-item" data-match="c">Radiación</div>
+          </div>
+          <div class="match-col">
+            <div class="match-target" data-match="c">Sol calentando la Tierra</div>
+            <div class="match-target" data-match="a">Cuchara metálica en té caliente</div>
+            <div class="match-target" data-match="b">Aire caliente que sube</div>
+          </div>
+        </div>
+        <p class="hint-text">Toca un concepto y luego su ejemplo.</p>
+        <div class="feedback" id="heatMatchFb"></div>
+      </article>
+
+      <article class="activity-card">
+        <div class="act-type">Cálculo</div>
+        <h3>2.3 Convierte a kelvin</h3>
+        <p>37 °C = ¿? K</p>
+        <div class="input-row">
+          <input type="number" id="kelvinIn" placeholder="K">
+          <button class="big-btn" onclick="checkKelvin()">Comprobar</button>
+        </div>
+        <div class="feedback" id="kelvinFb"></div>
+      </article>
+    </section>
+
+    <section class="block" id="block-3">
+      <div class="block-header"><h2>Bloque 3 · Presión</h2></div>
+
+      <article class="activity-card">
+        <div class="act-type">Cálculo</div>
+        <h3>3.1 Calcula la presión</h3>
+        <p>F = 150 N · A = 0.3 m²</p>
+        <div class="input-row">
+          <input type="number" id="pCalc" placeholder="Pa" step="0.1">
+          <button class="big-btn" onclick="checkP()">Comprobar</button>
+        </div>
+        <div class="feedback" id="pFb"></div>
+      </article>
+
+      <article class="activity-card">
+        <div class="act-type">Concepto</div>
+        <h3>3.2 ¿Por qué un cuchillo corta mejor?</h3>
+        <div class="options-large">
+          <button onclick="knifeCheck(this, true)">Menor área → mayor presión con la misma fuerza</button>
+          <button onclick="knifeCheck(this, false)">Porque es más pesado</button>
+          <button onclick="knifeCheck(this, false)">Porque tiene más temperatura</button>
+        </div>
+        <div class="feedback" id="knifeFb"></div>
+      </article>
+    </section>
+
+    <section class="block" id="block-4">
+      <div class="block-header"><h2>Bloque 4 · Principio de Pascal</h2></div>
+
+      <article class="activity-card">
+        <div class="act-type">Cálculo hidráulico</div>
+        <h3>4.1 Gato hidráulico</h3>
+        <p>F₁ = 20 N · A₁ = 0.02 m² · A₂ = 0.2 m² · ¿F₂?</p>
+        <div class="input-row">
+          <input type="number" id="f2Calc" placeholder="N">
+          <button class="big-btn" onclick="checkF2()">Comprobar</button>
+        </div>
+        <div class="feedback" id="f2Fb"></div>
+      </article>
+
+      <article class="activity-card">
+        <div class="act-type">Concepto</div>
+        <h3>4.2 ¿Qué dice Pascal?</h3>
+        <div class="options-large">
+          <button onclick="pascalCheck(this, false)">La presión solo actúa hacia abajo</button>
+          <button onclick="pascalCheck(this, true)">La presión en un fluido encerrado se transmite en todas direcciones</button>
+          <button onclick="pascalCheck(this, false)">Los fluidos no transmiten fuerza</button>
+        </div>
+        <div class="feedback" id="pascalFb"></div>
+      </article>
+    </section>
+
+    <section class="block" id="block-5">
+      <div class="block-header"><h2>Bloque 5 · Cierre</h2></div>
+
+      <article class="activity-card">
+        <div class="act-type">Integrador</div>
+        <h3>5.1 Relaciona ideas</h3>
+        <p>Un aumento de temperatura en un gas dentro de un recipiente cerrado suele provocar:</p>
+        <div class="options-large">
+          <button onclick="gasCheck(this, true)">Aumento de presión (partículas más rápidas, más choques)</button>
+          <button onclick="gasCheck(this, false)">Disminución de la masa del gas</button>
+          <button onclick="gasCheck(this, false)">Que el gas se vuelva sólido</button>
+        </div>
+        <div class="feedback" id="gasFb"></div>
+      </article>
+
+      <article class="activity-card highlight-final">
+        <h3>Cierre · Tema 3</h3>
+        <ul class="checklist">
+          <li>Modelo cinético de partículas</li>
+          <li>Temperatura ≠ calor</li>
+          <li>Conducción, convección, radiación</li>
+          <li>Presión P = F/A</li>
+          <li>Principio de Pascal y sistemas hidráulicos</li>
+        </ul>
+        <p>Creado por el <strong>Prof. Fabián Soberanes Martín</strong></p>
+        <p style="margin-top:1rem">
+          <a href="interacciones.html" style="color:#fde68a">← Teoría</a> ·
+          <a href="fuerzas.html" style="color:#fde68a">Tema 2</a>
+        </p>
+      </article>
+    </section>
+  </main>
+
+  <script src="actividades-interacciones.js"></script>
+</body>
+</html>

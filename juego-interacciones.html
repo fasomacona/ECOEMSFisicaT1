@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laboratorio de partículas · Tema 3</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="juegos.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="juegos.html" class="logo"><img src="assets/conamat-icon.png" class="nav-icon" alt="" /><span>Laboratorio de partículas</span></a>
+      <a href="juegos.html" style="font-weight:600;color:var(--primary)">← Juegos</a>
+    </div>
+  </nav>
+  <div class="game-wrap">
+    <div id="startScreen" class="start-screen">
+      <div style="font-size:3rem">🌡️</div>
+      <h1>Laboratorio de partículas</h1>
+      <p>Tema 3 · Calor, presión, Pascal y estados</p>
+      <button class="big-play" style="margin-top:1.2rem" onclick="startGame(Q)">¡Jugar!</button>
+    </div>
+    <div id="playScreen" style="display:none">
+      <div class="game-top">
+        <span class="score-pill" id="scorePill">0 pts</span>
+        <span class="streak-pill" id="streakPill">Racha: 0</span>
+      </div>
+      <div class="q-card">
+        <div class="q-num" id="qNum"></div>
+        <h2 id="qText"></h2>
+        <div id="answers"></div>
+        <div class="fb-box" id="fbBox"></div>
+        <div class="next-row"><button class="big-play" id="nextBtn" style="display:none" onclick="nextQ()">Siguiente →</button></div>
+      </div>
+    </div>
+    <div id="endScreen" class="end-screen" style="display:none">
+      <h2>¡Terminaste!</h2>
+      <div class="end-score" id="finalScore">0</div>
+      <p id="endMsg"></p>
+      <button class="big-play" onclick="restart()">Jugar de nuevo</button>
+      <a class="big-play secondary" href="juegos.html" style="display:inline-block;margin-top:0.6rem;text-decoration:none">Otros juegos</a>
+    </div>
+  </div>
+  <script src="juego-engine.js"></script>
+  <script>
+    const Q = [
+      { q: 'Según el modelo cinético, la temperatura se relaciona con:', opts: ['El color del cuerpo', 'La energía cinética promedio de las partículas', 'Solo el volumen', 'La masa del electrón'], ok: 1, tip: 'Más temperatura → partículas más rápidas.' },
+      { q: 'Calor y temperatura:', opts: ['Son lo mismo', 'Calor es energía transferida; temperatura no', 'Temperatura solo existe en líquidos', 'No se pueden medir'], ok: 1, tip: 'No confundir ambos conceptos.' },
+      { q: 'El Sol calienta la Tierra principalmente por:', opts: ['Conducción', 'Convección', 'Radiación', 'Contacto'], ok: 2, tip: 'Ondas electromagnéticas.' },
+      { q: 'P = F/A. Si F = 100 N y A = 0.2 m², P =', opts: ['20 Pa', '500 Pa', '100.2 Pa', '5 Pa'], ok: 1, tip: '100/0.2 = 500 Pa.' },
+      { q: 'Principio de Pascal: la presión en un fluido encerrado…', opts: ['Solo actúa hacia abajo', 'Se transmite en todas direcciones', 'No se transmite', 'Depende del color del líquido'], ok: 1, tip: 'Base de la hidráulica.' },
+      { q: 'En un gato hidráulico, A₂ = 5·A₁ y F₁ = 30 N. F₂ =', opts: ['6 N', '30 N', '150 N', '1500 N'], ok: 2, tip: 'F₂ = F₁·(A₂/A₁) = 150 N.' },
+      { q: 'En un gas, más temperatura (volumen fijo) suele implicar:', opts: ['Menos presión', 'Más presión', 'Menos partículas', 'Cero movimiento'], ok: 1, tip: 'Más choques contra las paredes.' },
+      { q: 'Estado con forma y volumen definidos:', opts: ['Gas', 'Líquido', 'Sólido', 'Plasma siempre'], ok: 2, tip: 'Partículas vibran en posiciones fijas.' },
+      { q: '37 °C en kelvin (aprox.) es:', opts: ['37 K', '236 K', '310 K', '373 K'], ok: 2, tip: '°C + 273 ≈ 310 K.' },
+      { q: 'Un cuchillo corta mejor porque:', opts: ['Es más pesado', 'Menor área → mayor presión', 'Está más frío', 'No aplica fuerza'], ok: 1, tip: 'P = F/A.' }
+    ];
+  </script>
+</body>
+</html>

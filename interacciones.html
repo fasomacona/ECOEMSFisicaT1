@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Física · Interacciones de la materia | CONAMAT</title>
+  <meta name="description" content="Tema 3: Las interacciones de la materia. Modelo cinético, calor, temperatura, presión y principio de Pascal." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="assets/conamat-icon.png" alt="CONAMAT" class="nav-icon" />
+        <span>Física · Interacciones</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menú">☰</button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html">Tema 1</a></li>
+        <li><a href="fuerzas.html">Tema 2</a></li>
+        <li><a href="#intro">Introducción</a></li>
+        <li><a href="#cinetico">Modelo cinético</a></li>
+        <li><a href="#calor">Calor y temperatura</a></li>
+        <li><a href="#presion">Presión</a></li>
+        <li><a href="#pascal">Principio de Pascal</a></li>
+        <li><a href="#ejercicios">Ejercicios</a></li>
+        <li><a href="actividades-interacciones.html">Actividades</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero hero-interacciones">
+    <div class="hero-content">
+      <img src="assets/conamat-logo.png" alt="CONAMAT" class="hero-logo" />
+      <p class="badge">Tema 3 · Guía CONAMAT</p>
+      <h1>Las interacciones de la materia.<br>Un modelo para describir lo que no percibimos</h1>
+      <p class="subtitle">Partículas, calor, temperatura, presión y el principio de Pascal</p>
+      <div class="hero-actions">
+        <a href="#intro" class="btn primary">Comenzar</a>
+        <a href="actividades-interacciones.html" class="btn secondary">Actividades de clase</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="intro" class="section">
+      <div class="container">
+        <h2>1. Introducción</h2>
+        <div class="card highlight">
+          <p>No vemos las partículas de la materia, pero con un <strong>modelo</strong> podemos explicar el calor, la temperatura, la presión y cómo se comportan sólidos, líquidos y gases.</p>
+          <p>Este tema conecta la idea de partículas en movimiento con fenómenos cotidianos: por qué se calienta una cuchara, cómo funciona un gato hidráulico o por qué sube la presión en una olla.</p>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Lo que estudiarás</h3>
+            <ul>
+              <li>Modelo cinético de partículas</li>
+              <li>Calor y temperatura (no son lo mismo)</li>
+              <li>Presión y su relación con las partículas</li>
+              <li>Principio de Pascal</li>
+              <li>Conservación de la energía en procesos térmicos</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Enlace con temas anteriores</h3>
+            <ul>
+              <li>Tema 1: movimiento de partículas</li>
+              <li>Tema 2: energía y su transformación</li>
+              <li>Aquí: energía térmica y presión</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cinetico" class="section alt">
+      <div class="container">
+        <h2>2. Modelo cinético de partículas</h2>
+        <div class="definition">
+          <span class="def-label">Idea central</span>
+          <p>La materia está formada por partículas (átomos o moléculas) que están en <strong>continuo movimiento</strong>. La rapidez de ese movimiento se relaciona con la temperatura.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card mini">
+            <h4>Sólido</h4>
+            <p>Partículas muy juntas, vibran en su lugar. Forma y volumen definidos.</p>
+          </div>
+          <div class="card mini">
+            <h4>Líquido</h4>
+            <p>Partículas juntas pero pueden deslizarse. Volumen definido, forma del recipiente.</p>
+          </div>
+          <div class="card mini">
+            <h4>Gas</h4>
+            <p>Partículas muy separadas, se mueven rápido y libremente. Sin forma ni volumen propios.</p>
+          </div>
+        </div>
+
+        <div class="callout info">
+          <strong>Al aumentar la temperatura:</strong> las partículas se mueven más rápido → más choques → en gases y líquidos puede aumentar la presión o el volumen.
+        </div>
+
+        <div class="example">
+          <h4>Ejemplo</h4>
+          <p>Al calentar un globo, el aire interior se expande (partículas más rápidas y más separadas) y el globo se infla más o puede reventar.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="calor" class="section">
+      <div class="container">
+        <h2>3. Calor y temperatura</h2>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Temperatura</h3>
+            <p>Mide qué tan rápido se mueven las partículas en promedio (energía cinética media).</p>
+            <p class="formula-text">Unidades: °C, K (kelvin)</p>
+            <p>0 °C = 273 K (aprox.)</p>
+          </div>
+          <div class="card">
+            <h3>Calor</h3>
+            <p>Energía térmica que se <strong>transfiere</strong> de un cuerpo a otro por diferencia de temperatura.</p>
+            <p class="formula-text">Unidad: joule (J) o caloría</p>
+            <p>Siempre fluye del más caliente al más frío.</p>
+          </div>
+        </div>
+
+        <div class="callout warning">
+          <strong>No confundir:</strong> Un objeto puede estar muy caliente (alta temperatura) pero tener poca energía térmica total si su masa es pequeña. El calor es la energía que se transfiere, no “lo que tiene” el cuerpo.
+        </div>
+
+        <h3>Formas de transferir calor</h3>
+        <div class="grid-3">
+          <div class="card mini">
+            <h4>Conducción</h4>
+            <p>Por contacto. Típico en sólidos (metales).</p>
+          </div>
+          <div class="card mini">
+            <h4>Convección</h4>
+            <p>Por movimiento de fluidos (aire, agua).</p>
+          </div>
+          <div class="card mini">
+            <h4>Radiación</h4>
+            <p>Por ondas electromagnéticas. No necesita medio (el Sol).</p>
+          </div>
+        </div>
+
+        <div class="interactive-box">
+          <h4>Conversor °C ↔ K</h4>
+          <div class="calc-form">
+            <div class="form-group">
+              <label>Temperatura en °C</label>
+              <input type="number" id="tempC" value="25" step="any">
+            </div>
+            <button class="btn primary" onclick="convertTemp()">Convertir a kelvin</button>
+          </div>
+          <div id="tempResult" class="result-box hidden"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="presion" class="section alt">
+      <div class="container">
+        <h2>4. Presión</h2>
+        <div class="definition">
+          <span class="def-label">Definición</span>
+          <p><strong>Presión:</strong> fuerza por unidad de área.</p>
+          <p class="formula-text">P = F / A</p>
+          <p>Unidad SI: pascal (Pa) · 1 Pa = 1 N/m²</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Desde el modelo de partículas</h3>
+            <p>En un gas, la presión se debe a los <strong>choques</strong> de las partículas contra las paredes. Más partículas, más rápidas o menos volumen → más presión.</p>
+          </div>
+          <div class="card">
+            <h3>Presión en líquidos</h3>
+            <p>Aumenta con la profundidad: P = ρ·g·h (densidad × g × profundidad).</p>
+            <p>Por eso en el fondo de una alberca sientes más presión.</p>
+          </div>
+        </div>
+
+        <div class="interactive-box">
+          <h4>Calculadora de presión</h4>
+          <div class="calc-form">
+            <div class="form-group">
+              <label>Fuerza F (N)</label>
+              <input type="number" id="presF" value="100" step="any">
+            </div>
+            <div class="form-group">
+              <label>Área A (m²)</label>
+              <input type="number" id="presA" value="0.5" step="any">
+            </div>
+            <button class="btn primary" onclick="calcPresion()">Calcular P</button>
+          </div>
+          <div id="presResult" class="result-box hidden"></div>
+        </div>
+
+        <div class="example important">
+          <h4>Ejemplo cotidiano</h4>
+          <p>Un cuchillo corta mejor que una cuchara porque concentra la misma fuerza en un área mucho más pequeña → mayor presión.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pascal" class="section">
+      <div class="container">
+        <h2>5. Principio de Pascal</h2>
+        <div class="definition">
+          <span class="def-label">Enunciado</span>
+          <p>La presión aplicada a un fluido encerrado se transmite <strong>íntegramente</strong> en todas direcciones y a todos los puntos del fluido.</p>
+        </div>
+
+        <p>Si en un punto de un líquido incompresible aumentas la presión, ese aumento se nota en todo el líquido.</p>
+
+        <div class="example">
+          <h4>Aplicación: prensa o gato hidráulico</h4>
+          <p>Fuerza pequeña en un émbolo de área pequeña produce una fuerza grande en un émbolo de área grande, porque la presión es la misma:</p>
+          <p class="formula-text">P = F₁/A₁ = F₂/A₂ &nbsp;→&nbsp; F₂ = F₁ · (A₂/A₁)</p>
+        </div>
+
+        <div class="interactive-box">
+          <h4>Simulador hidráulico simple</h4>
+          <div class="calc-form">
+            <div class="form-group">
+              <label>F₁ (N) — fuerza pequeña</label>
+              <input type="number" id="hidF1" value="50" step="any">
+            </div>
+            <div class="form-group">
+              <label>A₁ (m²) — área pequeña</label>
+              <input type="number" id="hidA1" value="0.01" step="any">
+            </div>
+            <div class="form-group">
+              <label>A₂ (m²) — área grande</label>
+              <input type="number" id="hidA2" value="0.1" step="any">
+            </div>
+            <button class="btn primary" onclick="calcHidraulico()">Calcular F₂</button>
+          </div>
+          <div id="hidResult" class="result-box hidden"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="conservacion" class="section alt">
+      <div class="container">
+        <h2>6. Energía y procesos térmicos</h2>
+        <p>El calor es una forma de transferir energía. En muchos procesos, la energía no se crea ni se destruye: se transforma (por ejemplo, de mecánica a térmica por fricción).</p>
+        <div class="callout info">
+          <strong>Recuerda (Tema 2):</strong> Si hay fricción o calor que se disipa, la energía mecánica ya no se conserva del todo; parte se convierte en energía térmica.
+        </div>
+      </div>
+    </section>
+
+    <section id="ejercicios" class="section">
+      <div class="container">
+        <h2>7. Ejercicios</h2>
+
+        <div class="exercise-card">
+          <h3>Ejercicio 1 · Temperatura vs calor</h3>
+          <p>¿Qué mide la temperatura según el modelo cinético?</p>
+          <div class="options">
+            <label><input type="radio" name="ei1" value="a"> a) La cantidad total de energía del cuerpo</label>
+            <label><input type="radio" name="ei1" value="b"> b) La energía cinética promedio de las partículas</label>
+            <label><input type="radio" name="ei1" value="c"> c) Solo el calor que se transfiere</label>
+            <label><input type="radio" name="ei1" value="d"> d) El volumen del cuerpo</label>
+          </div>
+          <button class="btn small" onclick="checkIntEx(1,'b')">Verificar</button>
+          <div class="feedback" id="ief1"></div>
+        </div>
+
+        <div class="exercise-card">
+          <h3>Ejercicio 2 · Presión</h3>
+          <p>F = 200 N · A = 0.4 m² · ¿P = ?</p>
+          <div class="options">
+            <label><input type="radio" name="ei2" value="a"> a) 500 Pa</label>
+            <label><input type="radio" name="ei2" value="b"> b) 80 Pa</label>
+            <label><input type="radio" name="ei2" value="c"> c) 200.4 Pa</label>
+            <label><input type="radio" name="ei2" value="d"> d) 0.002 Pa</label>
+          </div>
+          <button class="btn small" onclick="checkIntEx(2,'a')">Verificar</button>
+          <div class="feedback" id="ief2"></div>
+        </div>
+
+        <div class="exercise-card">
+          <h3>Ejercicio 3 · Transferencia de calor</h3>
+          <p>El Sol calienta la Tierra principalmente por:</p>
+          <div class="options">
+            <label><input type="radio" name="ei3" value="a"> a) Conducción</label>
+            <label><input type="radio" name="ei3" value="b"> b) Convección</label>
+            <label><input type="radio" name="ei3" value="c"> c) Radiación</label>
+            <label><input type="radio" name="ei3" value="d"> d) Contacto directo</label>
+          </div>
+          <button class="btn small" onclick="checkIntEx(3,'c')">Verificar</button>
+          <div class="feedback" id="ief3"></div>
+        </div>
+
+        <div class="exercise-card">
+          <h3>Ejercicio 4 · Principio de Pascal</h3>
+          <p>En un gato hidráulico, A₂ = 10 × A₁. Si F₁ = 40 N, ¿cuánto vale F₂?</p>
+          <div class="options">
+            <label><input type="radio" name="ei4" value="a"> a) 4 N</label>
+            <label><input type="radio" name="ei4" value="b"> b) 40 N</label>
+            <label><input type="radio" name="ei4" value="c"> c) 400 N</label>
+            <label><input type="radio" name="ei4" value="d"> d) 4000 N</label>
+          </div>
+          <button class="btn small" onclick="checkIntEx(4,'c')">Verificar</button>
+          <div class="feedback" id="ief4"></div>
+        </div>
+
+        <div class="exercise-card">
+          <h3>Ejercicio 5 · Estados de la materia</h3>
+          <p>Al calentar un sólido hasta fundirlo, las partículas:</p>
+          <div class="options">
+            <label><input type="radio" name="ei5" value="a"> a) Dejan de moverse</label>
+            <label><input type="radio" name="ei5" value="b"> b) Vibran menos</label>
+            <label><input type="radio" name="ei5" value="c"> c) Ganan movilidad y pueden deslizarse</label>
+            <label><input type="radio" name="ei5" value="d"> d) Desaparecen</label>
+          </div>
+          <button class="btn small" onclick="checkIntEx(5,'c')">Verificar</button>
+          <div class="feedback" id="ief5"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container">
+        <h2>Resumen del Tema 3</h2>
+        <div class="summary-grid">
+          <div class="summary-item"><strong>Modelo cinético</strong> → partículas en movimiento</div>
+          <div class="summary-item"><strong>Temperatura</strong> → energía cinética promedio</div>
+          <div class="summary-item"><strong>Calor</strong> → energía que se transfiere</div>
+          <div class="summary-item"><strong>Conducción / convección / radiación</strong></div>
+          <div class="summary-item"><strong>Presión</strong> → P = F/A</div>
+          <div class="summary-item"><strong>Pascal</strong> → presión se transmite en el fluido</div>
+          <div class="summary-item"><strong>Hidráulica</strong> → F₂ = F₁·(A₂/A₁)</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <img src="assets/conamat-logo.png" alt="CONAMAT" class="footer-logo" />
+      <p>Material de apoyo · Guía CONAMAT · Tema 3: Interacciones de la materia</p>
+      <p class="author">Creado por el <strong>Prof. Fabián Soberanes Martín</strong></p>
+      <p>
+        <a href="fuerzas.html" style="color:#c4b5fd">← Tema 2</a> ·
+        <a href="estructura.html" style="color:#c4b5fd">Tema 4 →</a> ·
+        <a href="actividades-interacciones.html" style="color:#c4b5fd">Actividades</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="script-interacciones.js"></script>
+</body>
+</html>

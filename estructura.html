@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Física · Estructura de la materia | CONAMAT</title>
+  <meta name="description" content="Tema 4: Manifestaciones de la estructura interna de la materia. Electricidad, magnetismo, ondas y luz." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="assets/conamat-icon.png" alt="CONAMAT" class="nav-icon" />
+        <span>Física · Estructura</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menú">☰</button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html">T1</a></li>
+        <li><a href="fuerzas.html">T2</a></li>
+        <li><a href="interacciones.html">T3</a></li>
+        <li><a href="#intro">Intro</a></li>
+        <li><a href="#estructura">Estructura</a></li>
+        <li><a href="#electricidad">Electricidad</a></li>
+        <li><a href="#magnetismo">Magnetismo</a></li>
+        <li><a href="#ondas">Ondas</a></li>
+        <li><a href="#luz">Luz</a></li>
+        <li><a href="#ejercicios">Ejercicios</a></li>
+        <li><a href="actividades-estructura.html">Actividades</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero hero-estructura">
+    <div class="hero-content">
+      <img src="assets/conamat-logo.png" alt="CONAMAT" class="hero-logo" />
+      <p class="badge">Tema 4 · Guía CONAMAT</p>
+      <h1>Manifestaciones de la estructura interna de la materia</h1>
+      <p class="subtitle">Electricidad, magnetismo, ondas y luz</p>
+      <div class="hero-actions">
+        <a href="#intro" class="btn primary">Comenzar</a>
+        <a href="actividades-estructura.html" class="btn secondary">Actividades de clase</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="intro" class="section">
+      <div class="container">
+        <h2>1. Introducción</h2>
+        <div class="card highlight">
+          <p>La materia tiene una <strong>estructura interna</strong> (átomos, electrones, núcleos). Esa estructura explica por qué unos materiales conducen la corriente, cómo aparecen los campos magnéticos, qué son las ondas y cómo se comporta la luz.</p>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>En este tema</h3>
+            <ul>
+              <li>Estructura atómica básica</li>
+              <li>Corriente eléctrica y conductores</li>
+              <li>Campos magnéticos e inducción</li>
+              <li>Movimiento ondulatorio</li>
+              <li>Luz, refracción y descomposición</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Conexión con temas previos</h3>
+            <ul>
+              <li>T2: cargas e imanes (intro)</li>
+              <li>T3: partículas y energía</li>
+              <li>Aquí: efectos electromagnéticos y ondas</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="estructura" class="section alt">
+      <div class="container">
+        <h2>2. Estructura interna de la materia</h2>
+        <div class="definition">
+          <span class="def-label">Idea básica</span>
+          <p>Los átomos tienen <strong>núcleo</strong> (protones +, neutrones) y <strong>electrones</strong> (−) a su alrededor. La disposición de los electrones determina muchas propiedades: si el material conduce electricidad, cómo reacciona, etc.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card mini">
+            <h4>Protón</h4>
+            <p>Carga positiva. En el núcleo.</p>
+          </div>
+          <div class="card mini">
+            <h4>Neutrón</h4>
+            <p>Sin carga. En el núcleo.</p>
+          </div>
+          <div class="card mini">
+            <h4>Electrón</h4>
+            <p>Carga negativa. Puede moverse (corriente).</p>
+          </div>
+        </div>
+        <div class="callout info">
+          <strong>Conductores:</strong> permiten el flujo de electrones (metales).<br>
+          <strong>Aislantes:</strong> no permiten ese flujo con facilidad (plástico, madera seca, goma).
+        </div>
+      </div>
+    </section>
+
+    <section id="electricidad" class="section">
+      <div class="container">
+        <h2>3. Corriente eléctrica</h2>
+        <div class="definition">
+          <span class="def-label">Corriente</span>
+          <p>Flujo de carga eléctrica (electrones) a través de un material.</p>
+          <p class="formula-text">I = q / t</p>
+          <p>Unidad: ampere (A) · 1 A = 1 C/s</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Voltaje (diferencia de potencial)</h3>
+            <p>“Empuje” que hace que las cargas se muevan. Unidad: volt (V).</p>
+          </div>
+          <div class="card">
+            <h3>Resistencia</h3>
+            <p>Oposición al paso de la corriente. Unidad: ohm (Ω).</p>
+            <p class="formula-text">V = I · R &nbsp;(Ley de Ohm)</p>
+          </div>
+        </div>
+
+        <div class="interactive-box">
+          <h4>Calculadora Ley de Ohm</h4>
+          <div class="calc-form">
+            <div class="form-group">
+              <label>Voltaje V (V)</label>
+              <input type="number" id="ohmV" value="12" step="any">
+            </div>
+            <div class="form-group">
+              <label>Resistencia R (Ω)</label>
+              <input type="number" id="ohmR" value="4" step="any">
+            </div>
+            <button class="btn primary" onclick="calcOhm()">Calcular I</button>
+          </div>
+          <div id="ohmResult" class="result-box hidden"></div>
+        </div>
+
+        <div class="example">
+          <h4>Circuitos básicos</h4>
+          <p><strong>Serie:</strong> una sola trayectoria; la corriente es la misma; resistencias se suman.</p>
+          <p><strong>Paralelo:</strong> varias trayectorias; el voltaje es el mismo en cada rama.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="magnetismo" class="section alt">
+      <div class="container">
+        <h2>4. Magnetismo e inducción</h2>
+        <div class="definition">
+          <span class="def-label">Campo magnético</span>
+          <p>Región donde un imán o una corriente ejerce fuerza sobre otros imanes o cargas en movimiento. Los imanes tienen polo norte y sur; polos iguales se repelen, distintos se atraen.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Electricidad → magnetismo</h3>
+            <p>Toda corriente eléctrica genera un campo magnético alrededor del conductor (Oersted).</p>
+          </div>
+          <div class="card">
+            <h3>Inducción electromagnética</h3>
+            <p>Un campo magnético <strong>variable</strong> puede generar corriente en un circuito (Faraday). Base de generadores y transformadores.</p>
+          </div>
+        </div>
+
+        <div class="callout warning">
+          <strong>Magnetismo terrestre:</strong> la Tierra actúa como un gran imán; la brújula se orienta con ese campo.
+        </div>
+      </div>
+    </section>
+
+    <section id="ondas" class="section">
+      <div class="container">
+        <h2>5. Movimiento ondulatorio</h2>
+        <div class="definition">
+          <span class="def-label">Onda</span>
+          <p>Perturbación que transporta <strong>energía</strong> sin transportar materia de forma permanente.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Ondas mecánicas</h3>
+            <p>Necesitan medio (sonido, olas, resorte). Pueden ser longitudinales o transversales.</p>
+          </div>
+          <div class="card">
+            <h3>Ondas electromagnéticas</h3>
+            <p>No necesitan medio (luz, radio, microondas). Se propagan en el vacío a ≈ 3×10⁸ m/s.</p>
+          </div>
+        </div>
+
+        <h3>Magnitudes de una onda</h3>
+        <div class="formulas-grid">
+          <div class="formula-card">
+            <p class="formula-text">λ (lambda)</p>
+            <span>Longitud de onda</span>
+          </div>
+          <div class="formula-card">
+            <p class="formula-text">f</p>
+            <span>Frecuencia (Hz)</span>
+          </div>
+          <div class="formula-card">
+            <p class="formula-text">T = 1/f</p>
+            <span>Periodo</span>
+          </div>
+          <div class="formula-card">
+            <p class="formula-text">v = λ · f</p>
+            <span>Velocidad de la onda</span>
+          </div>
+        </div>
+
+        <div class="interactive-box">
+          <h4>Calculadora v = λ · f</h4>
+          <div class="calc-form">
+            <div class="form-group">
+              <label>Longitud de onda λ (m)</label>
+              <input type="number" id="ondaL" value="2" step="any">
+            </div>
+            <div class="form-group">
+              <label>Frecuencia f (Hz)</label>
+              <input type="number" id="ondaF" value="5" step="any">
+            </div>
+            <button class="btn primary" onclick="calcOnda()">Calcular v</button>
+          </div>
+          <div id="ondaResult" class="result-box hidden"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="luz" class="section alt">
+      <div class="container">
+        <h2>6. La luz</h2>
+        <p>La luz visible es una onda electromagnética. También se comporta en parte como partícula (fotones), pero en este nivel nos centramos en su comportamiento ondulatorio.</p>
+
+        <div class="definition">
+          <span class="def-label">Velocidad de la luz en el vacío</span>
+          <p class="formula-text">c ≈ 3 × 10⁸ m/s</p>
+        </div>
+
+        <h3>Fenómenos importantes</h3>
+        <div class="grid-2">
+          <div class="card">
+            <h4>Reflexión</h4>
+            <p>La luz rebota en una superficie. Ángulo de incidencia = ángulo de reflexión.</p>
+          </div>
+          <div class="card">
+            <h4>Refracción</h4>
+            <p>La luz cambia de dirección al pasar de un medio a otro (aire → agua, aire → vidrio) porque cambia su velocidad.</p>
+          </div>
+        </div>
+
+        <div class="example important">
+          <h4>Prisma y descomposición de la luz blanca</h4>
+          <p>Un prisma desvía de forma distinta cada color. La luz blanca se separa en el espectro: rojo, naranja, amarillo, verde, azul, añil, violeta. El rojo se desvía menos; el violeta, más.</p>
+        </div>
+
+        <div class="callout info">
+          <strong>Color y frecuencia:</strong> cada color corresponde a una frecuencia (y longitud de onda) distinta. El violeta tiene mayor frecuencia que el rojo.
+        </div>
+      </div>
+    </section>
+
+    <section id="ejercicios" class="section">
+      <div class="container">
+        <h2>7. Ejercicios</h2>
+
+        <div class="exercise-card">
+          <h3>Ejercicio 1 · Conductores</h3>
+          <p>¿Cuál es buen conductor de la corriente?</p>
+          <div class="options">
+            <label><input type="radio" name="ee1" value="a"> a) Goma</label>
+            <label><input type="radio" name="ee1" value="b"> b) Cobre</label>
+            <label><input type="radio" name="ee1" value="c"> c) Plástico</label>
+            <label><input type="radio" name="ee1" value="d"> d) Vidrio</label>
+          </div>
+          <button class="btn small" onclick="checkEstEx(1,'b')">Verificar</button>
+          <div class="feedback" id="eef1"></div>
+        </div>
+
+        <div class="exercise-card">
+          <h3>Ejercicio 2 · Ley de Ohm</h3>
+          <p>V = 9 V · R = 3 Ω · ¿I = ?</p>
+          <div class="options">
+            <label><input type="radio" name="ee2" value="a"> a) 27 A</label>
+            <label><input type="radio" name="ee2" value="b"> b) 3 A</label>
+            <label><input type="radio" name="ee2" value="c"> c) 12 A</label>
+            <label><input type="radio" name="ee2" value="d"> d) 0.33 A</label>
+          </div>
+          <button class="btn small" onclick="checkEstEx(2,'b')">Verificar</button>
+          <div class="feedback" id="eef2"></div>
+        </div>
+
+        <div class="exercise-card">
+          <h3>Ejercicio 3 · Ondas</h3>
+          <p>λ = 4 m · f = 10 Hz · ¿v = ?</p>
+          <div class="options">
+            <label><input type="radio" name="ee3" value="a"> a) 0.4 m/s</label>
+            <label><input type="radio" name="ee3" value="b"> b) 2.5 m/s</label>
+            <label><input type="radio" name="ee3" value="c"> c) 40 m/s</label>
+            <label><input type="radio" name="ee3" value="d"> d) 14 m/s</label>
+          </div>
+          <button class="btn small" onclick="checkEstEx(3,'c')">Verificar</button>
+          <div class="feedback" id="eef3"></div>
+        </div>
+
+        <div class="exercise-card">
+          <h3>Ejercicio 4 · Inducción</h3>
+          <p>La inducción electromagnética de Faraday se basa en:</p>
+          <div class="options">
+            <label><input type="radio" name="ee4" value="a"> a) Un imán quieto cerca de un cable</label>
+            <label><input type="radio" name="ee4" value="b"> b) Un campo magnético que cambia con el tiempo</label>
+            <label><input type="radio" name="ee4" value="c"> c) Solo cargas estáticas</label>
+            <label><input type="radio" name="ee4" value="d"> d) La gravedad</label>
+          </div>
+          <button class="btn small" onclick="checkEstEx(4,'b')">Verificar</button>
+          <div class="feedback" id="eef4"></div>
+        </div>
+
+        <div class="exercise-card">
+          <h3>Ejercicio 5 · Prisma</h3>
+          <p>Al pasar luz blanca por un prisma, el color que más se desvía suele ser:</p>
+          <div class="options">
+            <label><input type="radio" name="ee5" value="a"> a) Rojo</label>
+            <label><input type="radio" name="ee5" value="b"> b) Verde</label>
+            <label><input type="radio" name="ee5" value="c"> c) Violeta</label>
+            <label><input type="radio" name="ee5" value="d"> d) Todos igual</label>
+          </div>
+          <button class="btn small" onclick="checkEstEx(5,'c')">Verificar</button>
+          <div class="feedback" id="eef5"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container">
+        <h2>Resumen del Tema 4</h2>
+        <div class="summary-grid">
+          <div class="summary-item"><strong>Átomo</strong> → núcleo + electrones</div>
+          <div class="summary-item"><strong>Conductor</strong> → deja pasar corriente</div>
+          <div class="summary-item"><strong>Ohm</strong> → V = I·R</div>
+          <div class="summary-item"><strong>Campo magnético</strong> → imanes y corrientes</div>
+          <div class="summary-item"><strong>Inducción</strong> → campo variable → corriente</div>
+          <div class="summary-item"><strong>Onda</strong> → v = λ·f</div>
+          <div class="summary-item"><strong>Luz</strong> → onda EM; reflexión y refracción</div>
+          <div class="summary-item"><strong>Prisma</strong> → descompone la luz blanca</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <img src="assets/conamat-logo.png" alt="CONAMAT" class="footer-logo" />
+      <p>Material de apoyo · Guía CONAMAT · Tema 4: Estructura de la materia</p>
+      <p class="author">Creado por el <strong>Prof. Fabián Soberanes Martín</strong></p>
+      <p>
+        <a href="interacciones.html" style="color:#c4b5fd">← Tema 3</a> ·
+        <a href="actividades-estructura.html" style="color:#c4b5fd">Actividades</a> ·
+        <a href="index.html" style="color:#c4b5fd">Inicio</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="script-estructura.js"></script>
+</body>
+</html>

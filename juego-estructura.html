@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Circuito y ondas · Tema 4</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="juegos.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="juegos.html" class="logo"><img src="assets/conamat-icon.png" class="nav-icon" alt="" /><span>Circuito y ondas</span></a>
+      <a href="juegos.html" style="font-weight:600;color:var(--primary)">← Juegos</a>
+    </div>
+  </nav>
+  <div class="game-wrap">
+    <div id="startScreen" class="start-screen">
+      <div style="font-size:3rem">⚡</div>
+      <h1>Circuito y ondas</h1>
+      <p>Tema 4 · Ohm, magnetismo, ondas y luz</p>
+      <button class="big-play" style="margin-top:1.2rem" onclick="startGame(Q)">¡Jugar!</button>
+    </div>
+    <div id="playScreen" style="display:none">
+      <div class="game-top">
+        <span class="score-pill" id="scorePill">0 pts</span>
+        <span class="streak-pill" id="streakPill">Racha: 0</span>
+      </div>
+      <div class="q-card">
+        <div class="q-num" id="qNum"></div>
+        <h2 id="qText"></h2>
+        <div id="answers"></div>
+        <div class="fb-box" id="fbBox"></div>
+        <div class="next-row"><button class="big-play" id="nextBtn" style="display:none" onclick="nextQ()">Siguiente →</button></div>
+      </div>
+    </div>
+    <div id="endScreen" class="end-screen" style="display:none">
+      <h2>¡Terminaste!</h2>
+      <div class="end-score" id="finalScore">0</div>
+      <p id="endMsg"></p>
+      <button class="big-play" onclick="restart()">Jugar de nuevo</button>
+      <a class="big-play secondary" href="juegos.html" style="display:inline-block;margin-top:0.6rem;text-decoration:none">Otros juegos</a>
+    </div>
+  </div>
+  <script src="juego-engine.js"></script>
+  <script>
+    const Q = [
+      { q: 'Buen conductor de la corriente:', opts: ['Goma', 'Cobre', 'Plástico', 'Vidrio'], ok: 1, tip: 'Los metales suelen ser conductores.' },
+      { q: 'Ley de Ohm: V = 12 V, R = 4 Ω. I =', opts: ['48 A', '3 A', '8 A', '0.33 A'], ok: 1, tip: 'I = V/R = 3 A.' },
+      { q: 'En un circuito en serie, la corriente es:', opts: ['Distinta en cada resistencia', 'La misma en todos los elementos', 'Siempre cero', 'Solo en el generador'], ok: 1, tip: 'Una sola trayectoria.' },
+      { q: 'Una corriente eléctrica genera:', opts: ['Solo calor', 'Campo magnético', 'Gravedad extra', 'Nada'], ok: 1, tip: 'Oersted.' },
+      { q: 'Inducción de Faraday requiere:', opts: ['Imán quieto siempre', 'Campo magnético que cambie', 'Solo aislamiento', 'Temperatura 0 K'], ok: 1, tip: 'Flujo magnético variable.' },
+      { q: 'v = λ·f. Si λ = 2 m y f = 15 Hz, v =', opts: ['7.5 m/s', '30 m/s', '17 m/s', '0.13 m/s'], ok: 1, tip: '2×15 = 30 m/s.' },
+      { q: 'La luz del Sol llega por:', opts: ['Conducción', 'Convección', 'Radiación (onda EM)', 'Cables'], ok: 2, tip: 'Ondas electromagnéticas.' },
+      { q: 'Al pasar luz blanca por un prisma, más se desvía el:', opts: ['Rojo', 'Verde', 'Violeta', 'Todos igual'], ok: 2, tip: 'El violeta se desvía más.' },
+      { q: 'Refracción es:', opts: ['Rebotar en el espejo', 'Cambiar de dirección al cambiar de medio', 'Apagar la luz', 'Solo reflexión total'], ok: 1, tip: 'Cambio de velocidad al entrar a otro medio.' },
+      { q: 'Generadores eléctricos se basan en:', opts: ['Solo fricción', 'Inducción electromagnética', 'Pascal', 'Caída libre'], ok: 1, tip: 'Campo magnético y movimiento relativo.' }
+    ];
+  </script>
+</body>
+</html>

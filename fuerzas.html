@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Física · Las Fuerzas | CONAMAT - Ingreso a Bachillerato</title>
+  <meta name="description" content="Tema 2: Las fuerzas. La explicación de los cambios. Desarrollo interactivo para examen de ingreso a bachillerato." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="assets/conamat-icon.png" alt="CONAMAT" class="nav-icon" />
+        <span>Física · Fuerzas</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menú">☰</button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html">Tema 1 · Movimiento</a></li>
+        <li><a href="#intro">Introducción</a></li>
+        <li><a href="#fuerza">¿Qué es una fuerza?</a></li>
+        <li><a href="#resultante">Fuerza resultante</a></li>
+        <li><a href="#newton">Leyes de Newton</a></li>
+        <li><a href="#gravedad">Gravedad y peso</a></li>
+        <li><a href="#energia">Energía</a></li>
+        <li><a href="#electricidad">Cargas e imanes</a></li>
+        <li><a href="#ejercicios">Ejercicios</a></li>
+        <li><a href="actividades-fuerzas.html">Actividades</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header id="inicio" class="hero hero-fuerzas">
+    <div class="hero-content">
+      <img src="assets/conamat-logo.png" alt="CONAMAT - Colegio Nacional de Matemáticas" class="hero-logo" />
+      <p class="badge">Tema 2 · Guía CONAMAT</p>
+      <h1>Las fuerzas.<br>La explicación de los cambios</h1>
+      <p class="subtitle">Por qué se mueven los cuerpos, cómo interactúan y qué es la energía</p>
+      <div class="hero-actions">
+        <a href="#intro" class="btn primary">Comenzar</a>
+        <a href="actividades-fuerzas.html" class="btn secondary">Actividades de clase</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- INTRO -->
+    <section id="intro" class="section">
+      <div class="container">
+        <h2>1. Introducción</h2>
+        <div class="card highlight">
+          <p>En el Tema 1 describimos <strong>cómo</strong> se mueven los cuerpos (posición, velocidad, aceleración). Ahora respondemos <strong>por qué</strong> se mueven o cambian su movimiento: por las <strong>fuerzas</strong>.</p>
+          <p>Una fuerza es una interacción que puede cambiar la velocidad de un objeto (acelerarlo, frenarlo o cambiar su dirección) o deformarlo.</p>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Relación con el Tema 1</h3>
+            <ul>
+              <li>Aceleración ↔ aparece cuando hay fuerza neta</li>
+              <li>Reposo o MRU ↔ fuerza neta = 0</li>
+              <li>Caída libre ↔ fuerza de gravedad</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Lo que verás en este tema</h3>
+            <ul>
+              <li>Fuerza resultante y diagramas</li>
+              <li>Las tres leyes de Newton</li>
+              <li>Peso, masa y gravitación</li>
+              <li>Energía mecánica y su conservación</li>
+              <li>Cargas eléctricas e imanes (introducción)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUÉ ES UNA FUERZA -->
+    <section id="fuerza" class="section alt">
+      <div class="container">
+        <h2>2. ¿Qué es una fuerza?</h2>
+        <div class="definition">
+          <span class="def-label">Definición</span>
+          <p><strong>Fuerza:</strong> magnitud vectorial que mide la interacción entre dos cuerpos. Puede producir aceleración o deformación.</p>
+          <p class="formula-text">Unidad en el SI: newton (N) · 1 N = 1 kg·m/s²</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Fuerzas de contacto</h3>
+            <p>Requieren tocarse:</p>
+            <ul>
+              <li>Normal (superficie empuja al objeto)</li>
+              <li>Fricción / rozamiento</li>
+              <li>Tensión (cuerdas)</li>
+              <li>Fuerza muscular, empujones</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Fuerzas a distancia</h3>
+            <p>Actúan sin tocarse:</p>
+            <ul>
+              <li>Gravedad</li>
+              <li>Fuerza eléctrica</li>
+              <li>Fuerza magnética</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout info">
+          <strong>Importante:</strong> La fuerza es un <strong>vector</strong>: tiene magnitud, dirección y sentido. Por eso se representa con flechas en los diagramas de cuerpo libre.
+        </div>
+      </div>
+    </section>
+
+    <!-- FUERZA RESULTANTE -->
+    <section id="resultante" class="section">
+      <div class="container">
+        <h2>3. Fuerza resultante</h2>
+        <p>Cuando varias fuerzas actúan sobre un mismo objeto, se suman vectorialmente. La suma se llama <strong>fuerza resultante</strong> o <strong>fuerza neta</strong> (F<sub>R</sub> o ΣF).</p>
+
+        <div class="definition">
+          <span class="def-label">Idea clave</span>
+          <p>Si F<sub>R</sub> = 0 → el objeto está en equilibrio (reposo o MRU).</p>
+          <p>Si F<sub>R</sub> ≠ 0 → hay aceleración en la dirección de F<sub>R</sub> (2ª ley de Newton).</p>
+        </div>
+
+        <div class="example important">
+          <h4>Ejemplo</h4>
+          <p>Dos personas empujan una caja en la misma dirección: 30 N y 20 N. F<sub>R</sub> = 50 N en esa dirección.</p>
+          <p>Si empujan en sentidos opuestos: 30 N a la derecha y 20 N a la izquierda → F<sub>R</sub> = 10 N a la derecha.</p>
+        </div>
+
+        <div class="interactive-box">
+          <h4>Calculadora: fuerzas en la misma línea</h4>
+          <div class="calc-form">
+            <div class="form-group">
+              <label>Fuerza 1 (N) — positivo = derecha</label>
+              <input type="number" id="f1" value="40" step="any">
+            </div>
+            <div class="form-group">
+              <label>Fuerza 2 (N) — positivo = derecha</label>
+              <input type="number" id="f2" value="-15" step="any">
+            </div>
+            <button class="btn primary" onclick="calcResultante()">Calcular F<sub>R</sub></button>
+          </div>
+          <div id="resResultado" class="result-box hidden"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LEYES DE NEWTON -->
+    <section id="newton" class="section alt">
+      <div class="container">
+        <h2>4. Las leyes de Newton</h2>
+
+        <article class="topic-block">
+          <h3>4.1 Primera ley — Ley de la inercia</h3>
+          <div class="definition">
+            <span class="def-label">Enunciado</span>
+            <p>Un cuerpo permanece en reposo o en movimiento rectilíneo uniforme a menos que una fuerza neta actúe sobre él.</p>
+          </div>
+          <p><strong>Inercia:</strong> tendencia de los cuerpos a mantener su estado de movimiento. A mayor masa, mayor inercia.</p>
+          <div class="example">
+            <h4>Ejemplo cotidiano</h4>
+            <p>Cuando el autobús frena de golpe, sigues “hacia adelante” porque tu cuerpo tiende a mantener la velocidad que llevaba.</p>
+          </div>
+        </article>
+
+        <article class="topic-block">
+          <h3>4.2 Segunda ley — Ley fundamental de la dinámica</h3>
+          <div class="definition">
+            <span class="def-label">Enunciado</span>
+            <p>La aceleración de un cuerpo es proporcional a la fuerza neta e inversamente proporcional a su masa.</p>
+            <p class="formula-text">F<sub>R</sub> = m · a &nbsp;&nbsp;→&nbsp;&nbsp; a = F<sub>R</sub> / m</p>
+          </div>
+          <ul>
+            <li>Más fuerza (misma masa) → más aceleración</li>
+            <li>Más masa (misma fuerza) → menos aceleración</li>
+          </ul>
+
+          <div class="interactive-box">
+            <h4>Simulador 2ª ley</h4>
+            <div class="calc-form">
+              <div class="form-group">
+                <label>Masa m (kg)</label>
+                <input type="number" id="newtonM" value="10" step="any">
+              </div>
+              <div class="form-group">
+                <label>Fuerza neta F<sub>R</sub> (N)</label>
+                <input type="number" id="newtonF" value="50" step="any">
+              </div>
+              <button class="btn primary" onclick="calcNewton2()">Calcular aceleración</button>
+            </div>
+            <div id="newton2Result" class="result-box hidden"></div>
+          </div>
+        </article>
+
+        <article class="topic-block">
+          <h3>4.3 Tercera ley — Acción y reacción</h3>
+          <div class="definition">
+            <span class="def-label">Enunciado</span>
+            <p>Si un cuerpo A ejerce una fuerza sobre un cuerpo B, entonces B ejerce sobre A una fuerza de igual magnitud, la misma dirección y sentido contrario.</p>
+            <p class="formula-text">F<sub>A→B</sub> = − F<sub>B→A</sub></p>
+          </div>
+          <div class="callout warning">
+            <strong>Ojo:</strong> Las fuerzas de acción y reacción actúan sobre <em>cuerpos distintos</em>. Por eso no se anulan entre sí en el diagrama de un solo objeto.
+          </div>
+          <div class="example">
+            <h4>Ejemplos</h4>
+            <ul>
+              <li>Al caminar, empujas el suelo hacia atrás; el suelo te empuja hacia adelante.</li>
+              <li>Un cohete expulsa gases hacia abajo; los gases empujan el cohete hacia arriba.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- GRAVEDAD Y PESO -->
+    <section id="gravedad" class="section">
+      <div class="container">
+        <h2>5. Gravedad, peso y masa</h2>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Masa</h3>
+            <p>Cantidad de materia. Mide la inercia. No cambia con el lugar.</p>
+            <p class="formula-text">Unidad: kg</p>
+          </div>
+          <div class="card">
+            <h3>Peso</h3>
+            <p>Fuerza con la que la Tierra (u otro astro) atrae al cuerpo.</p>
+            <p class="formula-text">P = m · g</p>
+            <p>En la Tierra g ≈ 9.8 m/s² → P en newtons.</p>
+          </div>
+        </div>
+
+        <div class="definition">
+          <span class="def-label">Ley de gravitación universal (Newton)</span>
+          <p>Dos cuerpos se atraen con una fuerza proporcional al producto de sus masas e inversamente proporcional al cuadrado de la distancia entre sus centros.</p>
+          <p class="formula-text">F = G · (m<sub>1</sub> · m<sub>2</sub>) / r²</p>
+          <p>G es la constante de gravitación universal.</p>
+        </div>
+
+        <div class="interactive-box">
+          <h4>Calculadora de peso</h4>
+          <div class="calc-form">
+            <div class="form-group">
+              <label>Masa (kg)</label>
+              <input type="number" id="pesoM" value="60" step="any">
+            </div>
+            <div class="form-group">
+              <label>g (m/s²)</label>
+              <input type="number" id="pesoG" value="9.8" step="any">
+            </div>
+            <button class="btn primary" onclick="calcPeso()">Calcular peso</button>
+          </div>
+          <div id="pesoResult" class="result-box hidden"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENERGÍA -->
+    <section id="energia" class="section alt">
+      <div class="container">
+        <h2>6. Energía y conservación</h2>
+
+        <div class="definition">
+          <span class="def-label">Energía</span>
+          <p>Capacidad de un sistema para realizar trabajo o producir cambios. Unidad: joule (J).</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Energía cinética (Ec)</h3>
+            <p>Asociada al movimiento.</p>
+            <p class="formula-text">E<sub>c</sub> = ½ · m · v²</p>
+          </div>
+          <div class="card">
+            <h3>Energía potencial gravitatoria (Ep)</h3>
+            <p>Asociada a la altura.</p>
+            <p class="formula-text">E<sub>p</sub> = m · g · h</p>
+          </div>
+        </div>
+
+        <div class="definition">
+          <span class="def-label">Energía mecánica</span>
+          <p class="formula-text">E<sub>m</sub> = E<sub>c</sub> + E<sub>p</sub></p>
+          <p><strong>Conservación:</strong> Si solo actúan fuerzas conservativas (como la gravedad, sin fricción), la energía mecánica se mantiene constante. Se transforma de cinética a potencial y viceversa, pero la suma no cambia.</p>
+        </div>
+
+        <div class="example important">
+          <h4>Ejemplo: caída libre</h4>
+          <p>Una pelota se suelta desde 5 m. Al inicio: E<sub>c</sub> = 0, E<sub>p</sub> máxima. Al llegar al suelo: E<sub>p</sub> ≈ 0, E<sub>c</sub> máxima. Si no hay aire, E<sub>m</sub> es la misma en ambos puntos.</p>
+        </div>
+
+        <div class="interactive-box">
+          <h4>Calculadora de energías</h4>
+          <div class="calc-form">
+            <div class="form-group">
+              <label>Masa (kg)</label>
+              <input type="number" id="enM" value="2" step="any">
+            </div>
+            <div class="form-group">
+              <label>Velocidad (m/s)</label>
+              <input type="number" id="enV" value="4" step="any">
+            </div>
+            <div class="form-group">
+              <label>Altura (m)</label>
+              <input type="number" id="enH" value="3" step="any">
+            </div>
+            <div class="form-group">
+              <label>g (m/s²)</label>
+              <input type="number" id="enG" value="9.8" step="any">
+            </div>
+            <button class="btn primary" onclick="calcEnergia()">Calcular</button>
+          </div>
+          <div id="enResult" class="result-box hidden"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARGAS E IMANES -->
+    <section id="electricidad" class="section">
+      <div class="container">
+        <h2>7. Cargas eléctricas e imanes</h2>
+
+        <article class="topic-block">
+          <h3>7.1 Cargas y electrización</h3>
+          <p>La materia tiene cargas eléctricas (positivas y negativas). Cargas del mismo signo se repelen; de signo contrario se atraen.</p>
+          <p><strong>Formas de electrizar un cuerpo:</strong></p>
+          <ul>
+            <li><strong>Frotamiento:</strong> transferencia de electrones por roce</li>
+            <li><strong>Contacto:</strong> un cuerpo cargado toca a otro neutro</li>
+            <li><strong>Inducción:</strong> acercar un cuerpo cargado sin tocarlo redistribuye cargas</li>
+          </ul>
+        </article>
+
+        <article class="topic-block">
+          <h3>7.2 Imanes y magnetismo terrestre</h3>
+          <p>Los imanes tienen dos polos (norte y sur). Polos iguales se repelen; distintos se atraen.</p>
+          <p>La Tierra se comporta como un gran imán. La brújula apunta aproximadamente al norte geográfico porque interactúa con el campo magnético terrestre.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- EJERCICIOS -->
+    <section id="ejercicios" class="section alt">
+      <div class="container">
+        <h2>8. Ejercicios</h2>
+
+        <div class="exercise-card">
+          <h3>Ejercicio 1 · Fuerza resultante</h3>
+          <p>Sobre un cuerpo actúan 25 N a la derecha y 10 N a la izquierda. ¿Cuál es la fuerza neta y hacia dónde?</p>
+          <div class="options">
+            <label><input type="radio" name="ef1" value="a"> a) 35 N a la derecha</label>
+            <label><input type="radio" name="ef1" value="b"> b) 15 N a la derecha</label>
+            <label><input type="radio" name="ef1" value="c"> c) 15 N a la izquierda</label>
+            <label><input type="radio" name="ef1" value="d"> d) 0 N</label>
+          </div>
+          <button class="btn small" onclick="checkFuerzaEx(1, 'b')">Verificar</button>
+          <div class="feedback" id="fef1"></div>
+        </div>
+
+        <div class="exercise-card">
+          <h3>Ejercicio 2 · Segunda ley</h3>
+          <p>Una fuerza neta de 60 N actúa sobre un cuerpo de 12 kg. ¿Cuál es su aceleración?</p>
+          <div class="options">
+            <label><input type="radio" name="ef2" value="a"> a) 5 m/s²</label>
+            <label><input type="radio" name="ef2" value="b"> b) 0.2 m/s²</label>
+            <label><input type="radio" name="ef2" value="c"> c) 72 m/s²</label>
+            <label><input type="radio" name="ef2" value="d"> d) 48 m/s²</label>
+          </div>
+          <button class="btn small" onclick="checkFuerzaEx(2, 'a')">Verificar</button>
+          <div class="feedback" id="fef2"></div>
+        </div>
+
+        <div class="exercise-card">
+          <h3>Ejercicio 3 · Peso</h3>
+          <p>¿Cuál es el peso de un estudiante de 55 kg en la Tierra? (g = 9.8 m/s²)</p>
+          <div class="options">
+            <label><input type="radio" name="ef3" value="a"> a) 55 N</label>
+            <label><input type="radio" name="ef3" value="b"> b) 539 N</label>
+            <label><input type="radio" name="ef3" value="c"> c) 5.6 N</label>
+            <label><input type="radio" name="ef3" value="d"> d) 9.8 N</label>
+          </div>
+          <button class="btn small" onclick="checkFuerzaEx(3, 'b')">Verificar</button>
+          <div class="feedback" id="fef3"></div>
+        </div>
+
+        <div class="exercise-card">
+          <h3>Ejercicio 4 · Energía cinética</h3>
+          <p>Un objeto de 3 kg se mueve a 4 m/s. ¿Cuál es su energía cinética?</p>
+          <div class="options">
+            <label><input type="radio" name="ef4" value="a"> a) 12 J</label>
+            <label><input type="radio" name="ef4" value="b"> b) 24 J</label>
+            <label><input type="radio" name="ef4" value="c"> c) 48 J</label>
+            <label><input type="radio" name="ef4" value="d"> d) 6 J</label>
+          </div>
+          <button class="btn small" onclick="checkFuerzaEx(4, 'b')">Verificar</button>
+          <div class="feedback" id="fef4"></div>
+        </div>
+
+        <div class="exercise-card">
+          <h3>Ejercicio 5 · Tercera ley</h3>
+          <p>Al saltar, empujas el suelo hacia abajo. ¿Qué hace el suelo?</p>
+          <div class="options">
+            <label><input type="radio" name="ef5" value="a"> a) Nada, el suelo no se mueve</label>
+            <label><input type="radio" name="ef5" value="b"> b) Te empuja hacia arriba con la misma magnitud</label>
+            <label><input type="radio" name="ef5" value="c"> c) Te empuja hacia abajo</label>
+            <label><input type="radio" name="ef5" value="d"> d) Te empuja con menos fuerza</label>
+          </div>
+          <button class="btn small" onclick="checkFuerzaEx(5, 'b')">Verificar</button>
+          <div class="feedback" id="fef5"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>Resumen del Tema 2</h2>
+        <div class="summary-grid">
+          <div class="summary-item"><strong>Fuerza</strong> → vector; unidad N</div>
+          <div class="summary-item"><strong>F<sub>R</sub> = 0</strong> → equilibrio</div>
+          <div class="summary-item"><strong>1ª ley</strong> → inercia</div>
+          <div class="summary-item"><strong>2ª ley</strong> → F = m·a</div>
+          <div class="summary-item"><strong>3ª ley</strong> → acción-reacción</div>
+          <div class="summary-item"><strong>Peso</strong> → P = m·g</div>
+          <div class="summary-item"><strong>E<sub>c</sub></strong> → ½·m·v²</div>
+          <div class="summary-item"><strong>E<sub>p</sub></strong> → m·g·h</div>
+          <div class="summary-item"><strong>E<sub>m</sub></strong> → se conserva (sin fricción)</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <img src="assets/conamat-logo.png" alt="CONAMAT" class="footer-logo" />
+      <p>Material de apoyo · Guía CONAMAT · Tema 2: Las fuerzas</p>
+      <p class="author">Creado por el <strong>Prof. Fabián Soberanes Martín</strong></p>
+      <p><a href="index.html" style="color:#93c5fd">← Tema 1</a> · <a href="interacciones.html" style="color:#93c5fd">Tema 3 →</a> · <a href="actividades-fuerzas.html" style="color:#93c5fd">Actividades</a></p>
+    </div>
+  </footer>
+
+  <script src="script-fuerzas.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      if (window.renderMathInElement) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '\\[', right: '\\]', display: true},
+            {left: '\\(', right: '\\)', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    });
+  </script>
+</body>
+</html>

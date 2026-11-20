@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Actividades · Estructura de la materia | CONAMAT</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="actividades.css" />
+</head>
+<body class="activities-page">
+  <header class="act-header">
+    <div class="act-header-inner">
+      <a href="estructura.html" class="back-link">← Teoría Tema 4</a>
+      <h1>
+        <img src="assets/conamat-icon.png" alt="" style="height:28px;vertical-align:middle;margin-right:6px" />
+        Actividades · Estructura
+      </h1>
+      <div class="session-info"><span id="currentBlock">Bloque 1</span></div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:20%"></div></div>
+  </header>
+
+  <aside class="act-sidebar">
+    <h3>Ruta de la clase</h3>
+    <nav class="block-nav">
+      <button class="block-btn active" data-block="1">1 · Estructura y corriente</button>
+      <button class="block-btn" data-block="2">2 · Ohm y circuitos</button>
+      <button class="block-btn" data-block="3">3 · Magnetismo</button>
+      <button class="block-btn" data-block="4">4 · Ondas y luz</button>
+      <button class="block-btn" data-block="5">5 · Cierre</button>
+    </nav>
+    <div class="score-box">
+      <p>Puntos</p>
+      <div class="score" id="totalScore">0</div>
+    </div>
+    <p style="font-size:0.8rem;color:#6b7280;margin-top:1rem;text-align:center">Prof. Fabián Soberanes Martín</p>
+  </aside>
+
+  <main class="act-main">
+    <section class="block active" id="block-1">
+      <div class="block-header"><h2>Bloque 1 · Estructura y corriente</h2></div>
+
+      <article class="activity-card">
+        <div class="act-type">Clasificación</div>
+        <h3>1.1 Conductor o aislante</h3>
+        <div class="classify-area">
+          <div class="classify-items" id="condItems">
+            <div class="chip" data-type="conductor">Cobre</div>
+            <div class="chip" data-type="aislante">Goma</div>
+            <div class="chip" data-type="conductor">Aluminio</div>
+            <div class="chip" data-type="aislante">Plástico</div>
+            <div class="chip" data-type="aislante">Vidrio</div>
+            <div class="chip" data-type="conductor">Hierro</div>
+          </div>
+          <div class="drop-zones">
+            <div class="drop-zone" data-accept="conductor" id="zoneCond"><h4>Conductores</h4><div class="dropped"></div></div>
+            <div class="drop-zone" data-accept="aislante" id="zoneAis"><h4>Aislantes</h4><div class="dropped"></div></div>
+          </div>
+        </div>
+        <button class="big-btn secondary" onclick="checkCond()">Verificar</button>
+        <div class="feedback" id="condFb"></div>
+      </article>
+
+      <article class="activity-card">
+        <div class="act-type">Concepto</div>
+        <h3>1.2 ¿Qué se mueve en un cable metálico?</h3>
+        <div class="options-large">
+          <button onclick="electronCheck(this, true)">Electronés</button>
+          <button onclick="electronCheck(this, false)">Protones del núcleo</button>
+          <button onclick="electronCheck(this, false)">Neutrones</button>
+        </div>
+        <div class="feedback" id="electronFb"></div>
+      </article>
+    </section>
+
+    <section class="block" id="block-2">
+      <div class="block-header"><h2>Bloque 2 · Ohm y circuitos</h2></div>
+
+      <article class="activity-card">
+        <div class="act-type">Cálculo</div>
+        <h3>2.1 Ley de Ohm</h3>
+        <p>V = 24 V · R = 6 Ω · ¿I?</p>
+        <div class="input-row">
+          <input type="number" id="iCalc" placeholder="A" step="0.1">
+          <button class="big-btn" onclick="checkI()">Comprobar</button>
+        </div>
+        <div class="feedback" id="iFb"></div>
+      </article>
+
+      <article class="activity-card">
+        <div class="act-type">Concepto</div>
+        <h3>2.2 En un circuito en serie</h3>
+        <div class="options-large">
+          <button onclick="serieCheck(this, true)">La corriente es la misma en todos los elementos</button>
+          <button onclick="serieCheck(this, false)">El voltaje es siempre el mismo en cada resistencia</button>
+          <button onclick="serieCheck(this, false)">No puede haber corriente</button>
+        </div>
+        <div class="feedback" id="serieFb"></div>
+      </article>
+    </section>
+
+    <section class="block" id="block-3">
+      <div class="block-header"><h2>Bloque 3 · Magnetismo</h2></div>
+
+      <article class="activity-card">
+        <div class="act-type">Verdadero / Falso</div>
+        <h3>3.1 Imanes y corrientes</h3>
+        <div class="tf-list">
+          <div class="tf-item" data-answer="true">
+            <p>Una corriente eléctrica genera campo magnético.</p>
+            <div class="tf-btns">
+              <button onclick="answerTF(this)">Verdadero</button>
+              <button onclick="answerTF(this)">Falso</button>
+            </div>
+            <div class="tf-explain hidden">Verdadero (experimento de Oersted).</div>
+          </div>
+          <div class="tf-item" data-answer="false">
+            <p>Polos magnéticos iguales se atraen.</p>
+            <div class="tf-btns">
+              <button onclick="answerTF(this)">Verdadero</button>
+              <button onclick="answerTF(this)">Falso</button>
+            </div>
+            <div class="tf-explain hidden">Falso. Iguales se repelen; distintos se atraen.</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="activity-card">
+        <div class="act-type">Concepto</div>
+        <h3>3.2 Inducción de Faraday</h3>
+        <div class="options-large">
+          <button onclick="faradayCheck(this, true)">Un campo magnético que cambia puede inducir corriente</button>
+          <button onclick="faradayCheck(this, false)">Solo sirve con imanes permanentes quietos</button>
+          <button onclick="faradayCheck(this, false)">No tiene aplicaciones prácticas</button>
+        </div>
+        <div class="feedback" id="faradayFb"></div>
+      </article>
+    </section>
+
+    <section class="block" id="block-4">
+      <div class="block-header"><h2>Bloque 4 · Ondas y luz</h2></div>
+
+      <article class="activity-card">
+        <div class="act-type">Cálculo</div>
+        <h3>4.1 Velocidad de la onda</h3>
+        <p>λ = 5 m · f = 20 Hz · ¿v?</p>
+        <div class="input-row">
+          <input type="number" id="vOnda" placeholder="m/s">
+          <button class="big-btn" onclick="checkVOnda()">Comprobar</button>
+        </div>
+        <div class="feedback" id="vOndaFb"></div>
+      </article>
+
+      <article class="activity-card">
+        <div class="act-type">Matching</div>
+        <h3>4.2 Relaciona</h3>
+        <div class="match-grid" id="luzMatch">
+          <div class="match-col">
+            <div class="match-item" data-match="a">Reflexión</div>
+            <div class="match-item" data-match="b">Refracción</div>
+            <div class="match-item" data-match="c">Prisma</div>
+          </div>
+          <div class="match-col">
+            <div class="match-target" data-match="c">Descompone la luz blanca</div>
+            <div class="match-target" data-match="a">La luz rebota en el espejo</div>
+            <div class="match-target" data-match="b">La luz se desvía al pasar al agua</div>
+          </div>
+        </div>
+        <p class="hint-text">Toca un concepto y luego su descripción.</p>
+        <div class="feedback" id="luzMatchFb"></div>
+      </article>
+
+      <article class="activity-card">
+        <div class="act-type">Concepto</div>
+        <h3>4.3 Color que más se desvía en el prisma</h3>
+        <div class="options-large">
+          <button onclick="prismaCheck(this, false)">Rojo</button>
+          <button onclick="prismaCheck(this, true)">Violeta</button>
+          <button onclick="prismaCheck(this, false)">Amarillo</button>
+        </div>
+        <div class="feedback" id="prismaFb"></div>
+      </article>
+    </section>
+
+    <section class="block" id="block-5">
+      <div class="block-header"><h2>Bloque 5 · Cierre</h2></div>
+
+      <article class="activity-card">
+        <div class="act-type">Integrador</div>
+        <h3>5.1 ¿Qué tienen en común generadores y transformadores?</h3>
+        <div class="options-large">
+          <button onclick="genCheck(this, true)">Usan inducción electromagnética</button>
+          <button onclick="genCheck(this, false)">Solo usan imanes estáticos sin movimiento</button>
+          <button onclick="genCheck(this, false)">No involucran campos magnéticos</button>
+        </div>
+        <div class="feedback" id="genFb"></div>
+      </article>
+
+      <article class="activity-card highlight-final">
+        <h3>Cierre · Tema 4 (y del bloque de Física)</h3>
+        <ul class="checklist">
+          <li>Estructura atómica y conductores</li>
+          <li>Corriente, voltaje, resistencia (Ohm)</li>
+          <li>Magnetismo e inducción</li>
+          <li>Ondas: v = λ·f</li>
+          <li>Luz: reflexión, refracción, prisma</li>
+        </ul>
+        <p>Creado por el <strong>Prof. Fabián Soberanes Martín</strong></p>
+        <p style="margin-top:1rem">
+          <a href="estructura.html" style="color:#fde68a">← Teoría</a> ·
+          <a href="index.html" style="color:#fde68a">Inicio</a>
+        </p>
+      </article>
+    </section>
+  </main>
+
+  <script src="actividades-estructura.js"></script>
+</body>
+</html>

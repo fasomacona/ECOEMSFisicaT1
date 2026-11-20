@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Actividades Interactivas · Tema 1: El Movimiento | 6 horas</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="actividades.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+</head>
+<body class="activities-page">
+
+  <!-- Top bar -->
+  <header class="act-header">
+    <div class="act-header-inner">
+      <a href="index.html" class="back-link">← Teoría</a>
+      <h1>Actividades · El Movimiento</h1>
+      <div class="session-info">
+        <span id="currentBlock">Bloque 1</span>
+        <span class="timer" id="blockTimer">60:00</span>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </header>
+
+  <!-- Sidebar navigation of blocks -->
+  <aside class="act-sidebar" id="sidebar">
+    <h3>Ruta de la clase (6 h)</h3>
+    <nav class="block-nav">
+      <button class="block-btn active" data-block="1">1 · Activación</button>
+      <button class="block-btn" data-block="2">2 · Distancia & Desplazamiento</button>
+      <button class="block-btn" data-block="3">3 · Rapidez y Velocidad</button>
+      <button class="block-btn" data-block="4">4 · Gráficas interactivas</button>
+      <button class="block-btn" data-block="5">5 · Aceleración & MRUA</button>
+      <button class="block-btn" data-block="6">6 · Caída libre + Cierre</button>
+    </nav>
+    <div class="score-box">
+      <p>Puntos de la sesión</p>
+      <div class="score" id="totalScore">0</div>
+    </div>
+  </aside>
+
+  <main class="act-main" id="mainContent">
+
+    <!-- ==================== BLOQUE 1 ==================== -->
+    <section class="block active" id="block-1">
+      <div class="block-header">
+        <h2>Bloque 1 · Activación y conceptos clave</h2>
+        
+      </div>
+
+      <!-- Actividad 1.1 -->
+      <article class="activity-card" data-points="10">
+        <div class="act-type">Calentamiento · Lluvia de ideas</div>
+        <h3>1.1 ¿Qué se mueve a tu alrededor?</h3>
+        <p>En 2 minutos, escribe o menciona en voz alta 8 cosas que se están moviendo en este momento (dentro o fuera del salón).</p>
+        <div class="team-mode">
+          <button class="big-btn" onclick="startBrainstorm()">Iniciar temporizador 2 min</button>
+          <div id="brainstormTimer" class="big-timer hidden">2:00</div>
+        </div>
+        <div class="reflection">
+          <p><strong>Pregunta al grupo:</strong> ¿Todas se mueven igual? ¿Cuáles son más rápidas? ¿Cuáles cambian de dirección?</p>
+        </div>
+      </article>
+
+      <!-- Actividad 1.2 -->
+      <article class="activity-card" data-points="15">
+        <div class="act-type">Clasificación · Arrastrar (o tocar)</div>
+        <h3>1.2 ¿Escalar o Vectorial?</h3>
+        <p>Clasifica cada magnitud. Toca la tarjeta y luego elige el grupo correcto.</p>
+        
+        <div class="classify-area">
+          <div class="classify-items" id="classifyItems">
+            <div class="chip" data-type="escalar" data-id="1">Distancia</div>
+            <div class="chip" data-type="vectorial" data-id="2">Desplazamiento</div>
+            <div class="chip" data-type="escalar" data-id="3">Rapidez</div>
+            <div class="chip" data-type="vectorial" data-id="4">Velocidad</div>
+            <div class="chip" data-type="vectorial" data-id="5">Aceleración</div>
+            <div class="chip" data-type="escalar" data-id="6">Tiempo</div>
+            <div class="chip" data-type="escalar" data-id="7">Masa</div>
+            <div class="chip" data-type="vectorial" data-id="8">Fuerza</div>
+          </div>
+
+          <div class="drop-zones">
+            <div class="drop-zone" data-accept="escalar" id="zoneEscalar">
+              <h4>Escalares</h4>
+              <div class="dropped"></div>
+            </div>
+            <div class="drop-zone" data-accept="vectorial" id="zoneVectorial">
+              <h4>Vectoriales</h4>
+              <div class="dropped"></div>
+            </div>
+          </div>
+        </div>
+        <button class="big-btn secondary" onclick="checkClassification()">Verificar clasificación</button>
+        <div class="feedback" id="classFeedback"></div>
+      </article>
+
+      <!-- Actividad 1.3 -->
+      <article class="activity-card" data-points="10">
+        <div class="act-type">Verdadero / Falso · Debate rápido</div>
+        <h3>1.3 Afirmaciones rápidas</h3>
+        <p>El grupo vota. Luego justifica.</p>
+        <div class="tf-list" id="tfList">
+          <div class="tf-item" data-answer="false">
+            <p>“Si un cuerpo regresa al punto de partida, su distancia recorrida es cero.”</p>
+            <div class="tf-btns">
+              <button onclick="answerTF(this, false)">Verdadero</button>
+              <button onclick="answerTF(this, false)">Falso</button>
+            </div>
+            <div class="tf-explain hidden">Falso. La distancia es la longitud de la trayectoria. El desplazamiento sí es cero.</div>
+          </div>
+          <div class="tf-item" data-answer="true">
+            <p>“La velocidad siempre tiene dirección.”</p>
+            <div class="tf-btns">
+              <button onclick="answerTF(this, true)">Verdadero</button>
+              <button onclick="answerTF(this, true)">Falso</button>
+            </div>
+            <div class="tf-explain hidden">Verdadero. La velocidad es una magnitud vectorial.</div>
+          </div>
+          <div class="tf-item" data-answer="false">
+            <p>“Rapidez y velocidad son exactamente lo mismo.”</p>
+            <div class="tf-btns">
+              <button onclick="answerTF(this, false)">Verdadero</button>
+              <button onclick="answerTF(this, false)">Falso</button>
+            </div>
+            <div class="tf-explain hidden">Falso. Rapidez es escalar; velocidad es vectorial.</div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ==================== BLOQUE 2 ==================== -->
+    <section class="block" id="block-2">
+      <div class="block-header">
+        <h2>Bloque 2 · Distancia vs Desplazamiento</h2>
+        
+      </div>
+
+      <article class="activity-card" data-points="20">
+        <div class="act-type">Simulación · Camino real</div>
+        <h3>2.1 El recorrido del estudiante</h3>
+        <p>Un estudiante camina por el patio según las instrucciones. Calcula distancia y desplazamiento.</p>
+        
+        <div class="scenario-box">
+          <ol>
+            <li>Camina <strong>40 m al norte</strong></li>
+            <li>Luego <strong>30 m al este</strong></li>
+            <li>Después <strong>40 m al sur</strong></li>
+            <li>Finalmente <strong>10 m al oeste</strong></li>
+          </ol>
+        </div>
+
+        <div class="calc-challenge">
+          <div class="input-row">
+            <label>Distancia total (m)</label>
+            <input type="number" id="distChallenge" placeholder="?">
+          </div>
+          <div class="input-row">
+            <label>Desplazamiento (magnitud en m)</label>
+            <input type="number" id="despChallenge" placeholder="?">
+          </div>
+          <button class="big-btn" onclick="checkPathChallenge()">Comprobar</button>
+        </div>
+        <div class="feedback" id="pathFeedback"></div>
+      </article>
+
+      <article class="activity-card" data-points="15">
+        <div class="act-type">Ordenar pasos · Secuencia</div>
+        <h3>2.2 Ordena el procedimiento</h3>
+        <p>Ordena los pasos para calcular el desplazamiento cuando el movimiento no es en línea recta.</p>
+        <div class="sequence-area" id="sequenceArea">
+          <div class="seq-item" data-order="3" draggable="true">Calcular la hipotenusa (o usar Pitágoras / componentes)</div>
+          <div class="seq-item" data-order="1" draggable="true">Dibujar un diagrama de la trayectoria</div>
+          <div class="seq-item" data-order="4" draggable="true">Indicar la dirección del vector resultante</div>
+          <div class="seq-item" data-order="2" draggable="true">Descomponer los tramos en ejes X y Y</div>
+        </div>
+        <button class="big-btn secondary" onclick="checkSequence()">Verificar orden</button>
+        <div class="feedback" id="seqFeedback"></div>
+      </article>
+
+      <article class="activity-card" data-points="10">
+        <div class="act-type">Encuentra el error</div>
+        <h3>2.3 ¿Dónde está el error?</h3>
+        <div class="error-box">
+          <p>Un alumno escribió:</p>
+          <blockquote>
+            “Un auto recorre 5 km al este y luego 12 km al norte.  
+            Distancia = 17 km  
+            Desplazamiento = 17 km al noreste”
+          </blockquote>
+          <p>¿Cuál es el error?</p>
+        </div>
+        <div class="options-large">
+          <button onclick="checkError(this, false)">La distancia está mal calculada</button>
+          <button onclick="checkError(this, true)">El desplazamiento no es 17 km (debe ser 13 km)</button>
+          <button onclick="checkError(this, false)">La dirección está incorrecta</button>
+          <button onclick="checkError(this, false)">No hay error</button>
+        </div>
+        <div class="feedback" id="errorFeedback"></div>
+      </article>
+
+      <article class="activity-card" data-points="15">
+        <div class="act-type">Reto visual · Diagrama</div>
+        <h3>2.4 Dibuja y calcula</h3>
+        <p>Un dron vuela 50 m al este, luego 120 m al norte y finalmente 50 m al oeste.</p>
+        <div class="multi-q">
+          <p><strong>a)</strong> Distancia total recorrida (m)</p>
+          <input type="number" id="dronDist" placeholder="m">
+          <p><strong>b)</strong> Magnitud del desplazamiento (m)</p>
+          <input type="number" id="dronDesp" placeholder="m">
+          <button class="big-btn" onclick="checkDron()">Verificar</button>
+        </div>
+        <div class="feedback" id="dronFeedback"></div>
+      </article>
+    </section>
+
+    <!-- ==================== BLOQUE 3 ==================== -->
+    <section class="block" id="block-3">
+      <div class="block-header">
+        <h2>Bloque 3 · Rapidez y Velocidad</h2>
+        
+      </div>
+
+      <article class="activity-card" data-points="15">
+        <div class="act-type">Calculadora en vivo · Competencia</div>
+        <h3>3.1 Carrera de cálculos</h3>
+        <p>Resuelve lo más rápido posible. El docente puede proyectar y cronometrar.</p>
+        
+        <div class="race-problem" id="raceProblem">
+          <p>Un ciclista recorre <strong>2.4 km</strong> en <strong>8 minutos</strong>. ¿Cuál es su rapidez media en m/s?</p>
+        </div>
+        <div class="input-row">
+          <input type="number" id="raceAnswer" placeholder="Respuesta en m/s" step="0.01">
+          <button class="big-btn" onclick="checkRace()">Enviar</button>
+        </div>
+        <div class="feedback" id="raceFeedback"></div>
+        <button class="text-btn" onclick="newRaceProblem()">Nueva pregunta</button>
+      </article>
+
+      <article class="activity-card" data-points="20">
+        <div class="act-type">Matching · Une columnas</div>
+        <h3>3.2 Relaciona concepto con definición</h3>
+        <div class="match-grid" id="matchGrid">
+          <div class="match-col">
+            <div class="match-item" data-match="a">Rapidez media</div>
+            <div class="match-item" data-match="b">Velocidad media</div>
+            <div class="match-item" data-match="c">Velocidad instantánea</div>
+            <div class="match-item" data-match="d">Desplazamiento</div>
+          </div>
+          <div class="match-col">
+            <div class="match-target" data-match="d">Vector del punto inicial al final</div>
+            <div class="match-target" data-match="a">Distancia total ÷ tiempo total</div>
+            <div class="match-target" data-match="c">Velocidad en un instante preciso</div>
+            <div class="match-target" data-match="b">Desplazamiento ÷ tiempo</div>
+          </div>
+        </div>
+        <p class="hint-text">Toca primero un concepto y luego su definición.</p>
+        <div class="feedback" id="matchFeedback"></div>
+      </article>
+
+      <article class="activity-card" data-points="15">
+        <div class="act-type">Escenario real</div>
+        <h3>3.3 El viaje a la escuela</h3>
+        <p>María sale de su casa y llega a la escuela 25 minutos después. La distancia por las calles es 4.2 km. En línea recta, su casa está a 2.8 km de la escuela.</p>
+        <div class="multi-q">
+          <p><strong>a)</strong> ¿Cuál fue su rapidez media en km/h?</p>
+          <input type="number" id="mariaRapidez" placeholder="km/h" step="0.1">
+          <p><strong>b)</strong> ¿Cuál fue la magnitud de su velocidad media en km/h?</p>
+          <input type="number" id="mariaVel" placeholder="km/h" step="0.1">
+          <button class="big-btn" onclick="checkMaria()">Verificar ambas</button>
+        </div>
+        <div class="feedback" id="mariaFeedback"></div>
+      </article>
+
+      <article class="activity-card" data-points="15">
+        <div class="act-type">Reto de conversión</div>
+        <h3>3.4 De km/h a m/s</h3>
+        <p>Un auto va a 90 km/h. ¿Cuál es su rapidez en m/s?</p>
+        <div class="input-row">
+          <input type="number" id="convMs" placeholder="m/s" step="0.1">
+          <button class="big-btn" onclick="checkConv()">Comprobar</button>
+        </div>
+        <p class="hint-text">Recuerda: divide entre 3.6 (o multiplica por 1000/3600)</p>
+        <div class="feedback" id="convFeedback"></div>
+      </article>
+    </section>
+
+    <!-- ==================== BLOQUE 4 ==================== -->
+    <section class="block" id="block-4">
+      <div class="block-header">
+        <h2>Bloque 4 · Gráficas de posición-tiempo</h2>
+        
+      </div>
+
+      <article class="activity-card" data-points="25">
+        <div class="act-type">Lectura de gráficas · Interactivo</div>
+        <h3>4.1 Interpreta la gráfica</h3>
+        <canvas id="actChart" height="200"></canvas>
+        <div class="graph-questions">
+          <p>Observa la gráfica y responde:</p>
+          <div class="q-item">
+            <p>¿En qué intervalo el objeto está en reposo?</p>
+            <div class="options-large">
+              <button onclick="graphQ(this, false)">0–2 s</button>
+              <button onclick="graphQ(this, true)">2–4 s</button>
+              <button onclick="graphQ(this, false)">4–6 s</button>
+              <button onclick="graphQ(this, false)">6–8 s</button>
+            </div>
+          </div>
+          <div class="feedback" id="graphQFeedback"></div>
+        </div>
+      </article>
+
+      <article class="activity-card" data-points="20">
+        <div class="act-type">Construye la gráfica · Mental</div>
+        <h3>4.2 ¿Cómo se vería la gráfica?</h3>
+        <p>Describe o dibuja mentalmente (o en el pizarrón) la gráfica posición-tiempo de:</p>
+        <div class="scenario-cards">
+          <div class="sc-card">
+            <strong>A</strong>
+            <p>Un auto que parte del reposo, acelera 5 s, viaja a velocidad constante 8 s y luego frena hasta detenerse en 4 s.</p>
+          </div>
+          <div class="sc-card">
+            <strong>B</strong>
+            <p>Una persona que camina 20 m, se detiene 10 s a amarrarse la agujeta y luego regresa al punto de partida.</p>
+          </div>
+        </div>
+        <p class="reflection">Discutan en equipos: ¿Dónde hay pendiente positiva, cero y negativa?</p>
+      </article>
+
+      <article class="activity-card" data-points="15">
+        <div class="act-type">Pendiente = Velocidad</div>
+        <h3>4.3 Calcula la velocidad desde la gráfica</h3>
+        <p>En una gráfica x-t, un tramo recto pasa por los puntos (2 s, 6 m) y (5 s, 18 m).</p>
+        <div class="input-row">
+          <label>Velocidad en ese tramo (m/s)</label>
+          <input type="number" id="slopeVel" placeholder="?">
+          <button class="big-btn" onclick="checkSlope()">Comprobar</button>
+        </div>
+        <div class="feedback" id="slopeFeedback"></div>
+      </article>
+
+      <article class="activity-card" data-points="15">
+        <div class="act-type">Reto de interpretación</div>
+        <h3>4.4 ¿Qué describe mejor la gráfica?</h3>
+        <p>Una gráfica posición-tiempo muestra una línea recta que baja de (0 s, 20 m) hasta (4 s, 0 m).</p>
+        <div class="options-large">
+          <button onclick="checkGraphDesc(this, false)">El objeto está en reposo</button>
+          <button onclick="checkGraphDesc(this, true)">Se mueve hacia el origen a 5 m/s</button>
+          <button onclick="checkGraphDesc(this, false)">Está acelerando</button>
+          <button onclick="checkGraphDesc(this, false)">Se aleja del origen a 5 m/s</button>
+        </div>
+        <div class="feedback" id="graphDescFeedback"></div>
+      </article>
+    </section>
+
+    <!-- ==================== BLOQUE 5 ==================== -->
+    <section class="block" id="block-5">
+      <div class="block-header">
+        <h2>Bloque 5 · Aceleración y MRUA</h2>
+        
+      </div>
+
+      <article class="activity-card" data-points="15">
+        <div class="act-type">Fórmulas · Elige la correcta</div>
+        <h3>5.1 ¿Qué fórmula usarías?</h3>
+        <p>Para cada situación elige la fórmula más conveniente. (Las fórmulas se muestran con notación clara)</p>
+        
+        <div class="formula-ref">
+          <p><strong>Fórmulas del MRUA:</strong></p>
+          <div class="formula-pills">
+            <span class="pill">v<sub>f</sub> = v<sub>i</sub> + a·t</span>
+            <span class="pill">x = v<sub>i</sub>·t + ½·a·t²</span>
+            <span class="pill">v<sub>f</sub>² = v<sub>i</sub>² + 2·a·x</span>
+            <span class="pill">x = (v<sub>i</sub> + v<sub>f</sub>)/2 · t</span>
+          </div>
+        </div>
+
+        <div class="formula-quiz">
+          <div class="fq-item" data-q="1">
+            <p><strong>Situación 1:</strong> Conozco v<sub>i</sub>, a y t. Quiero v<sub>f</sub>.</p>
+            <div class="options-large fq-options">
+              <button data-correct="1" onclick="selectFormula(this, 1)">v<sub>f</sub> = v<sub>i</sub> + a·t</button>
+              <button data-correct="0" onclick="selectFormula(this, 1)">v<sub>f</sub>² = v<sub>i</sub>² + 2·a·x</button>
+              <button data-correct="0" onclick="selectFormula(this, 1)">x = v<sub>i</sub>·t + ½·a·t²</button>
+            </div>
+          </div>
+          <div class="fq-item" data-q="2">
+            <p><strong>Situación 2:</strong> No tengo el tiempo. Conozco v<sub>i</sub>, v<sub>f</sub> y a. Quiero x.</p>
+            <div class="options-large fq-options">
+              <button data-correct="0" onclick="selectFormula(this, 2)">v<sub>f</sub> = v<sub>i</sub> + a·t</button>
+              <button data-correct="1" onclick="selectFormula(this, 2)">v<sub>f</sub>² = v<sub>i</sub>² + 2·a·x</button>
+              <button data-correct="0" onclick="selectFormula(this, 2)">x = (v<sub>i</sub> + v<sub>f</sub>)/2 · t</button>
+            </div>
+          </div>
+          <div class="fq-item" data-q="3">
+            <p><strong>Situación 3:</strong> Parte del reposo (v<sub>i</sub> = 0). Conozco a y t. Quiero la distancia.</p>
+            <div class="options-large fq-options">
+              <button data-correct="0" onclick="selectFormula(this, 3)">v<sub>f</sub> = v<sub>i</sub> + a·t</button>
+              <button data-correct="1" onclick="selectFormula(this, 3)">x = ½·a·t²</button>
+              <button data-correct="0" onclick="selectFormula(this, 3)">v = d / t</button>
+            </div>
+          </div>
+        </div>
+        <div class="feedback" id="formulaFeedback"></div>
+      </article>
+
+      <article class="activity-card" data-points="20">
+        <div class="act-type">Problema guiado paso a paso</div>
+        <h3>5.2 Resolución guiada</h3>
+        <p>Un autobús parte del reposo y acelera a 1.5 m/s² durante 12 segundos.</p>
+        <div class="guided-steps">
+          <div class="step" id="step1">
+            <p><strong>Paso 1:</strong> ¿Cuál es la velocidad final? (usa v<sub>f</sub> = v<sub>i</sub> + a·t)</p>
+            <input type="number" id="guidedVf" placeholder="m/s">
+            <button class="big-btn small-pad" onclick="checkGuided(1)">Siguiente</button>
+          </div>
+          <div class="step hidden" id="step2">
+            <p><strong>Paso 2:</strong> ¿Qué distancia recorrió en esos 12 s? (usa x = ½·a·t²)</p>
+            <input type="number" id="guidedX" placeholder="m">
+            <button class="big-btn small-pad" onclick="checkGuided(2)">Siguiente</button>
+          </div>
+          <div class="step hidden" id="step3">
+            <p class="success-msg">¡Excelente! Velocidad final = 18 m/s · Distancia = 108 m</p>
+          </div>
+        </div>
+        <div class="feedback" id="guidedFeedback"></div>
+      </article>
+
+      <article class="activity-card" data-points="20">
+        <div class="act-type">Reto numérico · MRUA completo</div>
+        <h3>5.3 El auto en la carretera</h3>
+        <p>Un auto viaja a 20 m/s y frena con aceleración de −4 m/s² hasta detenerse.</p>
+        <div class="multi-q">
+          <p><strong>a)</strong> ¿Cuánto tiempo tarda en detenerse?</p>
+          <input type="number" id="autoT" placeholder="s" step="0.1">
+          <p><strong>b)</strong> ¿Qué distancia recorre mientras frena?</p>
+          <input type="number" id="autoX" placeholder="m" step="0.1">
+          <button class="big-btn" onclick="checkAutoFreno()">Verificar</button>
+        </div>
+        <div class="feedback" id="autoFeedback"></div>
+      </article>
+
+      <article class="activity-card" data-points="15">
+        <div class="act-type">Verdadero / Falso con justificación</div>
+        <h3>5.4 Aceleración negativa</h3>
+        <p>“Si la aceleración es negativa, el objeto siempre se está deteniendo.”</p>
+        <div class="options-large">
+          <button onclick="showAccelExplain(false)">Verdadero</button>
+          <button onclick="showAccelExplain(true)">Falso</button>
+        </div>
+        <div class="feedback" id="accelFeedback"></div>
+      </article>
+
+      <article class="activity-card" data-points="15">
+        <div class="act-type">Reto rápido · Unidades</div>
+        <h3>5.5 Convierte y calcula</h3>
+        <p>Un motociclista acelera de 0 a 72 km/h en 5 segundos. ¿Cuál es su aceleración en m/s²?</p>
+        <div class="input-row">
+          <input type="number" id="motoA" placeholder="m/s²" step="0.1">
+          <button class="big-btn" onclick="checkMoto()">Comprobar</button>
+        </div>
+        <div class="feedback" id="motoFeedback"></div>
+      </article>
+    </section>
+
+    <!-- ==================== BLOQUE 6 ==================== -->
+    <section class="block" id="block-6">
+      <div class="block-header">
+        <h2>Bloque 6 · Caída libre + Cierre de la clase</h2>
+        
+      </div>
+
+      <article class="activity-card" data-points="20">
+        <div class="act-type">Simulador rápido</div>
+        <h3>6.1 Caída libre – Calcula al instante</h3>
+        <div class="caida-sim">
+          <div class="input-row">
+            <label>Altura (m)</label>
+            <input type="number" id="simH" value="45">
+          </div>
+          <div class="input-row">
+            <label>g (m/s²)</label>
+            <input type="number" id="simG" value="9.8">
+          </div>
+          <button class="big-btn" onclick="runCaidaSim()">Calcular</button>
+          <div id="simResult" class="result-big hidden"></div>
+        </div>
+      </article>
+
+      <article class="activity-card" data-points="25">
+        <div class="act-type">Reto final · Integrador</div>
+        <h3>6.2 El reto de los 6 minutos</h3>
+        <p>Resuelve este problema completo. Cronometra al grupo.</p>
+        <div class="final-challenge">
+          <p>Una piedra se suelta desde un puente de 78.4 m de altura. (usa g = 9.8 m/s²)</p>
+          <ol>
+            <li>¿Cuánto tiempo tarda en llegar al agua?</li>
+            <li>¿Con qué velocidad impacta?</li>
+            <li>Si en lugar de soltarla, la lanzas hacia abajo a 5 m/s, ¿cambia el tiempo? (solo razona)</li>
+          </ol>
+          <button class="big-btn" onclick="showFinalSolution()">Mostrar solución completa</button>
+          <div id="finalSolution" class="feedback hidden">
+            <p><strong>1.</strong> t = √(2h/g) = √(2×78.4 / 9.8) = √16 = <strong>4 s</strong></p>
+            <p><strong>2.</strong> v = g·t = 9.8 × 4 = <strong>39.2 m/s</strong></p>
+            <p><strong>3.</strong> Sí cambia. Al tener velocidad inicial hacia abajo, llega más rápido (el tiempo disminuye).</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="activity-card" data-points="20">
+        <div class="act-type">Reto extra · Dos situaciones</div>
+        <h3>6.3 Compara dos caídas</h3>
+        <p>Objeto A se suelta desde 20 m. Objeto B se lanza hacia abajo a 10 m/s desde la misma altura. (g = 10 m/s² para simplificar)</p>
+        <div class="multi-q">
+          <p>¿Qué objeto llega primero al suelo?</p>
+          <div class="options-large">
+            <button onclick="checkCompare(this, false)">Llegan al mismo tiempo</button>
+            <button onclick="checkCompare(this, true)">B llega primero</button>
+            <button onclick="checkCompare(this, false)">A llega primero</button>
+          </div>
+        </div>
+        <div class="feedback" id="compareFeedback"></div>
+      </article>
+
+      <article class="activity-card" data-points="10">
+        <div class="act-type">Ticket de salida</div>
+        <h3>6.3 3-2-1 de cierre</h3>
+        <div class="exit-ticket">
+          <p><strong>3</strong> cosas que aprendiste hoy</p>
+          <p><strong>2</strong> dudas que todavía tienes</p>
+          <p><strong>1</strong> aplicación en la vida real del movimiento</p>
+        </div>
+        <p class="reflection">Pueden escribirlo en papel, en el chat o compartirlo oralmente.</p>
+      </article>
+
+      <article class="activity-card highlight-final">
+        <h3>Cierre de la sesión de 6 horas</h3>
+        <ul class="checklist">
+          <li>Conceptos de distancia, desplazamiento, rapidez y velocidad</li>
+          <li>Interpretación de gráficas posición-tiempo</li>
+          <li>Aceleración y ecuaciones del MRUA</li>
+          <li>Caída libre y uso de \(g\)</li>
+          <li>Resolución de problemas tipo examen</li>
+        </ul>
+        <p>¡Excelente trabajo! Siguiente tema: <strong>Las fuerzas</strong>.</p>
+      </article>
+    </section>
+
+  </main>
+
+  <script src="actividades.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      if (window.renderMathInElement) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '\\[', right: '\\]', display: true},
+            {left: '\\(', right: '\\)', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    });
+  </script>
+</body>
+</html>

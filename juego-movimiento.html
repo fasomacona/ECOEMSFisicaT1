@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carrera del movimiento · Tema 1</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="juegos.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="juegos.html" class="logo"><img src="assets/conamat-icon.png" class="nav-icon" alt="" /><span>Carrera del movimiento</span></a>
+      <a href="juegos.html" style="font-weight:600;color:var(--primary)">← Juegos</a>
+    </div>
+  </nav>
+
+  <div class="game-wrap">
+    <div id="startScreen" class="start-screen">
+      <div class="game-emoji" style="font-size:3rem">🏃</div>
+      <h1>Carrera del movimiento</h1>
+      <p>Tema 1 · 10 preguntas · Suma puntos y mantén la racha</p>
+      <button class="big-play" style="margin-top:1.2rem" onclick="startGame(Q)">¡Jugar!</button>
+    </div>
+
+    <div id="playScreen" style="display:none">
+      <div class="game-top">
+        <span class="score-pill" id="scorePill">0 pts</span>
+        <span class="streak-pill" id="streakPill">Racha: 0</span>
+      </div>
+      <div class="q-card">
+        <div class="q-num" id="qNum"></div>
+        <h2 id="qText"></h2>
+        <div id="answers"></div>
+        <div class="fb-box" id="fbBox"></div>
+        <div class="next-row">
+          <button class="big-play" id="nextBtn" style="display:none" onclick="nextQ()">Siguiente →</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="endScreen" class="end-screen" style="display:none">
+      <h2>¡Terminaste!</h2>
+      <div class="end-score" id="finalScore">0</div>
+      <p id="endMsg"></p>
+      <button class="big-play" onclick="restart()">Jugar de nuevo</button>
+      <a class="big-play secondary" href="juegos.html" style="display:inline-block;margin-top:0.6rem;text-decoration:none">Otros juegos</a>
+    </div>
+  </div>
+
+  <script src="juego-engine.js"></script>
+  <script>
+    const Q = [
+      { q: 'Un corredor da una vuelta a una pista de 400 m y regresa al inicio. ¿Desplazamiento?', opts: ['400 m', '0 m', '200 m', '800 m'], ok: 1, tip: 'Misma posición inicial y final.' },
+      { q: 'Rapidez media = distancia / tiempo. ¿Es escalar o vectorial?', opts: ['Vectorial', 'Escalar', 'Ni una ni otra', 'Solo en caída libre'], ok: 1, tip: 'La rapidez no tiene dirección.' },
+      { q: 'En una gráfica x-t, una línea horizontal significa:', opts: ['Aceleración constante', 'Reposo', 'MRU rápido', 'Caída libre'], ok: 1, tip: 'Pendiente 0 → velocidad 0.' },
+      { q: 'Un auto va de 0 a 20 m/s en 4 s. ¿Aceleración?', opts: ['5 m/s²', '80 m/s²', '0.2 m/s²', '16 m/s²'], ok: 0, tip: 'a = Δv/t = 20/4 = 5.' },
+      { q: 'En caída libre (sin aire), la aceleración es aproximadamente:', opts: ['0', '1 m/s²', '9.8 m/s² hacia abajo', 'Variable'], ok: 2, tip: 'g ≈ 9.8 m/s².' },
+      { q: 'Distancia recorrida siempre es… respecto al desplazamiento (magnitud):', opts: ['Menor', 'Mayor o igual', 'Siempre igual', 'Negativa'], ok: 1, tip: 'La trayectoria puede ser más larga.' },
+      { q: 'MRU significa:', opts: ['Movimiento con aceleración constante', 'Velocidad constante en línea recta', 'Reposo', 'Caída libre'], ok: 1, tip: 'Rectilíneo y uniforme.' },
+      { q: 'Si caminas 30 m este y 40 m norte, el desplazamiento mide:', opts: ['70 m', '10 m', '50 m', '1200 m'], ok: 2, tip: 'Pitágoras: 50 m.' },
+      { q: 't = √(2h/g) se usa para:', opts: ['Velocidad media', 'Tiempo de caída desde el reposo', 'Fuerza neta', 'Periodo de onda'], ok: 1, tip: 'Caída libre desde h.' },
+      { q: 'La pendiente de la gráfica posición-tiempo es:', opts: ['La aceleración', 'La fuerza', 'La velocidad', 'La masa'], ok: 2, tip: 'v = Δx/Δt.' }
+    ];
+  </script>
+</body>
+</html>

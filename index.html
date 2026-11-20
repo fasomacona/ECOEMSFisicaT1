@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Física · El Movimiento | CONAMAT - Ingreso a Bachillerato</title>
+  <meta name="description" content="Desarrollo interactivo y extenso del tema: El movimiento. La descripción de los cambios en la naturaleza. Preparación para examen de ingreso a bachillerato." />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- KaTeX for math -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <!-- Chart.js for interactive graphs -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#inicio" class="logo">
+        <img src="assets/conamat-icon.png" alt="CONAMAT" class="nav-icon" />
+        <span>Física · Movimiento</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menú">☰</button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#introduccion">Introducción</a></li>
+        <li><a href="#conceptos-basicos">Conceptos básicos</a></li>
+        <li><a href="#rapidez-velocidad">Rapidez y Velocidad</a></li>
+        <li><a href="#graficas">Gráficas</a></li>
+        <li><a href="#aceleracion">Aceleración</a></li>
+        <li><a href="#caida-libre">Caída libre</a></li>
+        <li><a href="#ejercicios">Ejercicios</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header id="inicio" class="hero">
+    <div class="hero-content">
+      <img src="assets/conamat-logo.png" alt="CONAMAT - Colegio Nacional de Matemáticas" class="hero-logo" />
+      <p class="badge">Tema 1 · Guía CONAMAT</p>
+      <h1>El movimiento.<br>La descripción de los cambios en la naturaleza</h1>
+      <p class="subtitle">Desarrollo completo e interactivo para el examen de ingreso a bachillerato</p>
+      <div class="hero-actions">
+        <a href="#introduccion" class="btn primary">Comenzar a estudiar</a>
+        <a href="actividades.html" class="btn secondary">Actividades de clase</a>
+        <a href="fuerzas.html" class="btn secondary">Tema 2 · Fuerzas</a>
+        <a href="interacciones.html" class="btn secondary">Tema 3</a>
+        <a href="estructura.html" class="btn secondary">Tema 4</a>
+        <a href="juegos.html" class="btn secondary">🎮 Juegos</a>
+        <a href="simuladores.html" class="btn secondary">🎛️ Simuladores</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- INTRODUCCIÓN -->
+    <section id="introduccion" class="section">
+      <div class="container">
+        <h2>1. Introducción al estudio del movimiento</h2>
+        <div class="card highlight">
+          <p>La <strong>Física</strong> es la ciencia que estudia la materia, la energía y los cambios que experimentan. Uno de los cambios más fundamentales y cotidianos es el <strong>movimiento</strong>.</p>
+          <p>Todo lo que nos rodea se mueve: los planetas alrededor del Sol, los autos en la calle, las moléculas del aire e incluso nosotros mismos. Por eso el estudio del movimiento es la base de la mecánica y de casi toda la física clásica.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>¿Qué es un fenómeno físico?</h3>
+            <p>Es cualquier cambio en la forma, posición o estado de un cuerpo <strong>sin que se altere su composición química</strong>. El movimiento es el fenómeno físico por excelencia.</p>
+            <ul>
+              <li>Ejemplo de fenómeno físico: un auto acelerando, un balón cayendo, la luz reflejándose.</li>
+              <li>No es fenómeno físico: quemar papel (cambio químico).</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>¿Por qué es importante este tema?</h3>
+            <p>En el examen de ingreso a bachillerato (COMIPEMS / ECOEMS / UNAM / IPN) aparecen reactivos sobre:</p>
+            <ul>
+              <li>Interpretación de gráficas posición-tiempo</li>
+              <li>Cálculo de rapidez, velocidad y aceleración</li>
+              <li>Caída libre y movimiento rectilíneo</li>
+              <li>Diferencia entre distancia y desplazamiento</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout info">
+          <strong>Objetivo de este tema:</strong> Que seas capaz de describir cualquier movimiento de forma precisa usando magnitudes, gráficas y ecuaciones, y de resolver problemas típicos del examen.
+        </div>
+      </div>
+    </section>
+
+    <!-- CONCEPTOS BÁSICOS -->
+    <section id="conceptos-basicos" class="section alt">
+      <div class="container">
+        <h2>2. Conceptos fundamentales del movimiento</h2>
+
+        <!-- Sistema de referencia -->
+        <article class="topic-block">
+          <h3>2.1 Sistema de referencia</h3>
+          <p>Para saber si algo se mueve o no, necesitamos un <strong>punto de comparación</strong>. Ese punto (o conjunto de puntos) se llama <strong>sistema de referencia</strong>.</p>
+          
+          <div class="definition">
+            <span class="def-label">Definición</span>
+            <p><strong>Sistema de referencia:</strong> Conjunto de puntos, ejes y reloj que permiten determinar la posición de un objeto en el espacio y en el tiempo.</p>
+          </div>
+
+          <div class="example">
+            <h4>Ejemplo cotidiano</h4>
+            <p>Si vas en un autobús y miras a un pasajero sentado frente a ti, él parece en reposo respecto a ti. Pero respecto al suelo de la calle, ambos se mueven a 60 km/h. El movimiento es <strong>relativo</strong>.</p>
+          </div>
+
+          <div class="interactive-box">
+            <h4>Interactivo: ¿Se mueve o no?</h4>
+            <p>Selecciona el sistema de referencia y observa:</p>
+            <div class="ref-selector">
+              <button class="ref-btn active" data-ref="suelo">Respecto al suelo</button>
+              <button class="ref-btn" data-ref="autobus">Respecto al autobús</button>
+              <button class="ref-btn" data-ref="luna">Respecto a la Luna</button>
+            </div>
+            <div id="refResult" class="result-box">
+              El pasajero del autobús <strong>se mueve</strong> a la velocidad del autobús respecto al suelo.
+            </div>
+          </div>
+        </article>
+
+        <!-- Trayectoria, distancia, desplazamiento -->
+        <article class="topic-block">
+          <h3>2.2 Trayectoria, distancia y desplazamiento</h3>
+          
+          <div class="grid-3">
+            <div class="card mini">
+              <h4>Trayectoria</h4>
+              <p>Es la <strong>línea</strong> (o curva) que une todas las posiciones que ocupa el cuerpo durante su movimiento. Es el “camino” que recorre.</p>
+            </div>
+            <div class="card mini">
+              <h4>Distancia (o camino recorrido)</h4>
+              <p>Es la <strong>longitud de la trayectoria</strong>. Es una magnitud <strong>escalar</strong> (solo tiene valor numérico). Siempre es positiva o cero.</p>
+            </div>
+            <div class="card mini">
+              <h4>Desplazamiento</h4>
+              <p>Es el vector que va desde la posición inicial hasta la posición final. Tiene <strong>magnitud, dirección y sentido</strong>. Puede ser menor que la distancia.</p>
+            </div>
+          </div>
+
+          <div class="definition">
+            <span class="def-label">Fórmula del desplazamiento</span>
+            <p>\[\Delta \vec{r} = \vec{r}_f - \vec{r}_i\]</p>
+            <p>Su magnitud es la distancia en línea recta entre el punto de partida y el de llegada.</p>
+          </div>
+
+          <div class="example important">
+            <h4>Ejemplo clásico: la pista de atletismo</h4>
+            <p>Un corredor da una vuelta completa a una pista de 400 m y regresa al punto de partida.</p>
+            <ul>
+              <li><strong>Distancia recorrida:</strong> 400 m</li>
+              <li><strong>Desplazamiento:</strong> 0 m (porque posición final = posición inicial)</li>
+            </ul>
+            <p>Por eso se dice: <em>“La distancia siempre es mayor o igual que la magnitud del desplazamiento”</em>.</p>
+          </div>
+
+          <div class="interactive-box">
+            <h4>Calculadora: Distancia vs Desplazamiento</h4>
+            <p>Imagina que caminas en línea recta 30 m al este y luego 40 m al norte.</p>
+            <div class="calc-grid">
+              <div>
+                <label>Distancia total recorrida (m)</label>
+                <input type="number" id="distInput" value="70" readonly>
+              </div>
+              <div>
+                <label>Desplazamiento (magnitud en m)</label>
+                <input type="number" id="despInput" value="50" readonly>
+              </div>
+            </div>
+            <p class="hint">Por el teorema de Pitágoras: \(\sqrt{30^2 + 40^2} = 50\) m</p>
+            <button class="btn small" onclick="mostrarPitagoras()">Ver explicación paso a paso</button>
+            <div id="pitagorasExplicacion" class="hidden result-box"></div>
+          </div>
+        </article>
+
+        <!-- Magnitudes escalares y vectoriales -->
+        <article class="topic-block">
+          <h3>2.3 Magnitudes escalares y vectoriales</h3>
+          <div class="grid-2">
+            <div class="card">
+              <h4>Escalares</h4>
+              <p>Solo necesitan un número y una unidad.</p>
+              <ul>
+                <li>Distancia</li>
+                <li>Rapidez</li>
+                <li>Tiempo</li>
+                <li>Masa</li>
+                <li>Temperatura</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>Vectoriales</h4>
+              <p>Necesitan magnitud + dirección + sentido.</p>
+              <ul>
+                <li>Desplazamiento</li>
+                <li>Velocidad</li>
+                <li>Aceleración</li>
+                <li>Fuerza</li>
+                <li>Peso</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- RAPIDEZ Y VELOCIDAD -->
+    <section id="rapidez-velocidad" class="section">
+      <div class="container">
+        <h2>3. Rapidez y Velocidad</h2>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Rapidez (escalar)</h3>
+            <div class="definition">
+              <p>Es la relación entre la <strong>distancia recorrida</strong> y el tiempo empleado.</p>
+              <p>\[v = \dfrac{d}{t}\]</p>
+              <p>Unidades SI: m/s</p>
+            </div>
+            <p>No importa la dirección. Solo “qué tan rápido” se movió en promedio.</p>
+          </div>
+          <div class="card">
+            <h3>Velocidad (vectorial)</h3>
+            <div class="definition">
+              <p>Es la relación entre el <strong>desplazamiento</strong> y el tiempo.</p>
+              <p>\[\vec{v} = \dfrac{\Delta \vec{r}}{\Delta t}\]</p>
+              <p>Unidades SI: m/s + dirección</p>
+            </div>
+            <p>Indica tanto “qué tan rápido” como “hacia dónde”.</p>
+          </div>
+        </div>
+
+        <div class="callout warning">
+          <strong>¡Cuidado!</strong> En el lenguaje cotidiano usamos “velocidad” para todo. En Física:
+          <ul>
+            <li>“Voy a 80 km/h” → estamos hablando de <strong>rapidez</strong>.</li>
+            <li>“Voy a 80 km/h hacia el norte” → estamos hablando de <strong>velocidad</strong>.</li>
+          </ul>
+        </div>
+
+        <article class="topic-block">
+          <h3>3.1 Velocidad media y velocidad instantánea</h3>
+          <p><strong>Velocidad media:</strong> desplazamiento total dividido entre el tiempo total.</p>
+          <p>\[\vec{v}_{media} = \dfrac{\vec{r}_f - \vec{r}_i}{t_f - t_i}\]</p>
+          <p><strong>Velocidad instantánea:</strong> velocidad en un instante preciso (la que marca el velocímetro en ese segundo).</p>
+        </article>
+
+        <div class="interactive-box">
+          <h4>Calculadora interactiva de rapidez y velocidad</h4>
+          <div class="calc-form">
+            <div class="form-group">
+              <label>Distancia recorrida (m)</label>
+              <input type="number" id="calcDist" value="120" step="any">
+            </div>
+            <div class="form-group">
+              <label>Desplazamiento (m)</label>
+              <input type="number" id="calcDesp" value="80" step="any">
+            </div>
+            <div class="form-group">
+              <label>Tiempo (s)</label>
+              <input type="number" id="calcTiempo" value="10" step="any">
+            </div>
+            <button class="btn primary" onclick="calcularRapidezVelocidad()">Calcular</button>
+          </div>
+          <div id="calcResultado" class="result-box hidden"></div>
+        </div>
+
+        <div class="example">
+          <h4>Ejemplo resuelto</h4>
+          <p>Un ciclista recorre 2 km hacia el este en 5 minutos y luego 1.5 km hacia el oeste en 4 minutos.</p>
+          <ol>
+            <li>Distancia total = 2 + 1.5 = <strong>3.5 km</strong></li>
+            <li>Desplazamiento = 2 − 1.5 = <strong>0.5 km hacia el este</strong></li>
+            <li>Tiempo total = 9 minutos = 0.15 h</li>
+            <li>Rapidez media = 3.5 km / 0.15 h = <strong>23.33 km/h</strong></li>
+            <li>Velocidad media = 0.5 km / 0.15 h = <strong>3.33 km/h hacia el este</strong></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- GRÁFICAS -->
+    <section id="graficas" class="section alt">
+      <div class="container">
+        <h2>4. Gráficas de posición-tiempo</h2>
+        <p>Las gráficas son una de las formas más importantes de representar el movimiento. En el examen de ingreso aparecen con mucha frecuencia.</p>
+
+        <div class="definition">
+          <span class="def-label">Idea clave</span>
+          <p>En una gráfica <strong>posición vs tiempo</strong>:</p>
+          <ul>
+            <li>La <strong>pendiente</strong> de la recta representa la <strong>velocidad</strong>.</li>
+            <li>Si la pendiente es positiva → se aleja del origen en sentido positivo.</li>
+            <li>Si la pendiente es cero (horizontal) → está en reposo.</li>
+            <li>Si la pendiente es negativa → se mueve en sentido contrario.</li>
+          </ul>
+        </div>
+
+        <div class="interactive-box">
+          <h4>Gráfico interactivo: elige el tipo de movimiento</h4>
+          <div class="graph-controls">
+            <button class="graph-btn active" data-type="reposo">Reposo</button>
+            <button class="graph-btn" data-type="mru">MRU (velocidad constante)</button>
+            <button class="graph-btn" data-type="acelerado">Acelerado</button>
+            <button class="graph-btn" data-type="desacelerado">Desacelerado</button>
+            <button class="graph-btn" data-type="vuelta">Ida y vuelta</button>
+          </div>
+          <canvas id="posicionChart" height="220"></canvas>
+          <p id="graphExplanation" class="result-box">El objeto permanece en la misma posición. Pendiente = 0 → velocidad = 0.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h4>Cómo calcular la velocidad desde la gráfica</h4>
+            <p>Si la gráfica es una recta, toma dos puntos \((t_1, x_1)\) y \((t_2, x_2)\):</p>
+            <p>\[v = \dfrac{x_2 - x_1}{t_2 - t_1}\]</p>
+            <p>Esa es la pendiente de la recta.</p>
+          </div>
+          <div class="card">
+            <h4>Área bajo la curva velocidad-tiempo</h4>
+            <p>Aunque aquí vemos posición-tiempo, recuerda que en una gráfica velocidad-tiempo el área bajo la curva es el <strong>desplazamiento</strong>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACELERACIÓN -->
+    <section id="aceleracion" class="section">
+      <div class="container">
+        <h2>5. Movimiento con velocidad variable: la aceleración</h2>
+
+        <div class="definition">
+          <span class="def-label">Definición</span>
+          <p>La <strong>aceleración</strong> es el cambio de velocidad por unidad de tiempo.</p>
+          <p>\[\vec{a} = \dfrac{\Delta \vec{v}}{\Delta t} = \dfrac{\vec{v}_f - \vec{v}_i}{t_f - t_i}\]</p>
+          <p>Unidades SI: m/s²</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h4>Aceleración positiva</h4>
+            <p>La velocidad aumenta en la dirección del movimiento (el cuerpo va más rápido).</p>
+          </div>
+          <div class="card">
+            <h4>Aceleración negativa (desaceleración o deceleración)</h4>
+            <p>La velocidad disminuye. También se llama aceleración de frenado.</p>
+          </div>
+        </div>
+
+        <article class="topic-block">
+          <h3>5.1 Movimiento Rectilíneo Uniformemente Acelerado (MRUA)</h3>
+          <p>Cuando la aceleración es constante, usamos estas ecuaciones fundamentales:</p>
+          
+          <div class="formulas-grid">
+            <div class="formula-card">
+              <p class="formula-text">v<sub>f</sub> = v<sub>i</sub> + a·t</p>
+              <span>Velocidad final</span>
+            </div>
+            <div class="formula-card">
+              <p class="formula-text">x = v<sub>i</sub>·t + ½·a·t²</p>
+              <span>Posición (si x<sub>i</sub> = 0)</span>
+            </div>
+            <div class="formula-card">
+              <p class="formula-text">v<sub>f</sub>² = v<sub>i</sub>² + 2·a·x</p>
+              <span>Sin tiempo</span>
+            </div>
+            <div class="formula-card">
+              <p class="formula-text">x = (v<sub>i</sub> + v<sub>f</sub>)/2 · t</p>
+              <span>Con velocidades</span>
+            </div>
+          </div>
+        </article>
+
+        <div class="interactive-box">
+          <h4>Simulador de MRUA</h4>
+          <div class="calc-form">
+            <div class="form-group">
+              <label>Velocidad inicial v<sub>i</sub> (m/s)</label>
+              <input type="number" id="mruaVi" value="0" step="any">
+            </div>
+            <div class="form-group">
+              <label>Aceleración a (m/s²)</label>
+              <input type="number" id="mruaA" value="2" step="any">
+            </div>
+            <div class="form-group">
+              <label>Tiempo t (s)</label>
+              <input type="number" id="mruaT" value="5" step="any">
+            </div>
+            <button class="btn primary" onclick="calcularMRUA()">Calcular</button>
+          </div>
+          <div id="mruaResultado" class="result-box hidden"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAÍDA LIBRE -->
+    <section id="caida-libre" class="section alt">
+      <div class="container">
+        <h2>6. Movimiento de los cuerpos que caen (Caída libre)</h2>
+
+        <div class="definition">
+          <span class="def-label">Definición</span>
+          <p><strong>Caída libre</strong> es el movimiento de un cuerpo que cae bajo la acción exclusiva de la gravedad, sin resistencia del aire (idealización).</p>
+          <p>La aceleración es constante y se llama <strong>aceleración de la gravedad</strong> \(g\).</p>
+          <p>\[g \approx 9.81 \, \text{m/s}^2 \approx 9.8 \, \text{m/s}^2\] (hacia abajo)</p>
+        </div>
+
+        <div class="callout info">
+          <p>En la mayoría de los problemas de examen se toma \(g = 9.8 \, \text{m/s}^2\) o simplemente \(10 \, \text{m/s}^2\) para facilitar cálculos.</p>
+        </div>
+
+        <h3>Ecuaciones de caída libre</h3>
+        <p>Son las mismas del MRUA, pero con \(a = g\) (o \(a = -g\) si el sentido positivo es hacia arriba):</p>
+
+        <div class="formulas-grid">
+          <div class="formula-card">
+            <p class="formula-text">v = g·t</p>
+            <span>Si parte del reposo</span>
+          </div>
+          <div class="formula-card">
+            <p class="formula-text">h = ½·g·t²</p>
+            <span>Altura desde el reposo</span>
+          </div>
+          <div class="formula-card">
+            <p class="formula-text">v² = 2·g·h</p>
+            <span>Velocidad al llegar al suelo</span>
+          </div>
+          <div class="formula-card">
+            <p class="formula-text">t = √(2h/g)</p>
+            <span>Tiempo de caída</span>
+          </div>
+        </div>
+
+        <div class="interactive-box">
+          <h4>Calculadora de caída libre</h4>
+          <div class="calc-form">
+            <div class="form-group">
+              <label>Altura \(h\) (m)</label>
+              <input type="number" id="caidaH" value="20" step="any">
+            </div>
+            <div class="form-group">
+              <label>Valor de \(g\) (m/s²)</label>
+              <input type="number" id="caidaG" value="9.8" step="any">
+            </div>
+            <button class="btn primary" onclick="calcularCaidaLibre()">Calcular tiempo y velocidad final</button>
+          </div>
+          <div id="caidaResultado" class="result-box hidden"></div>
+        </div>
+
+        <div class="example important">
+          <h4>Ejemplo resuelto: caída desde un edificio</h4>
+          <p>Una pelota se suelta desde lo alto de un edificio de 45 m. Calcula:</p>
+          <ol>
+            <li>El tiempo que tarda en llegar al suelo.</li>
+            <li>La velocidad con la que llega al suelo.</li>
+          </ol>
+          <p><strong>Datos:</strong> \(h = 45\) m, \(v_i = 0\), \(g = 9.8\) m/s²</p>
+          <p><strong>1.</strong> \(t = \sqrt{\dfrac{2h}{g}} = \sqrt{\dfrac{2 \times 45}{9.8}} = \sqrt{9.184} \approx 3.03\) s</p>
+          <p><strong>2.</strong> \(v = g t = 9.8 \times 3.03 \approx 29.7\) m/s</p>
+          <p>O con \(v^2 = 2gh \Rightarrow v = \sqrt{2 \times 9.8 \times 45} = \sqrt{882} \approx 29.7\) m/s</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- EJERCICIOS -->
+    <section id="ejercicios" class="section">
+      <div class="container">
+        <h2>7. Ejercicios interactivos</h2>
+        <p>Resuelve los siguientes ejercicios. Al hacer clic en “Verificar” recibirás retroalimentación inmediata.</p>
+
+        <!-- Ejercicio 1 -->
+        <div class="exercise-card" data-exercise="1">
+          <h3>Ejercicio 1 · Distancia y desplazamiento</h3>
+          <p>Un estudiante camina 80 m hacia el norte, luego 60 m hacia el este y finalmente 80 m hacia el sur. ¿Cuál es la distancia total recorrida y la magnitud del desplazamiento?</p>
+          <div class="options">
+            <label><input type="radio" name="ex1" value="a"> a) Distancia = 220 m · Desplazamiento = 60 m</label>
+            <label><input type="radio" name="ex1" value="b"> b) Distancia = 220 m · Desplazamiento = 220 m</label>
+            <label><input type="radio" name="ex1" value="c"> c) Distancia = 60 m · Desplazamiento = 220 m</label>
+            <label><input type="radio" name="ex1" value="d"> d) Distancia = 140 m · Desplazamiento = 60 m</label>
+          </div>
+          <button class="btn small" onclick="checkExercise(1, 'a')">Verificar</button>
+          <div class="feedback" id="feedback1"></div>
+        </div>
+
+        <!-- Ejercicio 2 -->
+        <div class="exercise-card" data-exercise="2">
+          <h3>Ejercicio 2 · Rapidez media</h3>
+          <p>Un auto recorre 150 km en 2 horas y media. ¿Cuál es su rapidez media en km/h y en m/s?</p>
+          <div class="options">
+            <label><input type="radio" name="ex2" value="a"> a) 60 km/h · 16.67 m/s</label>
+            <label><input type="radio" name="ex2" value="b"> b) 75 km/h · 20.83 m/s</label>
+            <label><input type="radio" name="ex2" value="c"> c) 50 km/h · 13.89 m/s</label>
+            <label><input type="radio" name="ex2" value="d"> d) 100 km/h · 27.78 m/s</label>
+          </div>
+          <button class="btn small" onclick="checkExercise(2, 'a')">Verificar</button>
+          <div class="feedback" id="feedback2"></div>
+        </div>
+
+        <!-- Ejercicio 3 -->
+        <div class="exercise-card" data-exercise="3">
+          <h3>Ejercicio 3 · Interpretación de gráfica</h3>
+          <p>En una gráfica posición-tiempo, un tramo es una línea horizontal. ¿Qué significa?</p>
+          <div class="options">
+            <label><input type="radio" name="ex3" value="a"> a) El objeto se mueve con velocidad constante</label>
+            <label><input type="radio" name="ex3" value="b"> b) El objeto está en reposo</label>
+            <label><input type="radio" name="ex3" value="c"> c) El objeto está acelerando</label>
+            <label><input type="radio" name="ex3" value="d"> d) El objeto se mueve hacia atrás</label>
+          </div>
+          <button class="btn small" onclick="checkExercise(3, 'b')">Verificar</button>
+          <div class="feedback" id="feedback3"></div>
+        </div>
+
+        <!-- Ejercicio 4 -->
+        <div class="exercise-card" data-exercise="4">
+          <h3>Ejercicio 4 · Aceleración</h3>
+          <p>Un motociclista parte del reposo y alcanza 20 m/s en 4 segundos. ¿Cuál es su aceleración?</p>
+          <div class="options">
+            <label><input type="radio" name="ex4" value="a"> a) 5 m/s²</label>
+            <label><input type="radio" name="ex4" value="b"> b) 80 m/s²</label>
+            <label><input type="radio" name="ex4" value="c"> c) 0.2 m/s²</label>
+            <label><input type="radio" name="ex4" value="d"> d) 16 m/s²</label>
+          </div>
+          <button class="btn small" onclick="checkExercise(4, 'a')">Verificar</button>
+          <div class="feedback" id="feedback4"></div>
+        </div>
+
+        <!-- Ejercicio 5 -->
+        <div class="exercise-card" data-exercise="5">
+          <h3>Ejercicio 5 · Caída libre</h3>
+          <p>Una piedra se deja caer desde 78.4 m de altura. ¿Cuánto tiempo tarda en llegar al suelo? (usa \(g = 9.8\) m/s²)</p>
+          <div class="options">
+            <label><input type="radio" name="ex5" value="a"> a) 2 s</label>
+            <label><input type="radio" name="ex5" value="b"> b) 4 s</label>
+            <label><input type="radio" name="ex5" value="c"> c) 8 s</label>
+            <label><input type="radio" name="ex5" value="d"> d) 16 s</label>
+          </div>
+          <button class="btn small" onclick="checkExercise(5, 'b')">Verificar</button>
+          <div class="feedback" id="feedback5"></div>
+        </div>
+
+        <!-- Ejercicio abierto -->
+        <div class="exercise-card open">
+          <h3>Ejercicio 6 · Problema completo (escribe tu respuesta)</h3>
+          <p>Un auto parte del reposo y acelera a razón de 3 m/s² durante 6 segundos. Después mantiene velocidad constante durante 10 segundos. Calcula:</p>
+          <ol>
+            <li>La velocidad que alcanza al final de la aceleración.</li>
+            <li>La distancia total recorrida en los 16 segundos.</li>
+          </ol>
+          <textarea id="openAnswer" placeholder="Escribe aquí tu procedimiento y respuesta..." rows="5"></textarea>
+          <button class="btn small" onclick="showOpenSolution()">Ver solución completa</button>
+          <div id="openSolution" class="feedback hidden">
+            <p><strong>Solución:</strong></p>
+            <p>1. \(v = a t = 3 \times 6 = 18\) m/s</p>
+            <p>2. Durante la aceleración: \(x_1 = \dfrac{1}{2} a t^2 = \dfrac{1}{2} \times 3 \times 36 = 54\) m</p>
+            <p>Durante velocidad constante: \(x_2 = v t = 18 \times 10 = 180\) m</p>
+            <p><strong>Distancia total = 54 + 180 = 234 m</strong></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMEN -->
+    <section class="section alt">
+      <div class="container">
+        <h2>Resumen rápido para el examen</h2>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <strong>Distancia</strong> → escalar, longitud de la trayectoria
+          </div>
+          <div class="summary-item">
+            <strong>Desplazamiento</strong> → vector, de inicio a fin
+          </div>
+          <div class="summary-item">
+            <strong>Rapidez</strong> → \(v = d/t\) (escalar)
+          </div>
+          <div class="summary-item">
+            <strong>Velocidad</strong> → \(\vec{v} = \Delta\vec{r}/\Delta t\) (vector)
+          </div>
+          <div class="summary-item">
+            <strong>Aceleración</strong> → \(a = \Delta v / \Delta t\)
+          </div>
+          <div class="summary-item">
+            <strong>Caída libre</strong> → \(a = g \approx 9.8\) m/s²
+          </div>
+          <div class="summary-item">
+            <strong>Gráfica x-t</strong> → pendiente = velocidad
+          </div>
+          <div class="summary-item">
+            <strong>MRUA</strong> → \(v = v_i + at\), \(x = v_i t + \frac12 at^2\)
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <img src="assets/conamat-logo.png" alt="CONAMAT" class="footer-logo" />
+      <p>Material de apoyo · Guía CONAMAT · Tema 1: El movimiento</p>
+      <p class="author">Creado por el <strong>Prof. Fabián Soberanes Martín</strong></p>
+      <p>
+        <a href="fuerzas.html" style="color:#c4b5fd">T2 Fuerzas</a> ·
+        <a href="interacciones.html" style="color:#c4b5fd">T3 Interacciones</a> ·
+        <a href="estructura.html" style="color:#c4b5fd">T4 Estructura</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      renderMathInElement(document.body, {
+        delimiters: [
+          {left: '\\[', right: '\\]', display: true},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '$$', right: '$$', display: true},
+          {left: '$', right: '$', display: false}
+        ],
+        throwOnError: false
+      });
+    });
+  </script>
+</body>
+</html>

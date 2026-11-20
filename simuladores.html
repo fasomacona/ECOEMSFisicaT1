@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Simuladores gráficos · Física CONAMAT</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body { background: #faf5ff; }
+    .sim-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0 1.5rem;
+      justify-content: center;
+    }
+    .sim-nav button {
+      padding: 0.55rem 1rem;
+      border-radius: 999px;
+      border: 2px solid #e9d5ff;
+      background: white;
+      color: #5b21b6;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    .sim-nav button.on {
+      background: #7c3aed;
+      color: white;
+      border-color: #7c3aed;
+    }
+    .sim-panel {
+      display: none;
+      background: white;
+      border-radius: 16px;
+      padding: 1.2rem;
+      box-shadow: var(--shadow);
+      border: 2px solid #e9d5ff;
+      margin-bottom: 1.5rem;
+    }
+    .sim-panel.active { display: block; }
+    .sim-panel h2 {
+      margin: 0 0 0.4rem;
+      color: #5b21b6;
+      font-size: 1.35rem;
+    }
+    .sim-panel .hint {
+      color: #6b7280;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+    .canvas-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 640px;
+      margin: 0 auto;
+      background: #f8fafc;
+      border-radius: 12px;
+      border: 2px solid #ddd6fe;
+      overflow: hidden;
+      touch-action: none;
+    }
+    .canvas-wrap canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      cursor: grab;
+    }
+    .canvas-wrap canvas:active { cursor: grabbing; }
+    .readout {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+    .readout .val {
+      background: #ede9fe;
+      border-radius: 10px;
+      padding: 0.7rem 0.9rem;
+      text-align: center;
+    }
+    .readout .val span {
+      display: block;
+      font-size: 0.8rem;
+      color: #6b7280;
+      font-weight: 600;
+    }
+    .readout .val strong {
+      font-size: 1.25rem;
+      color: #5b21b6;
+    }
+    .sliders {
+      margin-top: 1rem;
+      display: grid;
+      gap: 0.8rem;
+    }
+    .sliders label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      font-weight: 600;
+      color: #4c1d95;
+      font-size: 0.9rem;
+    }
+    .sliders input[type=range] {
+      width: 100%;
+      accent-color: #7c3aed;
+      height: 1.4rem;
+    }
+    .page-hero {
+      background: linear-gradient(135deg, #5b21b6, #7c3aed, #db2777);
+      color: white;
+      padding: 2rem 1.2rem;
+      text-align: center;
+    }
+    .page-hero h1 { margin: 0.5rem 0; font-size: clamp(1.5rem, 4vw, 2.2rem); }
+    .page-hero p { opacity: 0.92; margin: 0; }
+    .page-hero img.hero-logo {
+      max-width: 200px;
+      background: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="assets/conamat-icon.png" alt="" class="nav-icon" />
+        <span>Simuladores</span>
+      </a>
+      <ul class="nav-menu">
+        <li><a href="juegos.html">Juegos</a></li>
+        <li><a href="index.html">Temas</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-hero">
+    <img src="assets/conamat-logo.png" alt="CONAMAT" class="hero-logo" />
+    <h1>Simuladores gráficos interactivos</h1>
+    <p>Arrastra, mueve y observa los valores en tiempo real</p>
+  </div>
+
+  <main class="section" style="padding-top:1.5rem">
+    <div class="container">
+      <div class="sim-nav" id="simNav">
+        <button class="on" data-sim="fuerzas">Fuerzas</button>
+        <button data-sim="pascal">Pascal / hidráulico</button>
+        <button data-sim="presion">Presión</button>
+        <button data-sim="ohm">Ley de Ohm</button>
+        <button data-sim="onda">Onda</button>
+        <button data-sim="caida">Caída libre</button>
+        <button data-sim="plano">Plano inclinado</button>
+        <button data-sim="newton">2ª ley Newton</button>
+        <button data-sim="mru">MRU</button>
+        <button data-sim="mrua">MRUA</button>
+        <button data-sim="tiro">Tiro vertical</button>
+        <button data-sim="f2d">Fuerzas 2D</button>
+      </div>
+
+      <!-- 1. FUERZAS -->
+      <div class="sim-panel active" id="sim-fuerzas">
+        <h2>Fuerza resultante (1D)</h2>
+        <p class="hint">Arrastra las flechas roja y azul. La flecha verde es F<sub>R</sub>.</p>
+        <div class="canvas-wrap">
+          <canvas id="cvFuerzas" width="640" height="280"></canvas>
+        </div>
+        <div class="readout">
+          <div class="val"><span>F₁ (N)</span><strong id="f1v">40</strong></div>
+          <div class="val"><span>F₂ (N)</span><strong id="f2v">-15</strong></div>
+          <div class="val"><span>F<sub>R</sub> (N)</span><strong id="frv">25</strong></div>
+        </div>
+      </div>
+
+      <!-- 2. PASCAL -->
+      <div class="sim-panel" id="sim-pascal">
+        <h2>Principio de Pascal · Gato hidráulico</h2>
+        <p class="hint">Mueve los deslizadores de áreas y F₁. Observa cómo cambia F₂.</p>
+        <div class="canvas-wrap">
+          <canvas id="cvPascal" width="640" height="320"></canvas>
+        </div>
+        <div class="sliders">
+          <label>F₁ — fuerza pequeña (N)
+            <input type="range" id="pasF1" min="10" max="100" value="40" />
+          </label>
+          <label>A₁ — área pequeña (cm²)
+            <input type="range" id="pasA1" min="5" max="40" value="10" />
+          </label>
+          <label>A₂ — área grande (cm²)
+            <input type="range" id="pasA2" min="20" max="200" value="80" />
+          </label>
+        </div>
+        <div class="readout">
+          <div class="val"><span>Presión P</span><strong id="pasP">—</strong></div>
+          <div class="val"><span>F₂ resultante</span><strong id="pasF2">—</strong></div>
+          <div class="val"><span>Multiplicador</span><strong id="pasMul">—</strong></div>
+        </div>
+      </div>
+
+      <!-- 3. PRESIÓN -->
+      <div class="sim-panel" id="sim-presion">
+        <h2>Presión = F / A</h2>
+        <p class="hint">Arrastra el control de fuerza y el ancho del área (la base).</p>
+        <div class="canvas-wrap">
+          <canvas id="cvPresion" width="640" height="300"></canvas>
+        </div>
+        <div class="readout">
+          <div class="val"><span>Fuerza F (N)</span><strong id="preF">100</strong></div>
+          <div class="val"><span>Área A (m²)</span><strong id="preA">0.50</strong></div>
+          <div class="val"><span>Presión P (Pa)</span><strong id="preP">200</strong></div>
+        </div>
+      </div>
+
+      <!-- 4. OHM -->
+      <div class="sim-panel" id="sim-ohm">
+        <h2>Ley de Ohm · V = I · R</h2>
+        <p class="hint">Ajusta voltaje y resistencia. La “corriente” se anima en el circuito.</p>
+        <div class="canvas-wrap">
+          <canvas id="cvOhm" width="640" height="280"></canvas>
+        </div>
+        <div class="sliders">
+          <label>Voltaje V (V)
+            <input type="range" id="ohmV" min="1" max="24" value="12" />
+          </label>
+          <label>Resistencia R (Ω)
+            <input type="range" id="ohmR" min="1" max="20" value="4" />
+          </label>
+        </div>
+        <div class="readout">
+          <div class="val"><span>V (V)</span><strong id="ohmVv">12</strong></div>
+          <div class="val"><span>R (Ω)</span><strong id="ohmRv">4</strong></div>
+          <div class="val"><span>I = V/R (A)</span><strong id="ohmIv">3.00</strong></div>
+        </div>
+      </div>
+
+      <!-- 5. ONDA -->
+      <div class="sim-panel" id="sim-onda">
+        <h2>Onda · v = λ · f</h2>
+        <p class="hint">Cambia longitud de onda y frecuencia. La onda se dibuja al instante.</p>
+        <div class="canvas-wrap">
+          <canvas id="cvOnda" width="640" height="260"></canvas>
+        </div>
+        <div class="sliders">
+          <label>Longitud de onda λ (m)
+            <input type="range" id="ondaL" min="20" max="120" value="60" />
+          </label>
+          <label>Frecuencia f (relativa)
+            <input type="range" id="ondaF" min="1" max="8" value="3" step="0.5" />
+          </label>
+        </div>
+        <div class="readout">
+          <div class="val"><span>λ (u)</span><strong id="ondaLv">60</strong></div>
+          <div class="val"><span>f</span><strong id="ondaFv">3</strong></div>
+          <div class="val"><span>v = λ·f</span><strong id="ondaVv">180</strong></div>
+        </div>
+      </div>
+
+      <!-- 6. CAÍDA -->
+      <div class="sim-panel" id="sim-caida">
+        <h2>Caída libre</h2>
+        <p class="hint">Elige la altura y pulsa “Soltar”. Observa tiempo y velocidad al llegar.</p>
+        <div class="canvas-wrap">
+          <canvas id="cvCaida" width="640" height="340"></canvas>
+        </div>
+        <div class="sliders">
+          <label>Altura h (m)
+            <input type="range" id="caidaH" min="5" max="80" value="45" />
+          </label>
+        </div>
+        <div style="text-align:center;margin:0.8rem 0">
+          <button class="btn primary" id="caidaBtn" onclick="dropBall()">Soltar</button>
+          <button class="btn secondary" onclick="resetBall()">Reiniciar</button>
+        </div>
+        <div class="readout">
+          <div class="val"><span>h (m)</span><strong id="caidaHv">45</strong></div>
+          <div class="val"><span>t (s)</span><strong id="caidaTv">—</strong></div>
+          <div class="val"><span>v al suelo (m/s)</span><strong id="caidaVv">—</strong></div>
+        </div>
+      </div>
+
+      <!-- 7. PLANO INCLINADO -->
+      <div class="sim-panel" id="sim-plano">
+        <h2>Plano inclinado</h2>
+        <p class="hint">Cambia el ángulo, la masa y el coeficiente de fricción μ. Observa fuerzas, aceleración y si el bloque se desliza.</p>
+        <div class="canvas-wrap">
+          <canvas id="cvPlano" width="640" height="360"></canvas>
+        </div>
+        <div class="sliders">
+          <label>Ángulo θ (grados)
+            <input type="range" id="plTheta" min="5" max="60" value="30" />
+          </label>
+          <label>Masa m (kg)
+            <input type="range" id="plM" min="1" max="20" value="5" />
+          </label>
+          <label>Fricción μ (0 = sin fricción)
+            <input type="range" id="plMu" min="0" max="1" value="0.2" step="0.05" />
+          </label>
+        </div>
+        <div style="text-align:center;margin:0.8rem 0">
+          <button class="btn primary" id="plBtn" onclick="runPlano()">Soltar bloque</button>
+          <button class="btn secondary" onclick="resetPlano()">Reiniciar</button>
+        </div>
+        <div class="readout">
+          <div class="val"><span>θ</span><strong id="plThetaV">30°</strong></div>
+          <div class="val"><span>P = mg (N)</span><strong id="plPV">—</strong></div>
+          <div class="val"><span>P∥ = mg senθ</span><strong id="plParV">—</strong></div>
+          <div class="val"><span>P⊥ = mg cosθ</span><strong id="plPerpV">—</strong></div>
+          <div class="val"><span>N (N)</span><strong id="plNV">—</strong></div>
+          <div class="val"><span>f<sub>r</sub> máx (N)</span><strong id="plFrV">—</strong></div>
+          <div class="val"><span>a (m/s²)</span><strong id="plAV">—</strong></div>
+          <div class="val"><span>¿Se mueve?</span><strong id="plMoveV">—</strong></div>
+        </div>
+      </div>
+
+
+      <!-- 8. SEGUNDA LEY DE NEWTON -->
+      <div class="sim-panel" id="sim-newton">
+        <h2>Segunda ley de Newton · F = m · a</h2>
+        <p class="hint">Ajusta la fuerza neta y la masa. Observa la aceleración y cómo se mueve el bloque. Puedes empujar a izquierda o derecha.</p>
+        <div class="canvas-wrap">
+          <canvas id="cvNewton" width="640" height="300"></canvas>
+        </div>
+        <div class="sliders">
+          <label>Fuerza neta F (N) — negativo = izquierda
+            <input type="range" id="nwF" min="-50" max="50" value="20" />
+          </label>
+          <label>Masa m (kg)
+            <input type="range" id="nwM" min="1" max="25" value="5" />
+          </label>
+        </div>
+        <div style="text-align:center;margin:0.8rem 0">
+          <button class="btn primary" onclick="runNewton()">Aplicar fuerza</button>
+          <button class="btn secondary" onclick="resetNewton()">Reiniciar</button>
+          <button class="btn secondary" onclick="stopNewton()">Pausar</button>
+        </div>
+        <div class="readout">
+          <div class="val"><span>F (N)</span><strong id="nwFv">20</strong></div>
+          <div class="val"><span>m (kg)</span><strong id="nwMv">5</strong></div>
+          <div class="val"><span>a = F/m (m/s²)</span><strong id="nwAv">4.00</strong></div>
+          <div class="val"><span>v (m/s)</span><strong id="nwVv">0.00</strong></div>
+          <div class="val"><span>x (m)</span><strong id="nwXv">0.00</strong></div>
+        </div>
+        <div class="callout info" style="margin-top:1rem">
+          <strong>Idea clave:</strong> Misma fuerza, más masa → menos aceleración. Más fuerza, misma masa → más aceleración.
+        </div>
+      </div>
+
+
+      <!-- MRU -->
+      <div class="sim-panel" id="sim-mru">
+        <h2>MRU · Movimiento rectilíneo uniforme</h2>
+        <p class="hint">Velocidad constante. x = x₀ + v·t. Ajusta v y observa posición y gráfica.</p>
+        <div class="canvas-wrap">
+          <canvas id="cvMRU" width="640" height="320"></canvas>
+        </div>
+        <div class="sliders">
+          <label>Velocidad v (m/s)
+            <input type="range" id="mruV" min="-12" max="12" value="4" />
+          </label>
+          <label>Posición inicial x₀ (m)
+            <input type="range" id="mruX0" min="-10" max="10" value="0" />
+          </label>
+        </div>
+        <div style="text-align:center;margin:0.8rem 0">
+          <button class="btn primary" onclick="runMRU()">Iniciar</button>
+          <button class="btn secondary" onclick="resetMRU()">Reiniciar</button>
+          <button class="btn secondary" onclick="stopMRU()">Pausar</button>
+        </div>
+        <div class="readout">
+          <div class="val"><span>v (m/s)</span><strong id="mruVv">4</strong></div>
+          <div class="val"><span>x₀ (m)</span><strong id="mruX0v">0</strong></div>
+          <div class="val"><span>t (s)</span><strong id="mruTv">0.00</strong></div>
+          <div class="val"><span>x = x₀+v·t</span><strong id="mruXv">0.00</strong></div>
+        </div>
+      </div>
+
+      <!-- MRUA -->
+      <div class="sim-panel" id="sim-mrua">
+        <h2>MRUA · Movimiento rectilíneo uniformemente acelerado</h2>
+        <p class="hint">Aceleración constante. v = v₀+a·t · x = x₀+v₀·t+½·a·t²</p>
+        <div class="canvas-wrap">
+          <canvas id="cvMRUA" width="640" height="320"></canvas>
+        </div>
+        <div class="sliders">
+          <label>Velocidad inicial v₀ (m/s)
+            <input type="range" id="mruaV0" min="-8" max="8" value="2" />
+          </label>
+          <label>Aceleración a (m/s²)
+            <input type="range" id="mruaA" min="-6" max="6" value="2" step="0.5" />
+          </label>
+        </div>
+        <div style="text-align:center;margin:0.8rem 0">
+          <button class="btn primary" onclick="runMRUA()">Iniciar</button>
+          <button class="btn secondary" onclick="resetMRUA()">Reiniciar</button>
+          <button class="btn secondary" onclick="stopMRUA()">Pausar</button>
+        </div>
+        <div class="readout">
+          <div class="val"><span>v₀</span><strong id="mruaV0v">2</strong></div>
+          <div class="val"><span>a</span><strong id="mruaAv">2</strong></div>
+          <div class="val"><span>t (s)</span><strong id="mruaTv">0.00</strong></div>
+          <div class="val"><span>v (m/s)</span><strong id="mruaVv">2.00</strong></div>
+          <div class="val"><span>x (m)</span><strong id="mruaXv">0.00</strong></div>
+        </div>
+      </div>
+
+      <!-- TIRO VERTICAL -->
+      <div class="sim-panel" id="sim-tiro">
+        <h2>Tiro vertical</h2>
+        <p class="hint">Lanzamiento hacia arriba con g ≈ 9.8 m/s². Sube, se detiene y cae.</p>
+        <div class="canvas-wrap">
+          <canvas id="cvTiro" width="640" height="380"></canvas>
+        </div>
+        <div class="sliders">
+          <label>Velocidad inicial v₀ hacia arriba (m/s)
+            <input type="range" id="tiroV0" min="5" max="40" value="20" />
+          </label>
+        </div>
+        <div style="text-align:center;margin:0.8rem 0">
+          <button class="btn primary" onclick="runTiro()">Lanzar</button>
+          <button class="btn secondary" onclick="resetTiro()">Reiniciar</button>
+        </div>
+        <div class="readout">
+          <div class="val"><span>v₀ (m/s)</span><strong id="tiroV0v">20</strong></div>
+          <div class="val"><span>h máx (m)</span><strong id="tiroHmax">—</strong></div>
+          <div class="val"><span>t subida (s)</span><strong id="tiroTsub">—</strong></div>
+          <div class="val"><span>t total (s)</span><strong id="tiroTtot">—</strong></div>
+          <div class="val"><span>y (m)</span><strong id="tiroYv">0</strong></div>
+          <div class="val"><span>v (m/s)</span><strong id="tiroVv">0</strong></div>
+        </div>
+      </div>
+
+      <!-- FUERZAS 2D -->
+      <div class="sim-panel" id="sim-f2d">
+        <h2>Sumatoria de fuerzas 2D</h2>
+        <p class="hint">Arrastra los extremos de F₁, F₂ y F₃. La flecha verde es la resultante F<sub>R</sub>.</p>
+        <div class="canvas-wrap">
+          <canvas id="cvF2D" width="640" height="400"></canvas>
+        </div>
+        <div class="readout">
+          <div class="val"><span>F₁ (N)</span><strong id="f2d1">—</strong></div>
+          <div class="val"><span>F₂ (N)</span><strong id="f2d2">—</strong></div>
+          <div class="val"><span>F₃ (N)</span><strong id="f2d3">—</strong></div>
+          <div class="val"><span>F<sub>Rx</sub></span><strong id="f2dRx">—</strong></div>
+          <div class="val"><span>F<sub>Ry</sub></span><strong id="f2dRy">—</strong></div>
+          <div class="val"><span>|F<sub>R</sub>| (N)</span><strong id="f2dR">—</strong></div>
+          <div class="val"><span>ángulo FR</span><strong id="f2dAng">—</strong></div>
+        </div>
+      </div>
+
+      <p style="text-align:center;color:#6b7280;font-size:0.9rem;margin-top:1rem">
+        Creado por el <strong>Prof. Fabián Soberanes Martín</strong> ·
+        <a href="juegos.html">Juegos</a> ·
+        <a href="index.html">Temas</a>
+      </p>
+    </div>
+  </main>
+
+  <script>
+    /* ===== NAV ===== */
+    document.querySelectorAll('#simNav button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#simNav button').forEach(b => b.classList.remove('on'));
+        btn.classList.add('on');
+        document.querySelectorAll('.sim-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById('sim-' + btn.dataset.sim).classList.add('active');
+        // redraw visible canvases
+        if (btn.dataset.sim === 'fuerzas') drawFuerzas();
+        if (btn.dataset.sim === 'pascal') drawPascal();
+        if (btn.dataset.sim === 'presion') drawPresion();
+        if (btn.dataset.sim === 'ohm') drawOhm();
+        if (btn.dataset.sim === 'onda') drawOnda();
+        if (btn.dataset.sim === 'caida') drawCaida(true);
+        if (btn.dataset.sim === 'plano') drawPlano(true);
+        if (btn.dataset.sim === 'newton') { resetNewton(); drawNewton(); }
+        if (btn.dataset.sim === 'mru') { resetMRU(); }
+        if (btn.dataset.sim === 'mrua') { resetMRUA(); }
+        if (btn.dataset.sim === 'tiro') { resetTiro(); }
+        if (btn.dataset.sim === 'f2d') { drawF2D(); }
+      });
+    });
+
+    function canvasXY(cv, e) {
+      const r = cv.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const scaleX = cv.width / r.width;
+      const scaleY = cv.height / r.height;
+      return { x: (clientX - r.left) * scaleX, y: (clientY - r.top) * scaleY };
+    }
+
+    /* ========== 1. FUERZAS ========== */
+    const cvF = document.getElementById('cvFuerzas');
+    const ctxF = cvF.getContext('2d');
+    let f1 = 40, f2 = -15; // N, scale: 1 N = 3 px from center
+    const scaleF = 3;
+    let dragF = null; // 1 or 2
+
+    function drawFuerzas() {
+      const w = cvF.width, h = cvF.height, cy = h / 2, cx = w / 2;
+      ctxF.clearRect(0, 0, w, h);
+      // axis
+      ctxF.strokeStyle = '#cbd5e1';
+      ctxF.lineWidth = 2;
+      ctxF.beginPath();
+      ctxF.moveTo(40, cy); ctxF.lineTo(w - 40, cy);
+      ctxF.stroke();
+      // ticks
+      ctxF.fillStyle = '#94a3b8';
+      ctxF.font = '12px system-ui';
+      for (let n = -80; n <= 80; n += 20) {
+        const x = cx + n * scaleF;
+        ctxF.beginPath();
+        ctxF.moveTo(x, cy - 6); ctxF.lineTo(x, cy + 6);
+        ctxF.stroke();
+        if (n !== 0) ctxF.fillText(n, x - 8, cy + 20);
+      }
+      ctxF.fillText('0', cx - 4, cy + 20);
+
+      function arrow(val, color, yOff, label) {
+        const x2 = cx + val * scaleF;
+        ctxF.strokeStyle = color;
+        ctxF.fillStyle = color;
+        ctxF.lineWidth = 6;
+        ctxF.lineCap = 'round';
+        ctxF.beginPath();
+        ctxF.moveTo(cx, cy + yOff);
+        ctxF.lineTo(x2, cy + yOff);
+        ctxF.stroke();
+        // head
+        const dir = val >= 0 ? 1 : -1;
+        ctxF.beginPath();
+        ctxF.moveTo(x2, cy + yOff);
+        ctxF.lineTo(x2 - dir * 14, cy + yOff - 8);
+        ctxF.lineTo(x2 - dir * 14, cy + yOff + 8);
+        ctxF.closePath();
+        ctxF.fill();
+        // handle circle
+        ctxF.beginPath();
+        ctxF.arc(x2, cy + yOff, 14, 0, Math.PI * 2);
+        ctxF.fill();
+        ctxF.fillStyle = '#fff';
+        ctxF.font = 'bold 11px system-ui';
+        ctxF.fillText(label, x2 - 6, cy + yOff + 4);
+      }
+
+      arrow(f1, '#ef4444', -40, 'F1');
+      arrow(f2, '#3b82f6', 40, 'F2');
+      const fr = f1 + f2;
+      arrow(fr, '#10b981', 0, 'FR');
+
+      document.getElementById('f1v').textContent = f1;
+      document.getElementById('f2v').textContent = f2;
+      document.getElementById('frv').textContent = fr;
+    }
+
+    function hitForce(x, y) {
+      const cy = cvF.height / 2, cx = cvF.width / 2;
+      const x1 = cx + f1 * scaleF, x2 = cx + f2 * scaleF;
+      if (Math.hypot(x - x1, y - (cy - 40)) < 28) return 1;
+      if (Math.hypot(x - x2, y - (cy + 40)) < 28) return 2;
+      return null;
+    }
+
+    function onFStart(e) {
+      e.preventDefault();
+      const p = canvasXY(cvF, e);
+      dragF = hitForce(p.x, p.y);
+    }
+    function onFMove(e) {
+      if (!dragF) return;
+      e.preventDefault();
+      const p = canvasXY(cvF, e);
+      const cx = cvF.width / 2;
+      let v = Math.round((p.x - cx) / scaleF);
+      v = Math.max(-90, Math.min(90, v));
+      if (dragF === 1) f1 = v; else f2 = v;
+      drawFuerzas();
+    }
+    function onFEnd() { dragF = null; }
+
+    cvF.addEventListener('mousedown', onFStart);
+    cvF.addEventListener('mousemove', onFMove);
+    window.addEventListener('mouseup', onFEnd);
+    cvF.addEventListener('touchstart', onFStart, { passive: false });
+    cvF.addEventListener('touchmove', onFMove, { passive: false });
+    cvF.addEventListener('touchend', onFEnd);
+    drawFuerzas();
+
+    /* ========== 2. PASCAL ========== */
+    const cvP = document.getElementById('cvPascal');
+    const ctxP = cvP.getContext('2d');
+
+    function drawPascal() {
+      const F1 = +document.getElementById('pasF1').value;
+      const A1cm = +document.getElementById('pasA1').value;
+      const A2cm = +document.getElementById('pasA2').value;
+      const A1 = A1cm / 10000; // m² rough for display ratio
+      const A2 = A2cm / 10000;
+      const F2 = F1 * (A2cm / A1cm);
+      const P = F1 / (A1cm * 1e-4); // Pa if cm²→m²
+
+      document.getElementById('pasP').textContent = P.toFixed(0) + ' Pa';
+      document.getElementById('pasF2').textContent = F2.toFixed(1) + ' N';
+      document.getElementById('pasMul').textContent = '×' + (A2cm / A1cm).toFixed(1);
+
+      const w = cvP.width, h = cvP.height;
+      ctxP.clearRect(0, 0, w, h);
+
+      // fluid tank
+      const tankY = 160, tankH = 100;
+      ctxP.fillStyle = '#67e8f9';
+      ctxP.fillRect(80, tankY, w - 160, tankH);
+      ctxP.strokeStyle = '#0e7490';
+      ctxP.lineWidth = 3;
+      ctxP.strokeRect(80, tankY, w - 160, tankH);
+
+      // left piston (small)
+      const r1 = 12 + A1cm * 0.35;
+      const x1 = 150;
+      ctxP.fillStyle = '#94a3b8';
+      ctxP.fillRect(x1 - r1, tankY - 50, r1 * 2, 50);
+      ctxP.fillStyle = '#ef4444';
+      ctxP.beginPath();
+      ctxP.arc(x1, tankY - 50, r1 + 4, 0, Math.PI * 2);
+      ctxP.fill();
+      ctxP.fillStyle = '#fff';
+      ctxP.font = 'bold 13px system-ui';
+      ctxP.textAlign = 'center';
+      ctxP.fillText('F₁', x1, tankY - 46);
+
+      // right piston (large)
+      const r2p = 18 + A2cm * 0.18;
+      const x2 = w - 160;
+      ctxP.fillStyle = '#94a3b8';
+      ctxP.fillRect(x2 - r2p, tankY - 70, r2p * 2, 70);
+      ctxP.fillStyle = '#10b981';
+      ctxP.beginPath();
+      ctxP.arc(x2, tankY - 70, r2p + 6, 0, Math.PI * 2);
+      ctxP.fill();
+      ctxP.fillStyle = '#fff';
+      ctxP.fillText('F₂', x2, tankY - 65);
+
+      ctxP.fillStyle = '#334155';
+      ctxP.font = '13px system-ui';
+      ctxP.fillText('A₁ = ' + A1cm + ' cm²', x1, tankY + tankH + 28);
+      ctxP.fillText('A₂ = ' + A2cm + ' cm²', x2, tankY + tankH + 28);
+      ctxP.fillText('P = F₁/A₁ = F₂/A₂', w / 2, 36);
+      ctxP.textAlign = 'left';
+    }
+
+    ['pasF1', 'pasA1', 'pasA2'].forEach(id => {
+      document.getElementById(id).addEventListener('input', drawPascal);
+    });
+    drawPascal();
+
+    /* ========== 3. PRESIÓN ========== */
+    const cvPr = document.getElementById('cvPresion');
+    const ctxPr = cvPr.getContext('2d');
+    let forceN = 100;
+    let areaM = 0.5; // m² displayed as width
+    let dragPr = null; // 'f' or 'a'
+
+    function drawPresion() {
+      const w = cvPr.width, h = cvPr.height;
+      ctxPr.clearRect(0, 0, w, h);
+      const baseW = 80 + areaM * 280; // visual
+      const baseX = (w - baseW) / 2;
+      const baseY = 220;
+
+      // ground
+      ctxPr.fillStyle = '#e2e8f0';
+      ctxPr.fillRect(0, baseY + 20, w, 40);
+
+      // block / area
+      const blockH = 50;
+      ctxPr.fillStyle = '#a78bfa';
+      ctxPr.fillRect(baseX, baseY - blockH, baseW, blockH);
+      ctxPr.strokeStyle = '#5b21b6';
+      ctxPr.lineWidth = 2;
+      ctxPr.strokeRect(baseX, baseY - blockH, baseW, blockH);
+
+      // force arrow down
+      const fx = w / 2;
+      const fy1 = 40;
+      const fy2 = baseY - blockH - 10;
+      ctxPr.strokeStyle = '#ef4444';
+      ctxPr.lineWidth = 5;
+      ctxPr.beginPath();
+      ctxPr.moveTo(fx, fy1);
+      ctxPr.lineTo(fx, fy2);
+      ctxPr.stroke();
+      ctxPr.fillStyle = '#ef4444';
+      ctxPr.beginPath();
+      ctxPr.moveTo(fx, fy2);
+      ctxPr.lineTo(fx - 12, fy2 - 16);
+      ctxPr.lineTo(fx + 12, fy2 - 16);
+      ctxPr.fill();
+      // handle force
+      ctxPr.beginPath();
+      ctxPr.arc(fx, fy1, 16, 0, Math.PI * 2);
+      ctxPr.fill();
+      ctxPr.fillStyle = '#fff';
+      ctxPr.font = 'bold 12px system-ui';
+      ctxPr.textAlign = 'center';
+      ctxPr.fillText('F', fx, fy1 + 4);
+
+      // area handles (sides)
+      ctxPr.fillStyle = '#f59e0b';
+      ctxPr.beginPath();
+      ctxPr.arc(baseX, baseY - blockH / 2, 12, 0, Math.PI * 2);
+      ctxPr.arc(baseX + baseW, baseY - blockH / 2, 12, 0, Math.PI * 2);
+      ctxPr.fill();
+
+      const P = forceN / areaM;
+      document.getElementById('preF').textContent = forceN;
+      document.getElementById('preA').textContent = areaM.toFixed(2);
+      document.getElementById('preP').textContent = P.toFixed(1);
+      ctxPr.fillStyle = '#334155';
+      ctxPr.font = '14px system-ui';
+      ctxPr.fillText('P = F / A', w / 2, 24);
+      ctxPr.textAlign = 'left';
+    }
+
+    function onPrStart(e) {
+      e.preventDefault();
+      const p = canvasXY(cvPr, e);
+      const w = cvPr.width;
+      const baseW = 80 + areaM * 280;
+      const baseX = (w - baseW) / 2;
+      const baseY = 220;
+      if (Math.hypot(p.x - w / 2, p.y - 40) < 30) dragPr = 'f';
+      else if (Math.hypot(p.x - baseX, p.y - (baseY - 25)) < 24 ||
+               Math.hypot(p.x - (baseX + baseW), p.y - (baseY - 25)) < 24) dragPr = 'a';
+    }
+    function onPrMove(e) {
+      if (!dragPr) return;
+      e.preventDefault();
+      const p = canvasXY(cvPr, e);
+      if (dragPr === 'f') {
+        // map y: higher on screen = more force
+        forceN = Math.round(Math.max(20, Math.min(300, 300 - p.y)));
+      } else {
+        const w = cvPr.width;
+        const half = Math.abs(p.x - w / 2);
+        areaM = Math.max(0.15, Math.min(1.2, (half - 40) / 140));
+        areaM = Math.round(areaM * 100) / 100;
+      }
+      drawPresion();
+    }
+    function onPrEnd() { dragPr = null; }
+
+    cvPr.addEventListener('mousedown', onPrStart);
+    cvPr.addEventListener('mousemove', onPrMove);
+    window.addEventListener('mouseup', onPrEnd);
+    cvPr.addEventListener('touchstart', onPrStart, { passive: false });
+    cvPr.addEventListener('touchmove', onPrMove, { passive: false });
+    cvPr.addEventListener('touchend', onPrEnd);
+    drawPresion();
+
+    /* ========== 4. OHM ========== */
+    const cvO = document.getElementById('cvOhm');
+    const ctxO = cvO.getContext('2d');
+    let ohmPhase = 0;
+
+    function drawOhm() {
+      const V = +document.getElementById('ohmV').value;
+      const R = +document.getElementById('ohmR').value;
+      const I = V / R;
+      document.getElementById('ohmVv').textContent = V;
+      document.getElementById('ohmRv').textContent = R;
+      document.getElementById('ohmIv').textContent = I.toFixed(2);
+
+      const w = cvO.width, h = cvO.height;
+      ctxO.clearRect(0, 0, w, h);
+
+      // wire rectangle
+      const x0 = 80, y0 = 80, x1 = w - 80, y1 = 200;
+      ctxO.strokeStyle = '#64748b';
+      ctxO.lineWidth = 6;
+      ctxO.strokeRect(x0, y0, x1 - x0, y1 - y0);
+
+      // battery left
+      ctxO.fillStyle = '#f59e0b';
+      ctxO.fillRect(x0 - 18, (y0 + y1) / 2 - 25, 12, 50);
+      ctxO.fillStyle = '#ef4444';
+      ctxO.fillRect(x0 - 28, (y0 + y1) / 2 - 15, 10, 30);
+      ctxO.fillStyle = '#334155';
+      ctxO.font = 'bold 14px system-ui';
+      ctxO.fillText(V + ' V', x0 - 50, y0 - 10);
+
+      // resistor right zigzag
+      ctxO.strokeStyle = '#7c3aed';
+      ctxO.lineWidth = 4;
+      ctxO.beginPath();
+      const rx = x1;
+      const ry = (y0 + y1) / 2;
+      ctxO.moveTo(rx, y0);
+      for (let i = 0; i < 6; i++) {
+        ctxO.lineTo(rx + (i % 2 === 0 ? 18 : -18), y0 + (i + 1) * ((y1 - y0) / 7));
+      }
+      ctxO.lineTo(rx, y1);
+      ctxO.stroke();
+      ctxO.fillStyle = '#7c3aed';
+      ctxO.fillText(R + ' Ω', x1 + 25, ry);
+
+      // current dots
+      const speed = Math.min(I * 0.8, 8);
+      ohmPhase = (ohmPhase + speed) % 200;
+      ctxO.fillStyle = '#06b6d4';
+      const pts = [
+        // top
+        ...Array.from({ length: 8 }, (_, i) => ({ x: x0 + ((i * 40 + ohmPhase) % (x1 - x0)), y: y0 })),
+        // bottom reverse
+        ...Array.from({ length: 8 }, (_, i) => ({ x: x1 - ((i * 40 + ohmPhase) % (x1 - x0)), y: y1 }))
+      ];
+      pts.forEach(p => {
+        ctxO.beginPath();
+        ctxO.arc(p.x, p.y, 5, 0, Math.PI * 2);
+        ctxO.fill();
+      });
+
+      ctxO.fillStyle = '#334155';
+      ctxO.fillText('I = ' + I.toFixed(2) + ' A', w / 2 - 30, 36);
+    }
+
+    ['ohmV', 'ohmR'].forEach(id => {
+      document.getElementById(id).addEventListener('input', drawOhm);
+    });
+    setInterval(drawOhm, 50);
+    drawOhm();
+
+    /* ========== 5. ONDA ========== */
+    const cvW = document.getElementById('cvOnda');
+    const ctxW = cvW.getContext('2d');
+    let waveT = 0;
+
+    function drawOnda() {
+      const L = +document.getElementById('ondaL').value;
+      const f = +document.getElementById('ondaF').value;
+      const v = L * f;
+      document.getElementById('ondaLv').textContent = L;
+      document.getElementById('ondaFv').textContent = f;
+      document.getElementById('ondaVv').textContent = v;
+
+      const w = cvW.width, h = cvW.height, mid = h / 2;
+      ctxW.clearRect(0, 0, w, h);
+      ctxW.strokeStyle = '#e2e8f0';
+      ctxW.lineWidth = 1;
+      ctxW.beginPath();
+      ctxW.moveTo(0, mid); ctxW.lineTo(w, mid);
+      ctxW.stroke();
+
+      ctxW.strokeStyle = '#7c3aed';
+      ctxW.lineWidth = 3;
+      ctxW.beginPath();
+      for (let x = 0; x < w; x++) {
+        const y = mid + 50 * Math.sin((2 * Math.PI * x) / L - waveT);
+        if (x === 0) ctxW.moveTo(x, y); else ctxW.lineTo(x, y);
+      }
+      ctxW.stroke();
+
+      // wavelength markers
+      ctxW.strokeStyle = '#f59e0b';
+      ctxW.setLineDash([4, 4]);
+      ctxW.beginPath();
+      ctxW.moveTo(20, mid + 70);
+      ctxW.lineTo(20 + L, mid + 70);
+      ctxW.stroke();
+      ctxW.setLineDash([]);
+      ctxW.fillStyle = '#b45309';
+      ctxW.font = '13px system-ui';
+      ctxW.fillText('λ', 20 + L / 2 - 4, mid + 88);
+
+      waveT += f * 0.08;
+    }
+    ['ondaL', 'ondaF'].forEach(id => {
+      document.getElementById(id).addEventListener('input', () => {});
+    });
+    setInterval(drawOnda, 40);
+    drawOnda();
+
+    /* ========== 6. CAÍDA ========== */
+    const cvC = document.getElementById('cvCaida');
+    const ctxC = cvC.getContext('2d');
+    let ballY = 40, ballVy = 0, dropping = false, g = 9.8, hMeters = 45;
+    const groundY = 300;
+    const topY = 40;
+
+    function metersToY(h) {
+      // h from hMeters at top to 0 at ground
+      return topY + (1 - h / hMeters) * (groundY - topY);
+    }
+    function yToMeters(y) {
+      return hMeters * (1 - (y - topY) / (groundY - topY));
+    }
+
+    function drawCaida(staticOnly) {
+      hMeters = +document.getElementById('caidaH').value;
+      document.getElementById('caidaHv').textContent = hMeters;
+      const w = cvC.width, h = cvC.height;
+      ctxC.clearRect(0, 0, w, h);
+
+      // sky gradient
+      const grd = ctxC.createLinearGradient(0, 0, 0, groundY);
+      grd.addColorStop(0, '#e0f2fe');
+      grd.addColorStop(1, '#fef3c7');
+      ctxC.fillStyle = grd;
+      ctxC.fillRect(0, 0, w, groundY + 10);
+
+      // ground
+      ctxC.fillStyle = '#78716c';
+      ctxC.fillRect(0, groundY, w, h - groundY);
+
+      // height ruler
+      ctxC.strokeStyle = '#94a3b8';
+      ctxC.fillStyle = '#64748b';
+      ctxC.font = '12px system-ui';
+      for (let m = 0; m <= hMeters; m += 10) {
+        const y = metersToY(m);
+        ctxC.beginPath();
+        ctxC.moveTo(20, y); ctxC.lineTo(40, y);
+        ctxC.stroke();
+        ctxC.fillText(m + ' m', 45, y + 4);
+      }
+
+      // ball
+      if (!dropping && staticOnly !== false) {
+        ballY = topY;
+        ballVy = 0;
+      }
+      ctxC.fillStyle = '#ef4444';
+      ctxC.beginPath();
+      ctxC.arc(w / 2, ballY, 16, 0, Math.PI * 2);
+      ctxC.fill();
+      ctxC.fillStyle = '#fff';
+      ctxC.beginPath();
+      ctxC.arc(w / 2 - 4, ballY - 4, 4, 0, Math.PI * 2);
+      ctxC.fill();
+    }
+
+    function dropBall() {
+      if (dropping) return;
+      hMeters = +document.getElementById('caidaH').value;
+      ballY = topY;
+      ballVy = 0;
+      dropping = true;
+      document.getElementById('caidaTv').textContent = '…';
+      document.getElementById('caidaVv').textContent = '…';
+      const tTotal = Math.sqrt(2 * hMeters / g);
+      const vFinal = g * tTotal;
+      let last = performance.now();
+
+      function frame(now) {
+        if (!dropping) return;
+        const dt = Math.min((now - last) / 1000, 0.05) * 2.2; // slight speed-up
+        last = now;
+        ballVy += g * dt;
+        // map: physical y in meters from top
+        const metersFallen = (ballVy * ballVy) / (2 * g); // from v²=2gh
+        // better integrate position
+        const scale = (groundY - topY) / hMeters;
+        ballY += ballVy * dt * scale;
+
+        if (ballY >= groundY - 16) {
+          ballY = groundY - 16;
+          dropping = false;
+          document.getElementById('caidaTv').textContent = tTotal.toFixed(2);
+          document.getElementById('caidaVv').textContent = vFinal.toFixed(1);
+          drawCaida(false);
+          return;
+        }
+        drawCaida(false);
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    function resetBall() {
+      dropping = false;
+      ballY = topY;
+      ballVy = 0;
+      document.getElementById('caidaTv').textContent = '—';
+      document.getElementById('caidaVv').textContent = '—';
+      drawCaida(true);
+    }
+
+    document.getElementById('caidaH').addEventListener('input', () => {
+      if (!dropping) drawCaida(true);
+    });
+    drawCaida(true);
+
+    /* ========== 7. PLANO INCLINADO ========== */
+    const cvPl = document.getElementById('cvPlano');
+    const ctxPl = cvPl ? cvPl.getContext('2d') : null;
+    let plPos = 0; // 0 at top of ramp, increases down the ramp (px along ramp)
+    let plVel = 0;
+    let plRunning = false;
+    let plAnimId = null;
+    const G = 9.8;
+
+    function plParams() {
+      const thetaDeg = +document.getElementById('plTheta').value;
+      const m = +document.getElementById('plM').value;
+      const mu = +document.getElementById('plMu').value;
+      const theta = thetaDeg * Math.PI / 180;
+      const P = m * G;
+      const Ppar = P * Math.sin(theta);
+      const Pperp = P * Math.cos(theta);
+      const N = Pperp;
+      const frMax = mu * N;
+      // net force down the plane
+      let Fnet = Ppar - frMax;
+      let a = 0;
+      let moves = false;
+      if (mu === 0) {
+        a = G * Math.sin(theta);
+        moves = true;
+        Fnet = Ppar;
+      } else if (Ppar > frMax + 1e-9) {
+        a = (Ppar - frMax) / m;
+        moves = true;
+      } else {
+        a = 0;
+        moves = false;
+        Fnet = 0;
+      }
+      return { thetaDeg, theta, m, mu, P, Ppar, Pperp, N, frMax, a, moves, Fnet };
+    }
+
+    function updatePlReadout(p) {
+      document.getElementById('plThetaV').textContent = p.thetaDeg + '°';
+      document.getElementById('plPV').textContent = p.P.toFixed(1);
+      document.getElementById('plParV').textContent = p.Ppar.toFixed(1);
+      document.getElementById('plPerpV').textContent = p.Pperp.toFixed(1);
+      document.getElementById('plNV').textContent = p.N.toFixed(1);
+      document.getElementById('plFrV').textContent = p.frMax.toFixed(1);
+      document.getElementById('plAV').textContent = p.a.toFixed(2);
+      document.getElementById('plMoveV').textContent = p.moves ? 'Sí ↓' : 'No (reposo)';
+    }
+
+    function drawPlano(resetPos) {
+      if (!ctxPl) return;
+      const p = plParams();
+      updatePlReadout(p);
+      if (resetPos) { plPos = 30; plVel = 0; }
+
+      const w = cvPl.width, h = cvPl.height;
+      ctxPl.clearRect(0, 0, w, h);
+
+      // layout: ramp from left-topish to right-bottom
+      const margin = 50;
+      const baseLen = 480;
+      const x0 = margin + 40;
+      const y0 = h - margin;
+      // height of ramp visual
+      const rampH = Math.sin(p.theta) * baseLen;
+      const rampL = Math.cos(p.theta) * baseLen;
+      const x1 = x0 + rampL;
+      const y1 = y0 - rampH;
+
+      // ground line
+      ctxPl.strokeStyle = '#94a3b8';
+      ctxPl.lineWidth = 2;
+      ctxPl.beginPath();
+      ctxPl.moveTo(30, y0);
+      ctxPl.lineTo(w - 20, y0);
+      ctxPl.stroke();
+
+      // ramp surface
+      ctxPl.fillStyle = '#c4b5fd';
+      ctxPl.beginPath();
+      ctxPl.moveTo(x0, y0);
+      ctxPl.lineTo(x1, y1);
+      ctxPl.lineTo(x1, y0);
+      ctxPl.closePath();
+      ctxPl.fill();
+      ctxPl.strokeStyle = '#5b21b6';
+      ctxPl.lineWidth = 3;
+      ctxPl.beginPath();
+      ctxPl.moveTo(x0, y0);
+      ctxPl.lineTo(x1, y1);
+      ctxPl.stroke();
+
+      // angle arc
+      ctxPl.strokeStyle = '#f59e0b';
+      ctxPl.lineWidth = 2;
+      ctxPl.beginPath();
+      ctxPl.arc(x0, y0, 40, -p.theta, 0);
+      ctxPl.stroke();
+      ctxPl.fillStyle = '#b45309';
+      ctxPl.font = 'bold 14px system-ui';
+      ctxPl.fillText('θ', x0 + 48, y0 - 12);
+
+      // block position along ramp (plPos in px from top of ramp along surface)
+      const rampLenPx = Math.hypot(x1 - x0, y1 - y0);
+      const s = Math.max(20, Math.min(plPos, rampLenPx - 25));
+      const ux = (x1 - x0) / rampLenPx; // down-ramp unit
+      const uy = (y1 - y0) / rampLenPx;
+      // block center
+      const bx = x1 - ux * s; // start near top: when s small, near x1,y1
+      // Actually define top as x1,y1 and bottom as x0,y0 for "down" direction
+      // Down direction: from top (x1,y1) to bottom (x0,y0)
+      const dx = (x0 - x1) / rampLenPx;
+      const dy = (y0 - y1) / rampLenPx;
+      const topX = x1, topY = y1;
+      const cx = topX + dx * s;
+      const cy = topY + dy * s;
+
+      // block oriented with ramp
+      const bw = 36, bh = 28;
+      ctxPl.save();
+      ctxPl.translate(cx, cy);
+      ctxPl.rotate(-p.theta); // ramp angle from horizontal
+      ctxPl.fillStyle = '#ef4444';
+      ctxPl.fillRect(-bw / 2, -bh - 2, bw, bh);
+      ctxPl.strokeStyle = '#991b1b';
+      ctxPl.lineWidth = 2;
+      ctxPl.strokeRect(-bw / 2, -bh - 2, bw, bh);
+      ctxPl.fillStyle = '#fff';
+      ctxPl.font = 'bold 11px system-ui';
+      ctxPl.textAlign = 'center';
+      ctxPl.fillText('m', 0, -bh / 2 - 2);
+      ctxPl.restore();
+
+      // force arrows from block center (in screen space)
+      function arrow(ax, ay, ang, len, color, label) {
+        const ex = ax + Math.cos(ang) * len;
+        const ey = ay + Math.sin(ang) * len;
+        ctxPl.strokeStyle = color;
+        ctxPl.fillStyle = color;
+        ctxPl.lineWidth = 3;
+        ctxPl.beginPath();
+        ctxPl.moveTo(ax, ay);
+        ctxPl.lineTo(ex, ey);
+        ctxPl.stroke();
+        const hx = 10, hy = 6;
+        ctxPl.beginPath();
+        ctxPl.moveTo(ex, ey);
+        ctxPl.lineTo(ex - Math.cos(ang) * hx + Math.sin(ang) * hy, ey - Math.sin(ang) * hx - Math.cos(ang) * hy);
+        ctxPl.lineTo(ex - Math.cos(ang) * hx - Math.sin(ang) * hy, ey - Math.sin(ang) * hx + Math.cos(ang) * hy);
+        ctxPl.closePath();
+        ctxPl.fill();
+        ctxPl.font = 'bold 12px system-ui';
+        ctxPl.fillText(label, ex + 8, ey);
+      }
+
+      const scale = 0.35;
+      // Weight downward
+      arrow(cx, cy - 20, Math.PI / 2, Math.min(70, p.P * scale), '#334155', 'P');
+      // Parallel component (down ramp)
+      const angDown = Math.atan2(dy, dx);
+      arrow(cx, cy - 20, angDown, Math.min(70, p.Ppar * scale + 15), '#ef4444', 'P∥');
+      // Perpendicular into plane (normal direction outward is opposite)
+      const angNorm = angDown - Math.PI / 2;
+      arrow(cx, cy - 20, angNorm, Math.min(60, p.N * scale * 0.8 + 10), '#3b82f6', 'N');
+      // Friction up the ramp if any
+      if (p.mu > 0) {
+        arrow(cx, cy - 20, angDown + Math.PI, Math.min(50, p.frMax * scale + 8), '#f59e0b', 'fr');
+      }
+
+      ctxPl.fillStyle = '#64748b';
+      ctxPl.font = '13px system-ui';
+      ctxPl.textAlign = 'left';
+      ctxPl.fillText('a = g(senθ − μ cosθ)  si se desliza', 16, 28);
+    }
+
+    function runPlano() {
+      if (plRunning) return;
+      const p0 = plParams();
+      if (!p0.moves) {
+        updatePlReadout(p0);
+        drawPlano(false);
+        return;
+      }
+      plRunning = true;
+      plPos = 30;
+      plVel = 0;
+      let last = performance.now();
+
+      function frame(now) {
+        if (!plRunning) return;
+        const p = plParams();
+        const dt = Math.min((now - last) / 1000, 0.05);
+        last = now;
+        // pixels along ramp: scale 8 px per meter roughly
+        const pxPerM = 12;
+        plVel += p.a * dt;
+        plPos += plVel * dt * pxPerM;
+
+        const rampLenPx = 480; // approx
+        if (plPos >= rampLenPx - 30) {
+          plPos = rampLenPx - 30;
+          plRunning = false;
+          drawPlano(false);
+          return;
+        }
+        drawPlano(false);
+        plAnimId = requestAnimationFrame(frame);
+      }
+      plAnimId = requestAnimationFrame(frame);
+    }
+
+    function resetPlano() {
+      plRunning = false;
+      if (plAnimId) cancelAnimationFrame(plAnimId);
+      plPos = 30;
+      plVel = 0;
+      drawPlano(true);
+    }
+
+    ['plTheta', 'plM', 'plMu'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', () => { if (!plRunning) drawPlano(false); });
+    });
+    if (cvPl) drawPlano(true);
+
+    /* ========== 8. SEGUNDA LEY DE NEWTON ========== */
+    const cvNw = document.getElementById('cvNewton');
+    const ctxNw = cvNw ? cvNw.getContext('2d') : null;
+    let nwX = 0;      // meters from center
+    let nwV = 0;      // m/s
+    let nwRunning = false;
+    let nwAnim = null;
+    const NW_SCALE = 18; // px per meter
+    const NW_GND = 220;
+
+    function nwParams() {
+      const F = +document.getElementById('nwF').value;
+      const m = +document.getElementById('nwM').value;
+      const a = F / m;
+      return { F, m, a };
+    }
+
+    function updateNwReadout(p) {
+      document.getElementById('nwFv').textContent = p.F;
+      document.getElementById('nwMv').textContent = p.m;
+      document.getElementById('nwAv').textContent = p.a.toFixed(2);
+      document.getElementById('nwVv').textContent = nwV.toFixed(2);
+      document.getElementById('nwXv').textContent = nwX.toFixed(2);
+    }
+
+    function drawNewton() {
+      if (!ctxNw) return;
+      const p = nwParams();
+      updateNwReadout(p);
+      const w = cvNw.width, h = cvNw.height;
+      const cx = w / 2;
+      ctxNw.clearRect(0, 0, w, h);
+
+      // ground
+      ctxNw.fillStyle = '#e2e8f0';
+      ctxNw.fillRect(0, NW_GND, w, h - NW_GND);
+      ctxNw.strokeStyle = '#94a3b8';
+      ctxNw.lineWidth = 2;
+      ctxNw.beginPath();
+      ctxNw.moveTo(0, NW_GND);
+      ctxNw.lineTo(w, NW_GND);
+      ctxNw.stroke();
+
+      // track marks
+      ctxNw.fillStyle = '#cbd5e1';
+      ctxNw.font = '11px system-ui';
+      ctxNw.textAlign = 'center';
+      for (let m = -15; m <= 15; m += 5) {
+        const px = cx + m * NW_SCALE;
+        ctxNw.beginPath();
+        ctxNw.moveTo(px, NW_GND);
+        ctxNw.lineTo(px, NW_GND + 8);
+        ctxNw.stroke();
+        ctxNw.fillStyle = '#64748b';
+        ctxNw.fillText(m + ' m', px, NW_GND + 22);
+      }
+
+      // block position
+      let bx = cx + nwX * NW_SCALE;
+      // soft walls
+      const half = 28;
+      if (bx < half) { bx = half; nwX = (bx - cx) / NW_SCALE; nwV = 0; nwRunning = false; }
+      if (bx > w - half) { bx = w - half; nwX = (bx - cx) / NW_SCALE; nwV = 0; nwRunning = false; }
+
+      const blockW = 50 + p.m * 1.2;
+      const blockH = 36 + p.m * 0.6;
+      ctxNw.fillStyle = '#7c3aed';
+      ctxNw.fillRect(bx - blockW / 2, NW_GND - blockH, blockW, blockH);
+      ctxNw.strokeStyle = '#5b21b6';
+      ctxNw.lineWidth = 2;
+      ctxNw.strokeRect(bx - blockW / 2, NW_GND - blockH, blockW, blockH);
+      ctxNw.fillStyle = '#fff';
+      ctxNw.font = 'bold 13px system-ui';
+      ctxNw.fillText(p.m + ' kg', bx, NW_GND - blockH / 2 + 4);
+
+      // force arrow
+      if (p.F !== 0) {
+        const dir = p.F > 0 ? 1 : -1;
+        const len = Math.min(90, 20 + Math.abs(p.F) * 1.2);
+        const ay = NW_GND - blockH - 18;
+        const ax0 = bx;
+        const ax1 = bx + dir * len;
+        ctxNw.strokeStyle = '#ef4444';
+        ctxNw.fillStyle = '#ef4444';
+        ctxNw.lineWidth = 4;
+        ctxNw.beginPath();
+        ctxNw.moveTo(ax0, ay);
+        ctxNw.lineTo(ax1, ay);
+        ctxNw.stroke();
+        ctxNw.beginPath();
+        ctxNw.moveTo(ax1, ay);
+        ctxNw.lineTo(ax1 - dir * 12, ay - 8);
+        ctxNw.lineTo(ax1 - dir * 12, ay + 8);
+        ctxNw.closePath();
+        ctxNw.fill();
+        ctxNw.font = 'bold 12px system-ui';
+        ctxNw.fillText('F = ' + p.F + ' N', bx + dir * (len / 2), ay - 12);
+      }
+
+      // formula banner
+      ctxNw.fillStyle = '#4c1d95';
+      ctxNw.font = 'bold 15px system-ui';
+      ctxNw.textAlign = 'left';
+      ctxNw.fillText('a = F / m = ' + p.F + ' / ' + p.m + ' = ' + p.a.toFixed(2) + ' m/s²', 16, 28);
+
+      // velocity bar
+      ctxNw.fillStyle = '#64748b';
+      ctxNw.font = '12px system-ui';
+      ctxNw.fillText('velocidad →', 16, 50);
+      const vBar = Math.max(-100, Math.min(100, nwV * 8));
+      ctxNw.fillStyle = '#ddd6fe';
+      ctxNw.fillRect(100, 40, 200, 12);
+      ctxNw.fillStyle = nwV >= 0 ? '#10b981' : '#f59e0b';
+      ctxNw.fillRect(200, 40, vBar, 12);
+      ctxNw.strokeStyle = '#94a3b8';
+      ctxNw.strokeRect(100, 40, 200, 12);
+      ctxNw.beginPath();
+      ctxNw.moveTo(200, 38);
+      ctxNw.lineTo(200, 54);
+      ctxNw.stroke();
+    }
+
+    function runNewton() {
+      if (nwRunning) return;
+      nwRunning = true;
+      let last = performance.now();
+      function frame(now) {
+        if (!nwRunning) return;
+        const p = nwParams();
+        const dt = Math.min((now - last) / 1000, 0.05);
+        last = now;
+        // a = F/m
+        nwV += p.a * dt;
+        nwX += nwV * dt;
+        drawNewton();
+        nwAnim = requestAnimationFrame(frame);
+      }
+      nwAnim = requestAnimationFrame(frame);
+    }
+
+    function stopNewton() {
+      nwRunning = false;
+      if (nwAnim) cancelAnimationFrame(nwAnim);
+    }
+
+    function resetNewton() {
+      stopNewton();
+      nwX = 0;
+      nwV = 0;
+      drawNewton();
+    }
+
+    ['nwF', 'nwM'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', () => {
+        const p = nwParams();
+        updateNwReadout(p);
+        drawNewton();
+      });
+    });
+    if (cvNw) drawNewton();
+
+    /* ========== MRU ========== */
+    const cvMRU = document.getElementById('cvMRU');
+    const ctxMRU = cvMRU ? cvMRU.getContext('2d') : null;
+    let mruT = 0, mruX = 0, mruRun = false, mruAnim = null;
+    const MRU_SC = 16;
+
+    function resetMRU() {
+      mruRun = false; if (mruAnim) cancelAnimationFrame(mruAnim);
+      mruT = 0;
+      mruX = +document.getElementById('mruX0').value;
+      drawMRU();
+    }
+    function stopMRU() { mruRun = false; if (mruAnim) cancelAnimationFrame(mruAnim); }
+    function runMRU() {
+      if (mruRun) return;
+      mruRun = true;
+      let last = performance.now();
+      function frame(now) {
+        if (!mruRun) return;
+        const dt = Math.min((now - last) / 1000, 0.05);
+        last = now;
+        const v = +document.getElementById('mruV').value;
+        mruT += dt;
+        mruX += v * dt;
+        drawMRU();
+        mruAnim = requestAnimationFrame(frame);
+      }
+      mruAnim = requestAnimationFrame(frame);
+    }
+    function drawMRU() {
+      if (!ctxMRU) return;
+      const v = +document.getElementById('mruV').value;
+      const x0 = +document.getElementById('mruX0').value;
+      document.getElementById('mruVv').textContent = v;
+      document.getElementById('mruX0v').textContent = x0;
+      document.getElementById('mruTv').textContent = mruT.toFixed(2);
+      document.getElementById('mruXv').textContent = mruX.toFixed(2);
+      const w = cvMRU.width, h = cvMRU.height, cx = w / 2, gnd = 130;
+      ctxMRU.clearRect(0, 0, w, h);
+      // track
+      ctxMRU.fillStyle = '#e2e8f0';
+      ctxMRU.fillRect(0, gnd, w, 40);
+      ctxMRU.strokeStyle = '#94a3b8';
+      ctxMRU.beginPath(); ctxMRU.moveTo(0, gnd); ctxMRU.lineTo(w, gnd); ctxMRU.stroke();
+      for (let m = -15; m <= 15; m += 5) {
+        const px = cx + m * MRU_SC;
+        ctxMRU.beginPath(); ctxMRU.moveTo(px, gnd); ctxMRU.lineTo(px, gnd + 8); ctxMRU.stroke();
+        ctxMRU.fillStyle = '#64748b'; ctxMRU.font = '11px system-ui'; ctxMRU.textAlign = 'center';
+        ctxMRU.fillText(m + '', px, gnd + 22);
+      }
+      let bx = cx + mruX * MRU_SC;
+      bx = Math.max(30, Math.min(w - 30, bx));
+      ctxMRU.fillStyle = '#7c3aed';
+      ctxMRU.fillRect(bx - 22, gnd - 36, 44, 36);
+      ctxMRU.fillStyle = '#fff'; ctxMRU.font = 'bold 12px system-ui';
+      ctxMRU.fillText('x', bx, gnd - 14);
+      // velocity arrow
+      if (v !== 0) {
+        const dir = v > 0 ? 1 : -1;
+        ctxMRU.strokeStyle = '#ef4444'; ctxMRU.fillStyle = '#ef4444'; ctxMRU.lineWidth = 3;
+        const ax1 = bx + dir * 40;
+        ctxMRU.beginPath(); ctxMRU.moveTo(bx, gnd - 50); ctxMRU.lineTo(ax1, gnd - 50); ctxMRU.stroke();
+        ctxMRU.beginPath();
+        ctxMRU.moveTo(ax1, gnd - 50);
+        ctxMRU.lineTo(ax1 - dir * 10, gnd - 56);
+        ctxMRU.lineTo(ax1 - dir * 10, gnd - 44);
+        ctxMRU.fill();
+        ctxMRU.font = '12px system-ui'; ctxMRU.fillText('v', bx + dir * 20, gnd - 58);
+      }
+      // mini graph x-t
+      ctxMRU.strokeStyle = '#c4b5fd'; ctxMRU.lineWidth = 1;
+      ctxMRU.strokeRect(40, 190, 560, 110);
+      ctxMRU.fillStyle = '#64748b'; ctxMRU.font = '11px system-ui'; ctxMRU.textAlign = 'left';
+      ctxMRU.fillText('gráfica x-t (esquema)', 48, 205);
+      ctxMRU.strokeStyle = '#7c3aed'; ctxMRU.lineWidth = 2;
+      ctxMRU.beginPath();
+      const gx0 = 50, gy0 = 280;
+      for (let i = 0; i <= 80; i++) {
+        const tt = i / 10;
+        const xx = x0 + v * tt;
+        const px = gx0 + tt * 50;
+        const py = gy0 - xx * 3;
+        if (i === 0) ctxMRU.moveTo(px, py); else ctxMRU.lineTo(px, Math.max(200, Math.min(290, py)));
+      }
+      ctxMRU.stroke();
+      // current point
+      const px = gx0 + mruT * 50;
+      const py = Math.max(200, Math.min(290, gy0 - mruX * 3));
+      if (mruT <= 10) {
+        ctxMRU.fillStyle = '#ef4444';
+        ctxMRU.beginPath(); ctxMRU.arc(px, py, 5, 0, Math.PI * 2); ctxMRU.fill();
+      }
+    }
+    ['mruV', 'mruX0'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', () => { if (!mruRun) { mruX = +document.getElementById('mruX0').value; mruT = 0; drawMRU(); }});
+    });
+    if (cvMRU) { mruX = 0; drawMRU(); }
+
+    /* ========== MRUA ========== */
+    const cvMRUA = document.getElementById('cvMRUA');
+    const ctxMRUA = cvMRUA ? cvMRUA.getContext('2d') : null;
+    let mruaT = 0, mruaX = 0, mruaV = 0, mruaRun = false, mruaAnim = null;
+
+    function resetMRUA() {
+      mruaRun = false; if (mruaAnim) cancelAnimationFrame(mruaAnim);
+      mruaT = 0; mruaX = 0;
+      mruaV = +document.getElementById('mruaV0').value;
+      drawMRUA();
+    }
+    function stopMRUA() { mruaRun = false; if (mruaAnim) cancelAnimationFrame(mruaAnim); }
+    function runMRUA() {
+      if (mruaRun) return;
+      mruaRun = true;
+      let last = performance.now();
+      function frame(now) {
+        if (!mruaRun) return;
+        const dt = Math.min((now - last) / 1000, 0.05);
+        last = now;
+        const a = +document.getElementById('mruaA').value;
+        mruaT += dt;
+        mruaV += a * dt;
+        mruaX += mruaV * dt;
+        drawMRUA();
+        mruaAnim = requestAnimationFrame(frame);
+      }
+      mruaAnim = requestAnimationFrame(frame);
+    }
+    function drawMRUA() {
+      if (!ctxMRUA) return;
+      const v0 = +document.getElementById('mruaV0').value;
+      const a = +document.getElementById('mruaA').value;
+      document.getElementById('mruaV0v').textContent = v0;
+      document.getElementById('mruaAv').textContent = a;
+      document.getElementById('mruaTv').textContent = mruaT.toFixed(2);
+      document.getElementById('mruaVv').textContent = mruaV.toFixed(2);
+      document.getElementById('mruaXv').textContent = mruaX.toFixed(2);
+      const w = cvMRUA.width, h = cvMRUA.height, cx = w / 2, gnd = 130, sc = 14;
+      ctxMRUA.clearRect(0, 0, w, h);
+      ctxMRUA.fillStyle = '#e2e8f0';
+      ctxMRUA.fillRect(0, gnd, w, 40);
+      ctxMRUA.strokeStyle = '#94a3b8';
+      ctxMRUA.beginPath(); ctxMRUA.moveTo(0, gnd); ctxMRUA.lineTo(w, gnd); ctxMRUA.stroke();
+      let bx = cx + mruaX * sc;
+      bx = Math.max(30, Math.min(w - 30, bx));
+      ctxMRUA.fillStyle = '#db2777';
+      ctxMRUA.fillRect(bx - 22, gnd - 36, 44, 36);
+      ctxMRUA.fillStyle = '#fff'; ctxMRUA.font = 'bold 11px system-ui'; ctxMRUA.textAlign = 'center';
+      ctxMRUA.fillText('m', bx, gnd - 14);
+      // a and v arrows
+      if (a !== 0) {
+        const dir = a > 0 ? 1 : -1;
+        ctxMRUA.strokeStyle = '#f59e0b'; ctxMRUA.fillStyle = '#f59e0b'; ctxMRUA.lineWidth = 3;
+        const ax1 = bx + dir * 45;
+        ctxMRUA.beginPath(); ctxMRUA.moveTo(bx, gnd - 55); ctxMRUA.lineTo(ax1, gnd - 55); ctxMRUA.stroke();
+        ctxMRUA.beginPath();
+        ctxMRUA.moveTo(ax1, gnd - 55);
+        ctxMRUA.lineTo(ax1 - dir * 10, gnd - 61);
+        ctxMRUA.lineTo(ax1 - dir * 10, gnd - 49);
+        ctxMRUA.fill();
+        ctxMRUA.font = '12px system-ui'; ctxMRUA.fillText('a', bx + dir * 22, gnd - 62);
+      }
+      // graph v-t schematic
+      ctxMRUA.strokeStyle = '#e9d5ff'; ctxMRUA.strokeRect(40, 190, 260, 110);
+      ctxMRUA.fillStyle = '#64748b'; ctxMRUA.font = '11px system-ui'; ctxMRUA.textAlign = 'left';
+      ctxMRUA.fillText('v-t (esquema)', 48, 205);
+      ctxMRUA.strokeStyle = '#db2777'; ctxMRUA.lineWidth = 2; ctxMRUA.beginPath();
+      for (let i = 0; i <= 50; i++) {
+        const tt = i / 10;
+        const vv = v0 + a * tt;
+        const px = 50 + tt * 40;
+        const py = 250 - vv * 4;
+        if (i === 0) ctxMRUA.moveTo(px, py); else ctxMRUA.lineTo(px, Math.max(200, Math.min(290, py)));
+      }
+      ctxMRUA.stroke();
+      ctxMRUA.strokeStyle = '#e9d5ff'; ctxMRUA.strokeRect(320, 190, 280, 110);
+      ctxMRUA.fillStyle = '#64748b'; ctxMRUA.fillText('x-t (esquema)', 328, 205);
+      ctxMRUA.strokeStyle = '#7c3aed'; ctxMRUA.beginPath();
+      for (let i = 0; i <= 50; i++) {
+        const tt = i / 10;
+        const xx = v0 * tt + 0.5 * a * tt * tt;
+        const px = 330 + tt * 40;
+        const py = 250 - xx * 2;
+        if (i === 0) ctxMRUA.moveTo(px, py); else ctxMRUA.lineTo(px, Math.max(200, Math.min(290, py)));
+      }
+      ctxMRUA.stroke();
+    }
+    ['mruaV0', 'mruaA'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', () => { if (!mruaRun) { mruaV = +document.getElementById('mruaV0').value; mruaX = 0; mruaT = 0; drawMRUA(); }});
+    });
+    if (cvMRUA) { mruaV = 2; drawMRUA(); }
+
+    /* ========== TIRO VERTICAL ========== */
+    const cvTiro = document.getElementById('cvTiro');
+    const ctxTiro = cvTiro ? cvTiro.getContext('2d') : null;
+    let tiroY = 0, tiroV = 0, tiroT = 0, tiroRun = false, tiroAnim = null;
+    const TIRO_G = 9.8;
+
+    function resetTiro() {
+      tiroRun = false; if (tiroAnim) cancelAnimationFrame(tiroAnim);
+      tiroY = 0; tiroV = 0; tiroT = 0;
+      const v0 = +document.getElementById('tiroV0').value;
+      document.getElementById('tiroV0v').textContent = v0;
+      document.getElementById('tiroHmax').textContent = ((v0 * v0) / (2 * TIRO_G)).toFixed(1);
+      document.getElementById('tiroTsub').textContent = (v0 / TIRO_G).toFixed(2);
+      document.getElementById('tiroTtot').textContent = (2 * v0 / TIRO_G).toFixed(2);
+      document.getElementById('tiroYv').textContent = '0';
+      document.getElementById('tiroVv').textContent = '0';
+      drawTiro();
+    }
+    function runTiro() {
+      if (tiroRun) return;
+      const v0 = +document.getElementById('tiroV0').value;
+      tiroY = 0; tiroV = v0; tiroT = 0; tiroRun = true;
+      document.getElementById('tiroHmax').textContent = ((v0 * v0) / (2 * TIRO_G)).toFixed(1);
+      document.getElementById('tiroTsub').textContent = (v0 / TIRO_G).toFixed(2);
+      document.getElementById('tiroTtot').textContent = (2 * v0 / TIRO_G).toFixed(2);
+      let last = performance.now();
+      function frame(now) {
+        if (!tiroRun) return;
+        const dt = Math.min((now - last) / 1000, 0.05) * 1.5;
+        last = now;
+        tiroT += dt;
+        tiroV -= TIRO_G * dt;
+        tiroY += tiroV * dt;
+        if (tiroY <= 0 && tiroT > 0.1) {
+          tiroY = 0; tiroV = 0; tiroRun = false;
+        }
+        document.getElementById('tiroYv').textContent = tiroY.toFixed(2);
+        document.getElementById('tiroVv').textContent = tiroV.toFixed(2);
+        drawTiro();
+        if (tiroRun) tiroAnim = requestAnimationFrame(frame);
+      }
+      tiroAnim = requestAnimationFrame(frame);
+    }
+    function drawTiro() {
+      if (!ctxTiro) return;
+      const v0 = +document.getElementById('tiroV0').value;
+      document.getElementById('tiroV0v').textContent = v0;
+      const w = cvTiro.width, h = cvTiro.height;
+      const gnd = h - 40;
+      const hmax = (v0 * v0) / (2 * TIRO_G);
+      const sc = Math.min(8, (gnd - 50) / Math.max(hmax, 1));
+      ctxTiro.clearRect(0, 0, w, h);
+      ctxTiro.fillStyle = '#e0f2fe';
+      ctxTiro.fillRect(0, 0, w, gnd);
+      ctxTiro.fillStyle = '#78716c';
+      ctxTiro.fillRect(0, gnd, w, h - gnd);
+      // height marks
+      ctxTiro.strokeStyle = '#94a3b8'; ctxTiro.fillStyle = '#64748b'; ctxTiro.font = '11px system-ui';
+      for (let m = 0; m <= hmax + 5; m += 5) {
+        const py = gnd - m * sc;
+        if (py < 20) break;
+        ctxTiro.beginPath(); ctxTiro.moveTo(30, py); ctxTiro.lineTo(45, py); ctxTiro.stroke();
+        ctxTiro.fillText(m + ' m', 50, py + 4);
+      }
+      // trajectory ghost
+      ctxTiro.strokeStyle = '#c4b5fd'; ctxTiro.setLineDash([4, 4]); ctxTiro.beginPath();
+      const tUp = v0 / TIRO_G;
+      for (let i = 0; i <= 40; i++) {
+        const tt = (i / 40) * 2 * tUp;
+        const yy = v0 * tt - 0.5 * TIRO_G * tt * tt;
+        const px = w / 2 + (i - 20) * 0.5;
+        const py = gnd - yy * sc;
+        if (i === 0) ctxTiro.moveTo(w / 2, gnd); else ctxTiro.lineTo(w / 2, py);
+      }
+      ctxTiro.stroke(); ctxTiro.setLineDash([]);
+      // ball
+      const by = gnd - Math.max(0, tiroY) * sc;
+      ctxTiro.fillStyle = '#ef4444';
+      ctxTiro.beginPath(); ctxTiro.arc(w / 2, by, 14, 0, Math.PI * 2); ctxTiro.fill();
+      ctxTiro.fillStyle = '#fff';
+      ctxTiro.beginPath(); ctxTiro.arc(w / 2 - 4, by - 4, 4, 0, Math.PI * 2); ctxTiro.fill();
+      // v arrow
+      if (Math.abs(tiroV) > 0.3) {
+        const dir = tiroV > 0 ? -1 : 1; // up is negative y
+        ctxTiro.strokeStyle = '#3b82f6'; ctxTiro.fillStyle = '#3b82f6'; ctxTiro.lineWidth = 3;
+        const len = Math.min(40, Math.abs(tiroV) * 1.5);
+        ctxTiro.beginPath();
+        ctxTiro.moveTo(w / 2 + 24, by);
+        ctxTiro.lineTo(w / 2 + 24, by + dir * len);
+        ctxTiro.stroke();
+      }
+      ctxTiro.fillStyle = '#4c1d95'; ctxTiro.font = '13px system-ui'; ctxTiro.textAlign = 'left';
+      ctxTiro.fillText('h_máx = v₀²/(2g) · t_subida = v₀/g', 16, 24);
+    }
+    const tiroEl = document.getElementById('tiroV0');
+    if (tiroEl) tiroEl.addEventListener('input', () => { if (!tiroRun) resetTiro(); });
+    if (cvTiro) resetTiro();
+
+    /* ========== FUERZAS 2D ========== */
+    const cvF2D = document.getElementById('cvF2D');
+    const ctxF2D = cvF2D ? cvF2D.getContext('2d') : null;
+    // vectors as endpoints relative to center, in "newtons" (1 N = 2 px)
+    let f2d = [
+      { x: 60, y: -20 },
+      { x: -30, y: -50 },
+      { x: 20, y: 40 }
+    ];
+    let f2dDrag = null;
+    const F2D_SC = 2;
+
+    function drawF2D() {
+      if (!ctxF2D) return;
+      const w = cvF2D.width, h = cvF2D.height, cx = w / 2, cy = h / 2;
+      ctxF2D.clearRect(0, 0, w, h);
+      // grid
+      ctxF2D.strokeStyle = '#f1f5f9'; ctxF2D.lineWidth = 1;
+      for (let i = 0; i < w; i += 40) { ctxF2D.beginPath(); ctxF2D.moveTo(i, 0); ctxF2D.lineTo(i, h); ctxF2D.stroke(); }
+      for (let j = 0; j < h; j += 40) { ctxF2D.beginPath(); ctxF2D.moveTo(0, j); ctxF2D.lineTo(w, j); ctxF2D.stroke(); }
+      // axes
+      ctxF2D.strokeStyle = '#cbd5e1'; ctxF2D.lineWidth = 2;
+      ctxF2D.beginPath(); ctxF2D.moveTo(0, cy); ctxF2D.lineTo(w, cy); ctxF2D.moveTo(cx, 0); ctxF2D.lineTo(cx, h); ctxF2D.stroke();
+      ctxF2D.fillStyle = '#94a3b8'; ctxF2D.font = '12px system-ui';
+      ctxF2D.fillText('x', w - 20, cy - 8);
+      ctxF2D.fillText('y', cx + 8, 16);
+
+      const colors = ['#ef4444', '#3b82f6', '#f59e0b'];
+      const labels = ['F1', 'F2', 'F3'];
+      let rx = 0, ry = 0;
+      f2d.forEach((f, i) => {
+        const ex = cx + f.x * F2D_SC, ey = cy + f.y * F2D_SC;
+        rx += f.x; ry += f.y;
+        // arrow
+        ctxF2D.strokeStyle = colors[i]; ctxF2D.fillStyle = colors[i]; ctxF2D.lineWidth = 4;
+        ctxF2D.beginPath(); ctxF2D.moveTo(cx, cy); ctxF2D.lineTo(ex, ey); ctxF2D.stroke();
+        const ang = Math.atan2(f.y, f.x);
+        ctxF2D.beginPath();
+        ctxF2D.moveTo(ex, ey);
+        ctxF2D.lineTo(ex - Math.cos(ang) * 14 + Math.sin(ang) * 7, ey - Math.sin(ang) * 14 - Math.cos(ang) * 7);
+        ctxF2D.lineTo(ex - Math.cos(ang) * 14 - Math.sin(ang) * 7, ey - Math.sin(ang) * 14 + Math.cos(ang) * 7);
+        ctxF2D.closePath(); ctxF2D.fill();
+        // handle
+        ctxF2D.beginPath(); ctxF2D.arc(ex, ey, 12, 0, Math.PI * 2); ctxF2D.fill();
+        ctxF2D.fillStyle = '#fff'; ctxF2D.font = 'bold 11px system-ui'; ctxF2D.textAlign = 'center';
+        ctxF2D.fillText(labels[i], ex, ey + 4);
+        const mag = Math.hypot(f.x, f.y);
+        document.getElementById('f2d' + (i + 1)).textContent = mag.toFixed(1);
+      });
+      // resultant
+      const rex = cx + rx * F2D_SC, rey = cy + ry * F2D_SC;
+      ctxF2D.strokeStyle = '#10b981'; ctxF2D.fillStyle = '#10b981'; ctxF2D.lineWidth = 5;
+      ctxF2D.beginPath(); ctxF2D.moveTo(cx, cy); ctxF2D.lineTo(rex, rey); ctxF2D.stroke();
+      const angR = Math.atan2(ry, rx);
+      ctxF2D.beginPath();
+      ctxF2D.moveTo(rex, rey);
+      ctxF2D.lineTo(rex - Math.cos(angR) * 16 + Math.sin(angR) * 9, rey - Math.sin(angR) * 16 - Math.cos(angR) * 9);
+      ctxF2D.lineTo(rex - Math.cos(angR) * 16 - Math.sin(angR) * 9, rey - Math.sin(angR) * 16 + Math.cos(angR) * 9);
+      ctxF2D.closePath(); ctxF2D.fill();
+      const magR = Math.hypot(rx, ry);
+      const angDeg = magR < 0.1 ? 0 : (Math.atan2(-ry, rx) * 180 / Math.PI); // screen y flipped feel
+      document.getElementById('f2dRx').textContent = rx.toFixed(1);
+      document.getElementById('f2dRy').textContent = (-ry).toFixed(1); // display y up positive
+      document.getElementById('f2dR').textContent = magR.toFixed(1);
+      document.getElementById('f2dAng').textContent = (Math.atan2(-ry, rx) * 180 / Math.PI).toFixed(0) + '°';
+      ctxF2D.fillStyle = '#059669'; ctxF2D.font = 'bold 13px system-ui';
+      ctxF2D.fillText('FR', rex + 10, rey);
+      // origin
+      ctxF2D.fillStyle = '#1e293b';
+      ctxF2D.beginPath(); ctxF2D.arc(cx, cy, 6, 0, Math.PI * 2); ctxF2D.fill();
+    }
+
+    function f2dHit(x, y) {
+      const cx = cvF2D.width / 2, cy = cvF2D.height / 2;
+      for (let i = 0; i < 3; i++) {
+        const ex = cx + f2d[i].x * F2D_SC, ey = cy + f2d[i].y * F2D_SC;
+        if (Math.hypot(x - ex, y - ey) < 22) return i;
+      }
+      return null;
+    }
+    function onF2DStart(e) {
+      e.preventDefault();
+      const pt = canvasXY(cvF2D, e);
+      f2dDrag = f2dHit(pt.x, pt.y);
+    }
+    function onF2DMove(e) {
+      if (f2dDrag === null) return;
+      e.preventDefault();
+      const pt = canvasXY(cvF2D, e);
+      const cx = cvF2D.width / 2, cy = cvF2D.height / 2;
+      f2d[f2dDrag].x = (pt.x - cx) / F2D_SC;
+      f2d[f2dDrag].y = (pt.y - cy) / F2D_SC;
+      drawF2D();
+    }
+    function onF2DEnd() { f2dDrag = null; }
+    if (cvF2D) {
+      cvF2D.addEventListener('mousedown', onF2DStart);
+      cvF2D.addEventListener('mousemove', onF2DMove);
+      window.addEventListener('mouseup', onF2DEnd);
+      cvF2D.addEventListener('touchstart', onF2DStart, { passive: false });
+      cvF2D.addEventListener('touchmove', onF2DMove, { passive: false });
+      cvF2D.addEventListener('touchend', onF2DEnd);
+      drawF2D();
+    }
+
+
+
+  </script>
+</body>
+</html>

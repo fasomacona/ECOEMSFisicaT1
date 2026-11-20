@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Juegos de Física · CONAMAT</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.4rem;
+      margin: 2rem 0;
+    }
+    .game-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.6rem;
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: transform 0.2s, border-color 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .game-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+      text-decoration: none;
+    }
+    .game-emoji { font-size: 2.8rem; margin-bottom: 0.6rem; }
+    .game-card h3 { color: var(--primary-dark); margin: 0.4rem 0; }
+    .game-card p { color: var(--text-muted); font-size: 0.95rem; margin: 0; }
+    .game-tag {
+      display: inline-block;
+      margin-top: 0.8rem;
+      background: #ede9fe;
+      color: #5b21b6;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="assets/conamat-icon.png" alt="CONAMAT" class="nav-icon" />
+        <span>Juegos de Física</span>
+      </a>
+      <ul class="nav-menu">
+        <li><a href="index.html">Tema 1</a></li>
+        <li><a href="fuerzas.html">Tema 2</a></li>
+        <li><a href="interacciones.html">Tema 3</a></li>
+        <li><a href="estructura.html">Tema 4</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero" style="min-height:280px;padding:2.5rem 1.5rem;">
+    <div class="hero-content">
+      <img src="assets/conamat-logo.png" alt="CONAMAT" class="hero-logo" />
+      <h1>Juegos por tema</h1>
+      <p class="subtitle">Repasa Física jugando · Ideal para pantalla interactiva</p>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="games-grid">
+        <a class="game-card" href="juego-movimiento.html">
+          <div class="game-emoji">🏃</div>
+          <h3>Carrera del movimiento</h3>
+          <p>Rapidez, desplazamiento, gráficas y caída libre. Responde y suma puntos.</p>
+          <span class="game-tag">Tema 1</span>
+        </a>
+        <a class="game-card" href="juego-fuerzas.html">
+          <div class="game-emoji">💪</div>
+          <h3>Desafío Newton</h3>
+          <p>Fuerzas, leyes de Newton, peso y energía. Retos rápidos.</p>
+          <span class="game-tag">Tema 2</span>
+        </a>
+        <a class="game-card" href="juego-interacciones.html">
+          <div class="game-emoji">🌡️</div>
+          <h3>Laboratorio de partículas</h3>
+          <p>Calor, presión, Pascal y estados de la materia.</p>
+          <span class="game-tag">Tema 3</span>
+        </a>
+        <a class="game-card" href="juego-estructura.html">
+          <div class="game-emoji">⚡</div>
+          <h3>Circuito y ondas</h3>
+          <p>Ohm, magnetismo, ondas y luz. ¡Acierta la racha!</p>
+          <span class="game-tag">Tema 4</span>
+        </a>
+        <a class="game-card" href="juego-versus.html" style="grid-column: 1 / -1; border-color: #fbbf24; background: linear-gradient(135deg, #faf5ff, #fff7ed);">
+          <div class="game-emoji">⚔️</div>
+          <h3>Física Versus</h3>
+          <p>Dos equipos cara a cara. Preguntas de los 4 temas, turnos alternados y marcador en vivo. Ideal para la clase.</p>
+          <span class="game-tag" style="background:#fef3c7;color:#b45309">Multiequipo · Todos los temas</span>
+        </a>
+      </div>
+
+      <div style="text-align:center;margin:1.5rem 0">
+        <a class="btn primary" href="simuladores.html" style="display:inline-block">🎛️ Simuladores gráficos interactivos</a>
+      </div>
+
+      <div class="card highlight" style="margin-top:1rem">
+        <p><strong>Cómo jugar en clase:</strong> proyecta el juego, divide al grupo en equipos, anoten puntos en el pizarrón o usen el marcador en pantalla. Cada juego tiene 8–10 preguntas con retroalimentación inmediata.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <img src="assets/conamat-logo.png" alt="CONAMAT" class="footer-logo" />
+      <p class="author">Creado por el <strong>Prof. Fabián Soberanes Martín</strong></p>
+      <p><a href="index.html" style="color:#c4b5fd">← Volver al inicio</a></p>
+    </div>
+  </footer>
+</body>
+</html>

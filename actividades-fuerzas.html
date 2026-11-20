@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Actividades · Las Fuerzas | CONAMAT</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="actividades.css" />
+</head>
+<body class="activities-page">
+  <header class="act-header">
+    <div class="act-header-inner">
+      <a href="fuerzas.html" class="back-link">← Teoría Tema 2</a>
+      <h1>
+        <img src="assets/conamat-icon.png" alt="" style="height:28px;vertical-align:middle;margin-right:6px" />
+        Actividades · Las Fuerzas
+      </h1>
+      <div class="session-info">
+        <span id="currentBlock">Bloque 1</span>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:20%"></div></div>
+  </header>
+
+  <aside class="act-sidebar">
+    <h3>Ruta de la clase</h3>
+    <nav class="block-nav">
+      <button class="block-btn active" data-block="1">1 · ¿Qué es una fuerza?</button>
+      <button class="block-btn" data-block="2">2 · Fuerza resultante</button>
+      <button class="block-btn" data-block="3">3 · Leyes de Newton</button>
+      <button class="block-btn" data-block="4">4 · Peso y gravedad</button>
+      <button class="block-btn" data-block="5">5 · Energía + Cierre</button>
+    </nav>
+    <div class="score-box">
+      <p>Puntos</p>
+      <div class="score" id="totalScore">0</div>
+    </div>
+    <p style="font-size:0.8rem;color:#6b7280;margin-top:1rem;text-align:center">Prof. Fabián Soberanes Martín</p>
+  </aside>
+
+  <main class="act-main">
+    <!-- BLOQUE 1 -->
+    <section class="block active" id="block-1">
+      <div class="block-header">
+        <h2>Bloque 1 · ¿Qué es una fuerza?</h2>
+      </div>
+
+      <article class="activity-card">
+        <div class="act-type">Clasificación</div>
+        <h3>1.1 Contacto o a distancia</h3>
+        <p>Toca cada fuerza y elige el grupo correcto.</p>
+        <div class="classify-area">
+          <div class="classify-items" id="forceItems">
+            <div class="chip" data-type="contacto">Fricción</div>
+            <div class="chip" data-type="distancia">Gravedad</div>
+            <div class="chip" data-type="contacto">Tensión de una cuerda</div>
+            <div class="chip" data-type="distancia">Fuerza magnética</div>
+            <div class="chip" data-type="contacto">Normal</div>
+            <div class="chip" data-type="distancia">Fuerza eléctrica</div>
+            <div class="chip" data-type="contacto">Empujón</div>
+          </div>
+          <div class="drop-zones">
+            <div class="drop-zone" data-accept="contacto" id="zoneContacto"><h4>De contacto</h4><div class="dropped"></div></div>
+            <div class="drop-zone" data-accept="distancia" id="zoneDistancia"><h4>A distancia</h4><div class="dropped"></div></div>
+          </div>
+        </div>
+        <button class="big-btn secondary" onclick="checkForceClass()">Verificar</button>
+        <div class="feedback" id="forceClassFb"></div>
+      </article>
+
+      <article class="activity-card">
+        <div class="act-type">Verdadero / Falso</div>
+        <h3>1.2 Ideas rápidas</h3>
+        <div class="tf-list">
+          <div class="tf-item" data-answer="true">
+            <p>La fuerza es una magnitud vectorial.</p>
+            <div class="tf-btns">
+              <button onclick="answerTF(this, true)">Verdadero</button>
+              <button onclick="answerTF(this, true)">Falso</button>
+            </div>
+            <div class="tf-explain hidden">Verdadero. Tiene magnitud, dirección y sentido.</div>
+          </div>
+          <div class="tf-item" data-answer="false">
+            <p>Si no hay fuerza, un objeto en movimiento se detiene solo.</p>
+            <div class="tf-btns">
+              <button onclick="answerTF(this, false)">Verdadero</button>
+              <button onclick="answerTF(this, false)">Falso</button>
+            </div>
+            <div class="tf-explain hidden">Falso. Por la 1ª ley de Newton (inercia) seguiría en MRU si F<sub>R</sub> = 0.</div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- BLOQUE 2 -->
+    <section class="block" id="block-2">
+      <div class="block-header"><h2>Bloque 2 · Fuerza resultante</h2></div>
+
+      <article class="activity-card">
+        <div class="act-type">Cálculo</div>
+        <h3>2.1 Suma de fuerzas en línea</h3>
+        <p>F<sub>1</sub> = 45 N a la derecha · F<sub>2</sub> = 20 N a la izquierda · F<sub>3</sub> = 10 N a la derecha</p>
+        <div class="input-row">
+          <label>F<sub>R</sub> (N) — positivo = derecha</label>
+          <input type="number" id="frCalc" placeholder="?">
+          <button class="big-btn" onclick="checkFR()">Comprobar</button>
+        </div>
+        <div class="feedback" id="frFb"></div>
+      </article>
+
+      <article class="activity-card">
+        <div class="act-type">Concepto</div>
+        <h3>2.2 ¿Cuándo hay equilibrio?</h3>
+        <div class="options-large">
+          <button onclick="eqCheck(this, false)">Cuando hay muchas fuerzas</button>
+          <button onclick="eqCheck(this, true)">Cuando la fuerza neta es cero</button>
+          <button onclick="eqCheck(this, false)">Solo cuando el objeto está quieto</button>
+          <button onclick="eqCheck(this, false)">Cuando la masa es grande</button>
+        </div>
+        <div class="feedback" id="eqFb"></div>
+      </article>
+    </section>
+
+    <!-- BLOQUE 3 -->
+    <section class="block" id="block-3">
+      <div class="block-header"><h2>Bloque 3 · Leyes de Newton</h2></div>
+
+      <article class="activity-card">
+        <div class="act-type">Matching</div>
+        <h3>3.1 Une cada ley con su idea</h3>
+        <div class="match-grid" id="newtonMatch">
+          <div class="match-col">
+            <div class="match-item" data-match="1">1ª ley</div>
+            <div class="match-item" data-match="2">2ª ley</div>
+            <div class="match-item" data-match="3">3ª ley</div>
+          </div>
+          <div class="match-col">
+            <div class="match-target" data-match="2">F = m·a</div>
+            <div class="match-target" data-match="3">Acción y reacción</div>
+            <div class="match-target" data-match="1">Inercia / F<sub>R</sub> = 0</div>
+          </div>
+        </div>
+        <p class="hint-text">Toca un concepto y luego su definición.</p>
+        <div class="feedback" id="newtonMatchFb"></div>
+      </article>
+
+      <article class="activity-card">
+        <div class="act-type">Cálculo · 2ª ley</div>
+        <h3>3.2 Aceleración</h3>
+        <p>F<sub>R</sub> = 80 N · m = 16 kg · ¿a = ?</p>
+        <div class="input-row">
+          <input type="number" id="aCalc" placeholder="m/s²" step="0.1">
+          <button class="big-btn" onclick="checkA()">Comprobar</button>
+        </div>
+        <div class="feedback" id="aFb"></div>
+      </article>
+
+      <article class="activity-card">
+        <div class="act-type">Situación</div>
+        <h3>3.3 Acción-reacción</h3>
+        <p>Un nadador empuja el agua hacia atrás. ¿Qué ocurre?</p>
+        <div class="options-large">
+          <button onclick="swimCheck(this, true)">El agua lo empuja hacia adelante</button>
+          <button onclick="swimCheck(this, false)">El agua no ejerce fuerza</button>
+          <button onclick="swimCheck(this, false)">Solo se mueve el agua</button>
+        </div>
+        <div class="feedback" id="swimFb"></div>
+      </article>
+    </section>
+
+    <!-- BLOQUE 4 -->
+    <section class="block" id="block-4">
+      <div class="block-header"><h2>Bloque 4 · Peso y gravedad</h2></div>
+
+      <article class="activity-card">
+        <div class="act-type">Cálculo</div>
+        <h3>4.1 Calcula el peso</h3>
+        <p>Masa = 70 kg · g = 9.8 m/s²</p>
+        <div class="input-row">
+          <input type="number" id="pesoCalc" placeholder="N" step="0.1">
+          <button class="big-btn" onclick="checkPesoAct()">Comprobar</button>
+        </div>
+        <div class="feedback" id="pesoActFb"></div>
+      </article>
+
+      <article class="activity-card">
+        <div class="act-type">Concepto</div>
+        <h3>4.2 Masa vs peso</h3>
+        <p>Si viajas a la Luna, ¿qué cambia?</p>
+        <div class="options-large">
+          <button onclick="masaPeso(this, false)">Tu masa</button>
+          <button onclick="masaPeso(this, true)">Tu peso (es menor en la Luna)</button>
+          <button onclick="masaPeso(this, false)">Ni masa ni peso</button>
+          <button onclick="masaPeso(this, false)">Ambos por igual</button>
+        </div>
+        <div class="feedback" id="mpFb"></div>
+      </article>
+    </section>
+
+    <!-- BLOQUE 5 -->
+    <section class="block" id="block-5">
+      <div class="block-header"><h2>Bloque 5 · Energía y cierre</h2></div>
+
+      <article class="activity-card">
+        <div class="act-type">Cálculo</div>
+        <h3>5.1 Energía cinética</h3>
+        <p>m = 4 kg · v = 5 m/s · E<sub>c</sub> = ¿?</p>
+        <div class="input-row">
+          <input type="number" id="ecCalc" placeholder="J">
+          <button class="big-btn" onclick="checkEc()">Comprobar</button>
+        </div>
+        <div class="feedback" id="ecFb"></div>
+      </article>
+
+      <article class="activity-card">
+        <div class="act-type">Conservación</div>
+        <h3>5.2 Transformación de energía</h3>
+        <p>Una pelota se suelta desde lo alto. Al caer (sin fricción):</p>
+        <div class="options-large">
+          <button onclick="energyCheck(this, true)">E<sub>p</sub> disminuye y E<sub>c</sub> aumenta; E<sub>m</sub> constante</button>
+          <button onclick="energyCheck(this, false)">Se pierde toda la energía</button>
+          <button onclick="energyCheck(this, false)">Solo aumenta E<sub>p</sub></button>
+        </div>
+        <div class="feedback" id="energyFb"></div>
+      </article>
+
+      <article class="activity-card highlight-final">
+        <h3>Cierre · Tema 2</h3>
+        <ul class="checklist">
+          <li>Fuerza y fuerza resultante</li>
+          <li>Tres leyes de Newton</li>
+          <li>Peso ≠ masa · P = m·g</li>
+          <li>Energía cinética, potencial y mecánica</li>
+          <li>Conservación de la energía mecánica</li>
+        </ul>
+        <p>Creado por el <strong>Prof. Fabián Soberanes Martín</strong></p>
+        <p style="margin-top:1rem"><a href="fuerzas.html" style="color:#fde68a">← Volver a la teoría</a> · <a href="index.html" style="color:#fde68a">Tema 1</a></p>
+      </article>
+    </section>
+  </main>
+
+  <script src="actividades-fuerzas.js"></script>
+</body>
+</html>

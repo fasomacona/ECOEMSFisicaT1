@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Desafío Newton · Tema 2</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="juegos.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="juegos.html" class="logo"><img src="assets/conamat-icon.png" class="nav-icon" alt="" /><span>Desafío Newton</span></a>
+      <a href="juegos.html" style="font-weight:600;color:var(--primary)">← Juegos</a>
+    </div>
+  </nav>
+  <div class="game-wrap">
+    <div id="startScreen" class="start-screen">
+      <div style="font-size:3rem">💪</div>
+      <h1>Desafío Newton</h1>
+      <p>Tema 2 · Fuerzas, leyes de Newton, peso y energía</p>
+      <button class="big-play" style="margin-top:1.2rem" onclick="startGame(Q)">¡Jugar!</button>
+    </div>
+    <div id="playScreen" style="display:none">
+      <div class="game-top">
+        <span class="score-pill" id="scorePill">0 pts</span>
+        <span class="streak-pill" id="streakPill">Racha: 0</span>
+      </div>
+      <div class="q-card">
+        <div class="q-num" id="qNum"></div>
+        <h2 id="qText"></h2>
+        <div id="answers"></div>
+        <div class="fb-box" id="fbBox"></div>
+        <div class="next-row"><button class="big-play" id="nextBtn" style="display:none" onclick="nextQ()">Siguiente →</button></div>
+      </div>
+    </div>
+    <div id="endScreen" class="end-screen" style="display:none">
+      <h2>¡Terminaste!</h2>
+      <div class="end-score" id="finalScore">0</div>
+      <p id="endMsg"></p>
+      <button class="big-play" onclick="restart()">Jugar de nuevo</button>
+      <a class="big-play secondary" href="juegos.html" style="display:inline-block;margin-top:0.6rem;text-decoration:none">Otros juegos</a>
+    </div>
+  </div>
+  <script src="juego-engine.js"></script>
+  <script>
+    const Q = [
+      { q: 'Fuerzas 30 N a la derecha y 10 N a la izquierda. ¿F_R?', opts: ['40 N derecha', '20 N derecha', '20 N izquierda', '0'], ok: 1, tip: '30 − 10 = 20 N a la derecha.' },
+      { q: 'La 1ª ley de Newton se relaciona con:', opts: ['F = m·a', 'Inercia', 'Acción-reacción', 'Peso'], ok: 1, tip: 'Tendencia a mantener el estado de movimiento.' },
+      { q: 'F = 60 N · m = 12 kg · ¿a?', opts: ['5 m/s²', '720 m/s²', '0.2 m/s²', '48 m/s²'], ok: 0, tip: 'a = F/m = 5.' },
+      { q: 'Peso de 50 kg en la Tierra (g = 9.8):', opts: ['50 N', '490 N', '9.8 N', '5.1 N'], ok: 1, tip: 'P = m·g = 490 N.' },
+      { q: 'La 3ª ley dice que acción y reacción:', opts: ['Se anulan en el mismo cuerpo', 'Actúan en cuerpos distintos', 'Solo existen en el vacío', 'Dependen de la temperatura'], ok: 1, tip: 'Pares sobre objetos diferentes.' },
+      { q: 'E_c de 2 kg a 4 m/s:', opts: ['8 J', '16 J', '4 J', '32 J'], ok: 1, tip: '½·2·16 = 16 J.' },
+      { q: 'Si F_R = 0, el cuerpo:', opts: ['Siempre está quieto', 'Está en equilibrio (reposo o MRU)', 'Acelera', 'Cae libremente'], ok: 1, tip: 'Equilibrio dinámico o estático.' },
+      { q: 'E_p gravitatoria depende de:', opts: ['Solo la velocidad', 'm, g y h', 'Solo el color', 'La resistencia'], ok: 1, tip: 'E_p = m·g·h.' },
+      { q: 'Masa vs peso: en la Luna cambia…', opts: ['La masa', 'El peso', 'Ninguno', 'Ambos por igual'], ok: 1, tip: 'g es menor; la masa no cambia.' },
+      { q: 'Sin fricción, al caer E_m:', opts: ['Aumenta', 'Disminuye a cero', 'Se conserva', 'Solo es cinética siempre'], ok: 2, tip: 'Se transforma entre E_c y E_p.' }
+    ];
+  </script>
+</body>
+</html>
